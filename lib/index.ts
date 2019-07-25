@@ -1,6 +1,6 @@
 import * as debug_ from 'debug';
 import * as electron from 'electron';
-import { join } from 'path';
+import { stringify } from 'querystring';
 
 const debug = debug_('balena-electronjs');
 
@@ -17,16 +17,14 @@ function createSidebar(height: number) {
 			nodeIntegration: true,
 		},
 	});
-	win.loadFile(join(__dirname, 'sidebar.html'));
+	win.loadURL(`file://${__dirname}/sidebar.html`);
 }
 
 function createOpenDialogWindow(
 	options: electron.OpenDialogOptions,
 	callback: ShowOpenDialogCallback,
 ) {
-	console.log(options, callback);
-	electron.ipcMain.once('select-file', (event: Event, arg: any) => {
-		console.log('main select file', event, arg);
+	electron.ipcMain.once('select-files', (_event: Event, arg: any) => {
 		callback(arg);
 	});
 	const win = new electron.BrowserWindow({
@@ -35,7 +33,11 @@ function createOpenDialogWindow(
 			nodeIntegration: true,
 		},
 	});
-	win.loadFile(join(__dirname, 'file-picker.html'));
+	win.loadURL(
+		`file://${__dirname}/file-picker.html?${stringify(options as {
+			[key: string]: any;
+		})}`,
+	);
 }
 
 function ready() {
@@ -87,6 +89,7 @@ function showOpenDialog(
 	callback?: ShowOpenDialogCallback,
 ): string[] | undefined;
 
+// TODO: don't allow opening more than one open dialog
 function showOpenDialog(
 	arg0: electron.BrowserWindow | electron.OpenDialogOptions,
 	arg1?: electron.OpenDialogOptions | ShowOpenDialogCallback,
