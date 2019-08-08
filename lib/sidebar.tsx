@@ -23,8 +23,8 @@ class Sidebar extends React.Component {
 	}
 
 	public openWifiConfig() {
-		console.log('open wifi config');
 		const win = new remote.BrowserWindow({
+			frame: false,
 			webPreferences: {
 				nodeIntegration: true,
 			},
