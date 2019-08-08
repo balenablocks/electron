@@ -25,8 +25,13 @@ RUN \
 		metacity \
 		# x11
 		xserver-xorg \
+		# xvfb & vnc for development
+		x11vnc \
+		xvfb \
 	&& rm -rf /var/lib/apt/lists/*
 COPY --from=builder /usr/src/app/build /usr/lib/balena-electronjs
+COPY balena-electronjs-start /usr/bin/balena-electronjs-start
+RUN chmod +x /usr/bin/balena-electronjs-start
 
 ENV DISPLAY=:1
 ENV DBUS_SESSION_BUS_ADDRESS="unix:path=/tmp/dbus-session-bus"
@@ -37,3 +42,8 @@ RUN \
 	&& rm onboard.ini \
 	# Remove onboard's "Snippets" button
 	&& sed -i '/layer2/d' /usr/share/onboard/layouts/Compact.onboard
+
+# Override this in your dockerfile or with -e
+ENV XVFB_RESOLUTION=1366x768x24
+
+ENTRYPOINT ["sh", "/usr/bin/balena-electronjs-start"]
