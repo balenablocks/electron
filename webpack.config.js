@@ -88,6 +88,17 @@ function createRendererConfig(name) {
 		...rendererConfig,
 		...{
 			entry: {
+				[name]: path.join(__dirname, 'lib', `${name}.ts`)
+			},
+		}
+	}
+}
+
+function createRendererConfigUI(name) {
+	return {
+		...rendererConfig,
+		...{
+			entry: {
 				[name]: path.join(__dirname, 'lib', `${name}.tsx`)
 			},
 			plugins: [
@@ -101,8 +112,9 @@ function createRendererConfig(name) {
 }
 
 module.exports = [
-	createRendererConfig('sidebar'),
-	createRendererConfig('wifi-config'),
-	createRendererConfig('file-picker'),
+	createRendererConfigUI('sidebar'),
+	createRendererConfigUI('wifi-config'),
+	createRendererConfigUI('file-picker'),
+	createRendererConfig('focus'),
 	mainConfig,
 ]

@@ -1,10 +1,28 @@
+import { Mutex } from 'async-mutex';
+import { execFile } from 'child_process';
 import * as debug_ from 'debug';
 import * as electron from 'electron';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 import { stringify } from 'querystring';
 
 const debug = debug_('balena-electronjs');
 
 const SIDEBAR_WIDTH = 200;
+
+function exec(
+	...command: string[]
+): Promise<{ stdout: string; stderr: string }> {
+	return new Promise((resolve, reject) => {
+		execFile(command[0], command.slice(1), (error, stdout, stderr) => {
+			if (error) {
+				reject(error);
+			} else {
+				resolve({ stdout, stderr });
+			}
+		});
+	});
+}
 
 function createSidebar(height: number) {
 	const win = new BrowserWindow({
@@ -40,6 +58,42 @@ function createOpenDialogWindow(
 	);
 }
 
+let keyboardVisible = false;
+
+async function setKeyboardVisibility(visible: boolean): Promise<void> {
+	await exec(
+		'dbus-send',
+		'--type=method_call',
+		'--dest=org.onboard.Onboard',
+		'/org/onboard/Onboard/Keyboard',
+		`org.onboard.Onboard.Keyboard.${visible ? 'Show' : 'Hide'}`,
+	);
+}
+
+const keyboardMutex = new Mutex();
+
+electron.ipcMain.on('input-focus', async () => {
+	const release = await keyboardMutex.acquire();
+	if (!keyboardVisible) {
+		await setKeyboardVisibility(true);
+		keyboardVisible = true;
+	}
+	release();
+});
+
+electron.ipcMain.on('input-blur', async () => {
+	const release = await keyboardMutex.acquire();
+	if (keyboardVisible) {
+		await setKeyboardVisibility(false);
+		keyboardVisible = false;
+	}
+	release();
+});
+
+const focusScript = readFileSync(join(__dirname, 'focus.js'), {
+	encoding: 'utf8',
+});
+
 function ready() {
 	const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
 	createSidebar(height);
@@ -54,6 +108,9 @@ function ready() {
 			y: 0,
 			width: width - SIDEBAR_WIDTH,
 			height,
+		});
+		this.webContents.on('dom-ready', () => {
+			this.webContents.executeJavaScript(focusScript);
 		});
 	};
 }

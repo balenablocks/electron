@@ -1,8 +1,8 @@
 import { ipcRenderer, OpenDialogOptions } from 'electron';
 import { env } from 'process';
+import { parse } from 'querystring';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { parse } from 'querystring';
 
 import { FileSelector } from './file-selector/file-selector';
 
@@ -22,13 +22,13 @@ function identityIfString(value: any): string | undefined {
 }
 
 function parseOpenDialogOptions(): OpenDialogOptions {
-	const options = parse(window.location.search.substring(1));
+	const opts = parse(window.location.search.substring(1));
 	return {
-		title: identityIfString(options.title),
-		defaultPath: identityIfString(options.defaultPath),
-		buttonLabel: identityIfString(options.buttonLabel),
-		message: identityIfString(options.message),
-	}
+		title: identityIfString(opts.title),
+		defaultPath: identityIfString(opts.defaultPath),
+		buttonLabel: identityIfString(opts.buttonLabel),
+		message: identityIfString(opts.message),
+	};
 }
 
 const options = parseOpenDialogOptions();
