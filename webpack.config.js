@@ -25,6 +25,7 @@ const commonConfig = {
 		__dirname: false,
 		__filename: false,
 	},
+	devtool: 'inline-source-map',
 	module: {
 		rules: [
 			{

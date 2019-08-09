@@ -4,6 +4,7 @@ COPY package.json package-lock.json ./
 RUN npm i
 COPY tsconfig.json webpack.config.js ./
 COPY lib lib/
+COPY typings typings/
 RUN npm run build
 
 FROM balenalib/amd64-debian-node:12.6-buster-run
@@ -43,7 +44,11 @@ RUN \
 	# Remove onboard's "Snippets" button
 	&& sed -i '/layer2/d' /usr/share/onboard/layouts/Compact.onboard
 
+# Required for communicating with host's NetworkManager
+ENV DBUS_SYSTEM_BUS_ADDRESS="unix:path=/host/run/dbus/system_bus_socket"
 # Override this in your dockerfile or with -e
 ENV XVFB_RESOLUTION=1366x768x24
 
 ENTRYPOINT ["sh", "/usr/bin/balena-electronjs-start"]
+
+WORKDIR /usr/src/app

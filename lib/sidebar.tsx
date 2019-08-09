@@ -6,7 +6,7 @@ import * as ReactDOM from 'react-dom';
 class Sidebar extends React.Component {
 	public render() {
 		return (
-			<React.Fragment>
+			<>
 				<h1>This is the sidebar!</h1>
 				We are using node
 				{process.versions.node}, Chrome
@@ -18,7 +18,7 @@ class Sidebar extends React.Component {
 						Open wifi configuration panel
 					</a>
 				</p>
-			</React.Fragment>
+			</>
 		);
 	}
 

@@ -2,7 +2,7 @@
 
 start_xvfb() {
 	Xvfb $DISPLAY -screen 0 $XVFB_RESOLUTION &
-	x11vnc -passwd $VNC_PASSWORD -display $DISPLAY &
+	x11vnc -passwd $VNC_PASSWORD -display $DISPLAY -noxdamage &
 }
 
 start_x() {
