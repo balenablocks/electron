@@ -403,6 +403,15 @@ class WifiConfig extends React.Component<{}, WifiConfigState> {
 		return (
 			<>
 				<h1>This is the wifi config!</h1>
+				<p>
+					<button
+						onClick={() => {
+							window.close();
+						}}
+					>
+						Close
+					</button>
+				</p>
 				<label htmlFor="wireless-enabled">Wireless enabled</label>
 				<input
 					id="wireless-enabled"
