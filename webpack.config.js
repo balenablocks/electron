@@ -84,12 +84,12 @@ const rendererConfig = {
 	},
 }
 
-function createRendererConfig(name) {
+function createRendererConfig(...name) {
 	return {
 		...rendererConfig,
 		...{
 			entry: {
-				[name]: path.join(__dirname, 'lib', `${name}.ts`)
+				[path.join(...name)]: path.join(__dirname, 'lib', ...name) + '.ts',
 			},
 		}
 	}
@@ -116,6 +116,6 @@ module.exports = [
 	createRendererConfigUI('sidebar'),
 	createRendererConfigUI('wifi-config'),
 	createRendererConfigUI('file-picker'),
-	createRendererConfig('focus'),
+	createRendererConfig('on-screen-keyboard', 'focus'),
 	mainConfig,
 ]

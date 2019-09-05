@@ -1,3 +1,5 @@
+import { execFile } from 'child_process';
+
 export interface Dict<T> {
 	[key: string]: T;
 }
@@ -59,4 +61,18 @@ export class OrderedMap<TKey, TValue> {
 			yield [key, this.data.get(key)];
 		}
 	}
+}
+
+export function exec(
+	...command: string[]
+): Promise<{ stdout: string; stderr: string }> {
+	return new Promise((resolve, reject) => {
+		execFile(command[0], command.slice(1), (error, stdout, stderr) => {
+			if (error) {
+				reject(error);
+			} else {
+				resolve({ stdout, stderr });
+			}
+		});
+	});
 }
