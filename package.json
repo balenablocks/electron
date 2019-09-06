@@ -4,7 +4,9 @@
   "description": "Kiosk mode for electron apps",
   "main": "build/index.js",
   "scripts": {
-    "build": "rm -rf build/* && webpack",
+    "clean": "rm -rf build/*",
+    "build": "npm run clean && webpack",
+    "watch": "webpack --watch",
     "lint": "resin-lint --typescript lib",
     "prettier": "prettier --config ./node_modules/resin-lint/config/.prettierrc --write \"lib/**/*.ts\" \"lib/**/*.tsx\""
   },
