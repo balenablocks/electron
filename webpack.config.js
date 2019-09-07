@@ -18,14 +18,16 @@
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { env } = require('process');
+
+const MODE = env.NODE_ENV === 'development' ? 'development' : 'production';
 
 const commonConfig = {
-	mode: 'production',
+	mode: MODE,
 	node: {
 		__dirname: false,
 		__filename: false,
 	},
-	devtool: 'inline-source-map',
 	module: {
 		rules: [
 			{
@@ -59,6 +61,10 @@ const commonConfig = {
 	resolve: {
 		extensions: [ '.js', '.ts', '.tsx' ]
 	},
+}
+
+if (MODE === 'development') {
+	commonConfig.devtool = 'inline-source-map';
 }
 
 const mainConfig = {
