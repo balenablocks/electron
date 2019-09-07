@@ -7,8 +7,8 @@
     "clean": "rm -rf build/*",
     "build": "npm run clean && webpack",
     "watch": "webpack --watch",
-    "lint": "resin-lint --typescript lib",
-    "prettier": "prettier --config ./node_modules/resin-lint/config/.prettierrc --write \"lib/**/*.ts\" \"lib/**/*.tsx\""
+    "lint": "resin-lint --typescript src",
+    "prettier": "prettier --config ./node_modules/resin-lint/config/.prettierrc --write \"src/**/*.ts\" \"src/**/*.tsx\""
   },
   "author": "Alexis Svinartchouk <alexis@balena.io>",
   "license": "Apache-2.0",

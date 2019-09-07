@@ -30,7 +30,7 @@ const commonConfig = {
 		rules: [
 			{
 				test: /\.html$/,
-				include: [ path.resolve(__dirname, 'lib') ],
+				include: [ path.resolve(__dirname, 'src') ],
 				use: {
 					loader: 'html-loader'
 				}
@@ -51,7 +51,8 @@ const commonConfig = {
 						loader: 'file-loader',
 						options: {
 							name: '[name].[ext]',
-							outputPath: 'fonts/'
+							outputPath: path.join('ui', 'fonts'),
+							publicPath: 'fonts',
 						}
 					}
 				]
@@ -72,7 +73,7 @@ const mainConfig = {
 	...{
 		target: 'electron-main',
 		entry: {
-			index: path.join(__dirname, 'lib', 'index.ts')
+			index: path.join(__dirname, 'src', 'index.ts')
 		},
 	}
 }
@@ -89,23 +90,23 @@ function createRendererConfig(...name) {
 		...rendererConfig,
 		...{
 			entry: {
-				[path.join(...name)]: path.join(__dirname, 'lib', ...name) + '.ts',
+				[path.join(...name)]: path.join(__dirname, 'src', ...name) + '.ts',
 			},
 		}
 	}
 }
 
-function createRendererConfigUI(name) {
+function createRendererConfigUI(...name) {
 	return {
 		...rendererConfig,
 		...{
 			entry: {
-				[name]: path.join(__dirname, 'lib', `${name}.tsx`)
+				[path.join(...name)]: path.join(__dirname, 'src', 'ui', ...name) + '.tsx',
 			},
 			plugins: [
 				new HtmlWebpackPlugin({
-					title: name,  // TODO
-					filename: `${name}.html`,
+					title: path.join(...name),  // TODO
+					filename: `${path.join('ui', ...name)}.html`,
 				})
 			],
 		}
@@ -115,7 +116,7 @@ function createRendererConfigUI(name) {
 module.exports = [
 	createRendererConfigUI('sidebar'),
 	createRendererConfigUI('wifi-config'),
-	createRendererConfigUI('file-picker'),
+	createRendererConfigUI('file-selector-window'),
 	createRendererConfig('on-screen-keyboard', 'focus'),
 	mainConfig,
 ]

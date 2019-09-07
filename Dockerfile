@@ -3,7 +3,7 @@ WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm i
 COPY tsconfig.json webpack.config.js ./
-COPY lib lib/
+COPY src src/
 COPY typings typings/
 RUN npm run build
 

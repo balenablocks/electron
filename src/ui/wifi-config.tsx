@@ -4,7 +4,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { promisify } from 'util';
 
-import { DBusObjectNode } from './dbus';
+import { DBusObjectNode } from '../dbus';
 
 const SCAN_INTERVAL = 3000;
 const ALLOWED_SCAN_ERRORS = [

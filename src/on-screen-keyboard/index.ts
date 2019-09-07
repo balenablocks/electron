@@ -1,4 +1,5 @@
 import { Mutex } from 'async-mutex';
+import * as Electron from 'electron';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
@@ -23,8 +24,7 @@ export const focusScript = readFileSync(
 	},
 );
 
-export function init(electron: any) {
-	// TODO: correct type
+export function init(electron: typeof Electron) {
 	const keyboardMutex = new Mutex();
 
 	electron.ipcMain.on('input-focus', async () => {
