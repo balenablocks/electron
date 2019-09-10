@@ -29,6 +29,8 @@ RUN \
 		# xvfb & vnc for development
 		x11vnc \
 		xvfb \
+		# emojis (used on the wifi config page)
+		fonts-symbola \
 	&& rm -rf /var/lib/apt/lists/*
 COPY --from=builder /usr/src/app/build /usr/lib/balena-electronjs
 COPY balena-electronjs-start /usr/bin/balena-electronjs-start
