@@ -16,8 +16,10 @@
 
 'use strict'
 
-const path = require('path');
+const { exec } = require('child_process');
+const { writeFileSync } = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 const { env } = require('process');
 
 const MODE = env.NODE_ENV === 'development' ? 'development' : 'production';
@@ -74,6 +76,17 @@ const mainConfig = {
 		entry: {
 			index: path.join(__dirname, 'src', 'index.ts')
 		},
+		plugins: [
+			{
+				apply: (compiler) => {
+					compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
+						exec('ts-json-schema-generator -p src/settings/schema.ts -t Settings -c', (err, stdout, stderr) => {
+							writeFileSync('build/settings-schema.json', stdout);
+						});
+					});
+				}
+			},
+		]
 	}
 }
 
@@ -106,7 +119,7 @@ function createRendererConfigUI(...name) {
 				new HtmlWebpackPlugin({
 					title: path.join(...name),  // TODO
 					filename: `${path.join('ui', ...name)}.html`,
-				})
+				}),
 			],
 		}
 	}
@@ -115,6 +128,7 @@ function createRendererConfigUI(...name) {
 module.exports = [
 	createRendererConfigUI('sidebar'),
 	createRendererConfigUI('wifi-config'),
+	createRendererConfigUI('settings'),
 	createRendererConfigUI('file-selector-window'),
 	createRendererConfig('on-screen-keyboard', 'focus'),
 	mainConfig,

@@ -1,4 +1,6 @@
 import { execFile } from 'child_process';
+import { readFile, writeFile } from 'fs';
+import { promisify } from 'util';
 
 export interface Dict<T> {
 	[key: string]: T;
@@ -76,3 +78,6 @@ export function exec(
 		});
 	});
 }
+
+export const readFileAsync = promisify(readFile);
+export const writeFileAsync = promisify(writeFile);

@@ -1,7 +1,8 @@
-import { remote } from 'electron';
-import { join } from 'path';
+import { ipcRenderer } from 'electron';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+
+import { screenOff } from '../screensaver';
 
 class Sidebar extends React.Component {
 	public render() {
@@ -18,18 +19,26 @@ class Sidebar extends React.Component {
 						Open wifi configuration panel
 					</a>
 				</p>
+				<p>
+					<a href="#" onClick={this.openSettings}>
+						Open settings
+					</a>
+				</p>
+				<p>
+					<a href="#" onClick={screenOff}>
+						Sleep
+					</a>
+				</p>
 			</>
 		);
 	}
 
-	public openWifiConfig() {
-		const win = new remote.BrowserWindow({
-			frame: false,
-			webPreferences: {
-				nodeIntegration: true,
-			},
-		});
-		win.loadFile(join(__dirname, 'wifi-config.html'));
+	private openWifiConfig() {
+		ipcRenderer.send('show-window', 'wifi-config');
+	}
+
+	private openSettings() {
+		ipcRenderer.send('show-window', 'settings');
 	}
 }
 

@@ -26,6 +26,8 @@ RUN \
 		metacity \
 		# x11
 		xserver-xorg \
+		# includes xset
+		x11-xserver-utils \
 		# xvfb & vnc for development
 		x11vnc \
 		xvfb \
