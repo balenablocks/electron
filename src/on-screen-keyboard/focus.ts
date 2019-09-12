@@ -25,7 +25,8 @@ document.addEventListener(
 			e.target !== null &&
 			((e.target instanceof HTMLInputElement &&
 				INPUT_TYPE_WHITELIST.includes(e.target.type)) ||
-				e.target instanceof HTMLTextAreaElement)
+				e.target instanceof HTMLTextAreaElement) &&
+			!e.target.readOnly
 		) {
 			focused = e.target;
 			ipcRenderer.send('input-focus');
