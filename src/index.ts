@@ -9,8 +9,6 @@ import { init as screenSaverInit } from './screensaver';
 import { Settings } from './settings/settings';
 import { uiUrl } from './utils';
 
-const SIDEBAR_WIDTH = 200;
-
 let initialized = false;
 
 function init() {
@@ -21,20 +19,6 @@ function init() {
 			// TODO
 			super(options);
 		}
-	}
-
-	function createSidebar(height: number) {
-		const win = new BrowserWindow({
-			width: SIDEBAR_WIDTH,
-			height,
-			x: 0,
-			y: 0,
-			frame: false,
-			webPreferences: {
-				nodeIntegration: true,
-			},
-		});
-		win.loadURL(uiUrl('sidebar'));
 	}
 
 	function createOverlayButton(
@@ -77,7 +61,6 @@ function init() {
 	function ready() {
 		onScreenKeyboardInit(electron);
 		const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
-		createSidebar(height);
 		// delay required in order to have transparent windows
 		// https://github.com/electron/electron/issues/16809
 		setTimeout(
@@ -95,9 +78,9 @@ function init() {
 		electron.BrowserWindow.prototype._init = function() {
 			originalInit.call(this);
 			this.setBounds({
-				x: SIDEBAR_WIDTH,
+				x: 0,
 				y: 0,
-				width: width - SIDEBAR_WIDTH,
+				width,
 				height,
 			});
 			this.webContents.on('dom-ready', () => {
