@@ -128,6 +128,8 @@ function createRendererConfigUI(...name) {
 module.exports = [
 	createRendererConfigUI('sidebar'),
 	createRendererConfigUI('wifi-config'),
+	createRendererConfigUI('open-window-overlay-icon'),
+	createRendererConfigUI('sleep-overlay-icon'),
 	createRendererConfigUI('settings'),
 	createRendererConfigUI('file-selector-window'),
 	createRendererConfig('on-screen-keyboard', 'focus'),

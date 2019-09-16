@@ -1,6 +1,7 @@
 import * as debug_ from 'debug';
 import * as Electron from 'electron';
-import { stringify } from 'querystring';
+
+import { uiUrl } from './utils';
 
 const debug = debug_('balena-electronjs');
 
@@ -23,11 +24,7 @@ export function init(electron: typeof Electron) {
 				nodeIntegration: true,
 			},
 		});
-		win.loadURL(
-			`file://${__dirname}/ui/file-selector-window.html?${stringify(options as {
-				[key: string]: any;
-			})}`,
-		);
+		win.loadURL(uiUrl('file-selector-window', options));
 	}
 
 	const originalShowOpenDialog = electron.dialog.showOpenDialog;

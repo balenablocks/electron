@@ -1,5 +1,6 @@
 import { execFile } from 'child_process';
 import { readFile, writeFile } from 'fs';
+import { stringify } from 'querystring';
 import { promisify } from 'util';
 
 export interface Dict<T> {
@@ -81,3 +82,8 @@ export function exec(
 
 export const readFileAsync = promisify(readFile);
 export const writeFileAsync = promisify(writeFile);
+
+export function uiUrl(page: string, params: Dict<any> = {}): string {
+	const qs = Object.keys(params).length ? '?' + stringify(params) : '';
+	return `file://${__dirname}/ui/${page}.html${qs}`;
+}

@@ -7,6 +7,7 @@ import {
 import { init as openDialogInit } from './open-dialog';
 import { init as screenSaverInit } from './screensaver';
 import { Settings } from './settings/settings';
+import { uiUrl } from './utils';
 
 const SIDEBAR_WIDTH = 200;
 
@@ -33,13 +34,60 @@ function init() {
 				nodeIntegration: true,
 			},
 		});
-		win.loadURL(`file://${__dirname}/ui/sidebar.html`);
+		win.loadURL(uiUrl('sidebar'));
+	}
+
+	function createOverlayButton(
+		icon: string,
+		opens: WindowName,
+		x: number,
+		y: number,
+	) {
+		const win = new BrowserWindow({
+			focusable: false,
+			frame: false,
+			transparent: true,
+			width: 48,
+			height: 56,
+			webPreferences: {
+				nodeIntegration: true,
+			},
+			x,
+			y,
+		});
+		win.loadURL(uiUrl('open-window-overlay-icon', { icon, opens }));
+	}
+
+	function createOverlaySleepButton(x: number, y: number) {
+		const win = new BrowserWindow({
+			focusable: false,
+			frame: false,
+			transparent: true,
+			width: 48,
+			height: 56,
+			webPreferences: {
+				nodeIntegration: true,
+			},
+			x,
+			y,
+		});
+		win.loadURL(uiUrl('sleep-overlay-icon', { icon: '💤' }));
 	}
 
 	function ready() {
 		onScreenKeyboardInit(electron);
 		const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
 		createSidebar(height);
+		// delay required in order to have transparent windows
+		// https://github.com/electron/electron/issues/16809
+		setTimeout(
+			() => {
+				createOverlayButton('📡', 'wifi-config', 0, 0);
+				createOverlayButton('🔧', 'settings', 60, 0);
+				createOverlaySleepButton(120, 0);
+			},
+			100, // TODO: constant
+		);
 		// _init exists on BrowserWindow's prototype
 		// @ts-ignore
 		const originalInit = electron.BrowserWindow.prototype._init;
@@ -75,12 +123,11 @@ if (!initialized) {
 	initialized = true;
 }
 
-type WindowName = 'settings' | 'wifi-config';
+export type WindowName = 'settings' | 'wifi-config';
 
 const windows: Map<WindowName, electron.BrowserWindow> = new Map();
 
-electron.ipcMain.on('show-window', (_event: any, name: WindowName) => {
-	// TODO: any
+electron.ipcMain.on('show-window', (_event: Event, name: WindowName) => {
 	let win = windows.get(name);
 	if (win === undefined || win.isDestroyed()) {
 		win = new electron.BrowserWindow({
@@ -89,7 +136,7 @@ electron.ipcMain.on('show-window', (_event: any, name: WindowName) => {
 				nodeIntegration: true,
 			},
 		});
-		win.loadURL(`file://${__dirname}/ui/${name}.html`);
+		win.loadURL(uiUrl(name));
 		windows.set(name, win);
 	} else {
 		win.focus();
