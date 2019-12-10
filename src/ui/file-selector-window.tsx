@@ -33,12 +33,22 @@ function parseOpenDialogOptions(): OpenDialogOptions {
 
 const options = parseOpenDialogOptions();
 
+let canceled = true;
+let filePaths: string[] = [];
+
+window.addEventListener('beforeunload', () => {
+	ipcRenderer.send('select-files', { canceled, filePaths });
+});
+
 ReactDOM.render(
 	<FileSelector
 		defaultPath={options.defaultPath || '/'}
 		buttonLabel={options.buttonLabel}
 		selectFiles={(files?: string[]) => {
-			ipcRenderer.send('select-files', files);
+			if (files !== undefined) {
+				canceled = false;
+				filePaths = files;
+			}
 			window.close();
 		}}
 		constraintPath={env.BALENA_ELECTRONJS_CONSTRAINT_PATH}
