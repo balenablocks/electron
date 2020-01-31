@@ -53,6 +53,6 @@ ENV DBUS_SYSTEM_BUS_ADDRESS="unix:path=/host/run/dbus/system_bus_socket"
 # Override this in your dockerfile or with -e
 ENV XVFB_RESOLUTION=1366x768x24
 
-ENTRYPOINT ["sh", "/usr/bin/balena-electronjs-start"]
-
 WORKDIR /usr/src/app
+
+CMD ["sh", "/usr/bin/balena-electronjs-start"]
