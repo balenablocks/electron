@@ -67,9 +67,10 @@ function init() {
 			() => {
 				createOverlayButton('📡', 'wifi-config', 0, 0);
 				createOverlayButton('🔧', 'settings', 60, 0);
-				createOverlaySleepButton(120, 0);
+				createOverlayButton('🖴', 'mounts', 120, 0);
+				createOverlaySleepButton(180, 0);
 			},
-			100, // TODO: constant
+			200, // TODO: constant
 		);
 		// _init exists on BrowserWindow's prototype
 		// @ts-ignore
@@ -106,7 +107,7 @@ if (!initialized) {
 	initialized = true;
 }
 
-export type WindowName = 'settings' | 'wifi-config';
+export type WindowName = 'settings' | 'wifi-config' | 'mounts';
 
 const windows: Map<WindowName, electron.BrowserWindow> = new Map();
 

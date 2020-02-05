@@ -131,6 +131,7 @@ module.exports = [
 	createRendererConfigUI('open-window-overlay-icon'),
 	createRendererConfigUI('sleep-overlay-icon'),
 	createRendererConfigUI('settings'),
+	createRendererConfigUI('mounts'),
 	createRendererConfigUI('file-selector-window'),
 	createRendererConfig('on-screen-keyboard', 'focus'),
 	mainConfig,
