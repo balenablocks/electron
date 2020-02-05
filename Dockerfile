@@ -1,4 +1,5 @@
-FROM balenalib/amd64-debian-node:12.6-buster-build as builder
+FROM balenalib/aarch64-debian-node:12.6-buster-build as builder
+COPY qemu-aarch64-static /usr/local/bin/qemu-aarch64-static
 WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm i
@@ -8,7 +9,8 @@ COPY typings typings/
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN npm run build
 
-FROM balenalib/amd64-debian-node:12.6-buster-run
+FROM balenalib/aarch64-debian-node:12.6-buster-run
+COPY qemu-aarch64-static /usr/local/bin/qemu-aarch64-static
 RUN \
 	apt-get update \
 	&& apt-get install -y \
