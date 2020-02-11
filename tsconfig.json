@@ -3,7 +3,7 @@
 		"module": "commonjs",
 		"outDir": "build",
 		"sourceMap": true,
-		"target": "es6",
+		"target": "es2018",
 		"noImplicitAny": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
