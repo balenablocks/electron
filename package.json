@@ -18,6 +18,7 @@
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.9.0",
+    "@types/bluebird": "^3.5.29",
     "@types/debug": "^4.1.4",
     "@types/node": "^12.6.8",
     "@types/react": "^16.8.23",
@@ -25,7 +26,6 @@
     "@types/styled-components": "^4.1.18",
     "async-mutex": "^0.1.4",
     "css-loader": "^3.1.0",
-    "d3": "^4.13.0",
     "dbus-native": "^0.4.0",
     "debug": "^4.1.1",
     "electron": "^7.1.4",
