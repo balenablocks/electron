@@ -1,4 +1,4 @@
-# balena-electronsj
+# balena-electronjs
 
 This is work in progress
 
