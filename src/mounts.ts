@@ -295,7 +295,11 @@ export async function startWatching(
 		await cleanMountsRoot();
 		await listPartitions(callback);
 	});
-	const watcher = watch(BY_PATH_DIR, debouncedUpdateLinks);
+	const watcher = watch(
+		BY_PATH_DIR,
+		{ persistent: false },
+		debouncedUpdateLinks,
+	);
 	const interval = setInterval(async () => {
 		await mountsMutex.runExclusive(async () => {
 			await checkMounts(callback);
