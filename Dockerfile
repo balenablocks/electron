@@ -39,6 +39,7 @@ COPY --from=builder /usr/src/app/build /usr/lib/balena-electronjs
 COPY .xserverrc /root/.xserverrc
 COPY .xinitrc /root/.xinitrc
 
+ENV DISPLAY=:0
 ENV DBUS_SESSION_BUS_ADDRESS="unix:path=/tmp/dbus-session-bus"
 COPY onboard.ini ./
 RUN \
@@ -55,4 +56,4 @@ ENV XVFB_RESOLUTION=1366x768x24
 
 WORKDIR /usr/src/app
 
-CMD startx
+CMD xinit

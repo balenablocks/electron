@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ -n "$VNC_PASSWORD" ]; then
-	x11vnc -passwd $VNC_PASSWORD -display $DISPLAY -noxdamage -forever &
+	x11vnc -passwd $VNC_PASSWORD -noxdamage -forever &
 fi
 
 metacity &
