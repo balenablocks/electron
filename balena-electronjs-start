@@ -1,20 +1,15 @@
 #!/usb/bin/env sh
 
-start_xvfb() {
-	Xvfb $DISPLAY -screen 0 $XVFB_RESOLUTION &
-	x11vnc -passwd $VNC_PASSWORD -display $DISPLAY -noxdamage &
-}
-
-start_x() {
-	startx -- $DISPLAY &
-}
-
-if [ -z "$VNC_PASSWORD" ]; then
-	echo "starting x"
-	start_x
-else
+if [ -n "$USE_XVFB" ]; then
 	echo "starting xvfb"
-	start_xvfb
+	Xvfb $DISPLAY -screen 0 $XVFB_RESOLUTION &
+else
+	echo "starting x"
+	startx -- $DISPLAY &
+fi
+
+if [ -n "$VNC_PASSWORD" ]; then
+	x11vnc -passwd $VNC_PASSWORD -display $DISPLAY -noxdamage &
 fi
 
 metacity &

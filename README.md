@@ -53,5 +53,6 @@ Watches and allows to mount / umount removable drives in
 | `BALENA_ELECTRONJS_MOUNTS_ROOT` | Where the removable drives should be mounted| `/tmp/media` |
 | `BALENA_ELECTRONJS_CONSTRAINT_PATH` | Only files in this path will be accessible through the file picker |  |
 | `DBUS_SYSTEM_BUS_ADDRESS` | DBus address for communicating with NetworkManager | `unix:path=/host/run/dbus/system_bus_socket` |
-| `VNC_PASSWORD` | Vnc password, runs `Xvfb` and `x11vnc` instead of `startx`if set |  |
-| `XVFB_RESOLUTION` | `Xvfb` resolution and color depth (only useful if`VNC_PASSWORD` is set) | `1366x768x24` |
+| `USE_XVFB` | Use `Xvfb` instead of `startx` if non empty |  |
+| `XVFB_RESOLUTION` | `Xvfb` resolution and color depth (only useful if `USE_XVFB` is set) | `1366x768x24` |
+| `VNC_PASSWORD` | Vnc password, will start x11vnc if non empty |  |
