@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ -n "$USE_XVFB" ]; then
+	exec Xvfb $DISPLAY -screen 0 $XVFB_RESOLUTION
+else
+	exec X $DISPLAY -nolisten tcp -s 0 -nocursor
+fi

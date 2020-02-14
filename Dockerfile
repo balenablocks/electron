@@ -36,8 +36,8 @@ RUN \
 		fonts-symbola \
 	&& rm -rf /var/lib/apt/lists/*
 COPY --from=builder /usr/src/app/build /usr/lib/balena-electronjs
-COPY balena-electronjs-start /usr/bin/balena-electronjs-start
-RUN chmod +x /usr/bin/balena-electronjs-start
+COPY .xserverrc /root/.xserverrc
+COPY .xinitrc /root/.xinitrc
 
 ENV DISPLAY=:1
 ENV DBUS_SESSION_BUS_ADDRESS="unix:path=/tmp/dbus-session-bus"
@@ -56,4 +56,4 @@ ENV XVFB_RESOLUTION=1366x768x24
 
 WORKDIR /usr/src/app
 
-CMD ["sh", "/usr/bin/balena-electronjs-start"]
+CMD startx
