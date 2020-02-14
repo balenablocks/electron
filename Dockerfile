@@ -39,7 +39,6 @@ COPY --from=builder /usr/src/app/build /usr/lib/balena-electronjs
 COPY .xserverrc /root/.xserverrc
 COPY .xinitrc /root/.xinitrc
 
-ENV DISPLAY=:1
 ENV DBUS_SESSION_BUS_ADDRESS="unix:path=/tmp/dbus-session-bus"
 COPY onboard.ini ./
 RUN \
