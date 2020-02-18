@@ -1,5 +1,7 @@
 #!/bin/sh
 
+rm -f /tmp/.X0-lock
+
 if [ -n "$USE_XVFB" ]; then
 	exec Xvfb $DISPLAY -screen 0 $XVFB_RESOLUTION
 else
