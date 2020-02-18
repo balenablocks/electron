@@ -56,3 +56,4 @@ Watches and allows to mount / umount removable drives in
 | `USE_XVFB` | Use `Xvfb` instead of `startx` if non empty |  |
 | `XVFB_RESOLUTION` | `Xvfb` resolution and color depth (only useful if `USE_XVFB` is set) | `1366x768x24` |
 | `VNC_PASSWORD` | Vnc password, will start x11vnc if non empty |  |
+| `XRANDR_ROTATION` | Rotate the screen with `xrandr -o $XRANDR_ROTATION` |  |

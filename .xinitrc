@@ -1,5 +1,9 @@
 #!/bin/sh
 
+if [ -n "$XRANDR_ROTATION" ]; then
+	xrandr -o $XRANDR_ROTATION
+fi
+
 if [ -n "$VNC_PASSWORD" ]; then
 	x11vnc -passwd $VNC_PASSWORD -noxdamage -forever &
 fi
