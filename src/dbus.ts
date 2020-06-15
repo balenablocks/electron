@@ -30,7 +30,7 @@ async function getInterface(
 interface FieldDefinition {
 	interfaceName: string;
 	subtree: Dict<FieldDefinition | null>;
-	extraListeners?: Dict<(...args: any) => Promise<void>>;
+	extraListeners?: Dict<(...args: any[]) => Promise<void>>;
 	extraInit?: (o: DBusObjectNode) => Promise<void>;
 }
 

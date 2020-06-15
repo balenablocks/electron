@@ -21,6 +21,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const { env } = require('process');
 const tsj = require('ts-json-schema-generator');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const MODE = env.NODE_ENV === 'development' ? 'development' : 'production';
 
@@ -33,15 +34,6 @@ const commonConfig = {
 	module: {
 		rules: [
 			{
-				test: /\.tsx?$/,
-				use: 'ts-loader',
-				exclude: /node_modules/
-			},
-			{
-				test: /\.css$/,
-				use: ['style-loader', 'css-loader'],
-			},
-			{
 				test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
 				use: [
 					{
@@ -53,6 +45,15 @@ const commonConfig = {
 						}
 					}
 				]
+			},
+			{
+				test: /\.css$/,
+				use: [MiniCssExtractPlugin.loader, 'css-loader'],
+			},
+			{
+				test: /\.tsx?$/,
+				use: 'ts-loader',
+				exclude: /node_modules/
 			},
 		]
 	},
@@ -122,6 +123,7 @@ function createRendererConfigUI(...name) {
 					title: path.join(...name),  // TODO
 					filename: `${path.join('ui', ...name)}.html`,
 				}),
+				new MiniCssExtractPlugin({ filename: 'ui/[name].css' }),
 			],
 		}
 	}

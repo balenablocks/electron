@@ -1,10 +1,10 @@
 import { delay } from 'bluebird';
 import * as _ from 'lodash';
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { promisify } from 'util';
 
 import { DBusObjectNode } from '../dbus';
+import { CloseableWindow, render } from './theme';
 
 const SCAN_INTERVAL = 3000;
 const ALLOWED_SCAN_ERRORS = [
@@ -64,7 +64,7 @@ class AccessPoint extends React.PureComponent<AccessPointProps> {
 			stateStr = `(${NM_ACTIVE_CONNECTION_STATE_LABELS.get(this.props.state)})`;
 		}
 		return (
-			<li>
+			<li key={this.props.path}>
 				<h1>
 					{this.props.Ssid.toString()} {this.props.active ? '🗸' : ''}
 					{''}
@@ -152,13 +152,13 @@ class WifiDevice extends React.PureComponent<WifiDeviceProps, {}> {
 					: undefined;
 			const state = this.props.connectionStates.get(ssid);
 			return {
+				...ap,
 				active,
 				configured,
 				createConnection,
 				forgetConnection,
 				connect,
 				state,
-				...ap,
 			};
 		});
 
@@ -401,17 +401,7 @@ class WifiConfig extends React.Component<{}, WifiConfigState> {
 
 	public render() {
 		return (
-			<>
-				<h1>This is the wifi config!</h1>
-				<p>
-					<button
-						onClick={() => {
-							window.close();
-						}}
-					>
-						Close
-					</button>
-				</p>
+			<CloseableWindow title="Wifi config">
 				<label htmlFor="wireless-enabled">Wireless enabled</label>
 				<input
 					id="wireless-enabled"
@@ -422,7 +412,7 @@ class WifiConfig extends React.Component<{}, WifiConfigState> {
 				{this.state.creatingConnection !== undefined
 					? this.renderCreateConnection()
 					: this.renderDevice()}
-			</>
+			</CloseableWindow>
 		);
 	}
 
@@ -430,12 +420,12 @@ class WifiConfig extends React.Component<{}, WifiConfigState> {
 		if (this.state.Devices && this.state.Devices.length) {
 			return (
 				<WifiDevice
+					{...this.state.Devices[0]}
 					configuredWifiConnections={this.state.configuredWifiConnections}
 					connectionStates={this.state.connectionStates}
 					forgetConnection={this.boundForgetConnection}
 					createConnection={this.boundCreateConnection}
 					connect={this.boundConnect}
-					{...this.state.Devices[0]}
 				/>
 			);
 		}
@@ -574,4 +564,4 @@ class PasswordBox extends React.PureComponent<
 	}
 }
 
-ReactDOM.render(<WifiConfig />, document.body);
+render(<WifiConfig />);

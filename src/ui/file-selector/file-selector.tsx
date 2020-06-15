@@ -17,9 +17,10 @@
 import * as debug_ from 'debug';
 import { dirname, relative } from 'path';
 import * as React from 'react';
-import * as rendition from 'rendition';
+import { Button } from 'rendition';
 import { default as styled } from 'styled-components';
 
+import { Provider } from '../theme';
 import { colors } from './colors';
 import { FileList } from './file-list';
 import { FileEntry } from './files';
@@ -160,22 +161,23 @@ export class FileSelector extends React.PureComponent<
 	}
 
 	public render() {
-		const styles = {
-			display: 'flex',
-			height: 'calc(100vh - 20px)',
-			'flex-direction': 'column',
-		};
 		return (
-			<rendition.Provider style={styles}>
+			<Provider
+				style={{
+					display: 'flex',
+					height: 'calc(100vh - 20px)',
+					flexDirection: 'column',
+				}}
+			>
 				<Header>
-					<rendition.Button
+					<Button
 						bg={colors.secondary.background}
 						color={colors.primary.color}
 						onClick={this.navigateUp.bind(this)}
 					>
 						<span className="fas fa-angle-left" />
 						&nbsp;Back
-					</rendition.Button>
+					</Button>
 					<span className="fas fa-hdd" />
 					<Breadcrumbs
 						path={this.state.path}
@@ -194,24 +196,24 @@ export class FileSelector extends React.PureComponent<
 					<input
 						type="checkbox"
 						checked={this.state.showHiddenFiles}
-						onClick={() => {
+						onChange={() => {
 							this.setState({ showHiddenFiles: !this.state.showHiddenFiles });
 						}}
 					/>
 					Show hidden files
 					<FilePath file={this.state.highlighted}></FilePath>
-					<rendition.Button
+					<Button
 						onClick={() => {
 							this.props.selectFiles();
 						}}
 					>
 						Cancel
-					</rendition.Button>
-					<rendition.Button primary onClick={this.confirmSelection.bind(this)}>
+					</Button>
+					<Button primary onClick={this.confirmSelection.bind(this)}>
 						{this.props.buttonLabel || 'Select file'}
-					</rendition.Button>
+					</Button>
 				</Footer>
-			</rendition.Provider>
+			</Provider>
 		);
 	}
 }
