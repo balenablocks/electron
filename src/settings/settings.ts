@@ -48,9 +48,7 @@ export class Settings extends EventEmitter {
 				throw error;
 			}
 		}
-		for (const [key, value] of Object.entries(
-			this.schema.definitions.Settings.properties,
-		)) {
+		for (const [key, value] of Object.entries(this.schema.properties)) {
 			// @ts-ignore
 			if (value.default !== undefined && this.data[key] === undefined) {
 				// @ts-ignore

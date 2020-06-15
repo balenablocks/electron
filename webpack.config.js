@@ -16,11 +16,11 @@
 
 'use strict'
 
-const { exec } = require('child_process');
-const { writeFileSync } = require('fs');
+const { promises: fs } = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const { env } = require('process');
+const tsj = require('ts-json-schema-generator');
 
 const MODE = env.NODE_ENV === 'development' ? 'development' : 'production';
 
@@ -79,10 +79,12 @@ const mainConfig = {
 		plugins: [
 			{
 				apply: (compiler) => {
-					compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
-						exec('ts-json-schema-generator -p src/settings/schema.ts -t Settings -c', (err, stdout, stderr) => {
-							writeFileSync('build/settings-schema.json', stdout);
-						});
+					compiler.hooks.afterEmit.tap('AfterEmitPlugin', async (compilation) => {
+						const schema = tsj.createGenerator({
+							path: 'src/settings/schema.ts',
+							skipTypeCheck: true,
+						}).createSchema('Settings');
+						await fs.writeFile('build/settings-schema.json', JSON.stringify(schema, null, 4));
 					});
 				}
 			},
