@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-'use strict'
-
-const { promises: fs } = require('fs');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
-const { env } = require('process');
-const tsj = require('ts-json-schema-generator');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+import { promises as fs } from 'fs';
+import * as HtmlWebpackPlugin from 'html-webpack-plugin';
+import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import * as path from 'path';
+import { env } from 'process';
+import * as tsj from 'ts-json-schema-generator';
+import { Compiler, Configuration } from 'webpack';
 
 const MODE = env.NODE_ENV === 'development' ? 'development' : 'production';
 
-const commonConfig = {
+const commonConfig: Configuration = {
 	mode: MODE,
 	node: {
 		__dirname: false,
@@ -42,9 +41,9 @@ const commonConfig = {
 							name: '[name].[ext]',
 							outputPath: path.join('ui', 'fonts'),
 							publicPath: 'fonts',
-						}
-					}
-				]
+						},
+					},
+				],
 			},
 			{
 				test: /\.css$/,
@@ -53,18 +52,18 @@ const commonConfig = {
 			{
 				test: /\.tsx?$/,
 				use: 'ts-loader',
-				exclude: /node_modules/
+				exclude: /node_modules/,
 			},
-		]
+		],
 	},
 	output: {
 		path: path.join(__dirname, 'build'),
-		filename: '[name].js'
+		filename: '[name].js',
 	},
 	resolve: {
-		extensions: [ '.js', '.ts', '.tsx' ]
+		extensions: ['.js', '.ts', '.tsx'],
 	},
-}
+};
 
 if (MODE === 'development') {
 	commonConfig.devtool = 'inline-source-map';
@@ -75,58 +74,64 @@ const mainConfig = {
 	...{
 		target: 'electron-main',
 		entry: {
-			index: path.join(__dirname, 'src', 'index.ts')
+			index: path.join(__dirname, 'src', 'index.ts'),
 		},
 		plugins: [
 			{
-				apply: (compiler) => {
-					compiler.hooks.afterEmit.tap('AfterEmitPlugin', async (compilation) => {
-						const schema = tsj.createGenerator({
-							path: 'src/settings/schema.ts',
-							skipTypeCheck: true,
-						}).createSchema('Settings');
-						await fs.writeFile('build/settings-schema.json', JSON.stringify(schema, null, 4));
+				apply: (compiler: Compiler) => {
+					compiler.hooks.afterEmit.tap('AfterEmitPlugin', async () => {
+						const schema = tsj
+							.createGenerator({
+								path: path.join('src', 'settings', 'schema.ts'),
+								skipTypeCheck: true,
+							})
+							.createSchema();
+						await fs.writeFile(
+							path.join('build', 'settings-schema.json'),
+							JSON.stringify(schema, null, 4),
+						);
 					});
-				}
+				},
 			},
-		]
-	}
-}
+		],
+	},
+};
 
 const rendererConfig = {
 	...commonConfig,
 	...{
 		target: 'electron-renderer',
 	},
-}
+};
 
-function createRendererConfig(...name) {
+function createRendererConfig(...name: string[]) {
 	return {
 		...rendererConfig,
 		...{
 			entry: {
 				[path.join(...name)]: path.join(__dirname, 'src', ...name) + '.ts',
 			},
-		}
-	}
+		},
+	};
 }
 
-function createRendererConfigUI(...name) {
+function createRendererConfigUI(...name: string[]) {
 	return {
 		...rendererConfig,
 		...{
 			entry: {
-				[path.join(...name)]: path.join(__dirname, 'src', 'ui', ...name) + '.tsx',
+				[path.join(...name)]:
+					path.join(__dirname, 'src', 'ui', ...name) + '.tsx',
 			},
 			plugins: [
 				new HtmlWebpackPlugin({
-					title: path.join(...name),  // TODO
+					title: path.join(...name), // TODO
 					filename: `${path.join('ui', ...name)}.html`,
 				}),
-				new MiniCssExtractPlugin({ filename: 'ui/[name].css' }),
+				new MiniCssExtractPlugin({ filename: path.join('ui', '[name].css') }),
 			],
-		}
-	}
+		},
+	};
 }
 
 module.exports = [
@@ -139,4 +144,4 @@ module.exports = [
 	createRendererConfigUI('file-selector-window'),
 	createRendererConfig('on-screen-keyboard', 'focus'),
 	mainConfig,
-]
+];
