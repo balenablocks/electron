@@ -1,6 +1,8 @@
 import * as _ from 'lodash';
 import * as React from 'react';
-import { Button, Table, TableColumn } from 'rendition';
+import Button from 'rendition/dist_esm5/components/Button';
+import Table from 'rendition/dist_esm5/components/Table';
+import { TableColumn } from 'rendition/dist_esm5/components/Table/TableRow';
 
 import { Partition, startWatching } from '../mounts';
 import { CloseableWindow, render } from './theme';

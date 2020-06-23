@@ -1,6 +1,6 @@
 import * as electron from 'electron';
 import * as React from 'react';
-import { Form } from 'rendition/dist/unstable';
+import Form from 'rendition/dist_esm5/unstable/components/Form';
 
 import { CloseableWindow, render } from './theme';
 

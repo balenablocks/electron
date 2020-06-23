@@ -17,7 +17,7 @@
 import * as debug_ from 'debug';
 import { dirname, relative } from 'path';
 import * as React from 'react';
-import { Button } from 'rendition';
+import Button from 'rendition/dist_esm5/components/Button';
 import { default as styled } from 'styled-components';
 
 import { Provider } from '../theme';
