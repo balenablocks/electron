@@ -38,22 +38,22 @@ interface FlexProps {
 
 const Flex = styled.div<FlexProps>`
 	display: flex;
-	flex: ${props => props.flex};
-	flex-direction: ${props => props.direction};
-	justify-content: ${props => props.justifyContent};
-	align-items: ${props => props.alignItems};
-	flex-wrap: ${props => props.wrap};
-	flex-grow: ${props => props.grow};
+	flex: ${(props) => props.flex};
+	flex-direction: ${(props) => props.direction};
+	justify-content: ${(props) => props.justifyContent};
+	align-items: ${(props) => props.alignItems};
+	flex-wrap: ${(props) => props.wrap};
+	flex-grow: ${(props) => props.grow};
 `;
 
 const ClickableFlex = styled.a<FlexProps>`
 	display: flex;
-	flex: ${props => props.flex};
-	flex-direction: ${props => props.direction};
-	justify-content: ${props => props.justifyContent};
-	align-items: ${props => props.alignItems};
-	flex-wrap: ${props => props.wrap};
-	flex-grow: ${props => props.grow};
+	flex: ${(props) => props.flex};
+	flex-direction: ${(props) => props.direction};
+	justify-content: ${(props) => props.justifyContent};
+	align-items: ${(props) => props.alignItems};
+	flex-wrap: ${(props) => props.wrap};
+	flex-grow: ${(props) => props.grow};
 `;
 
 interface FileListWrapProps {
@@ -136,7 +136,7 @@ const File = styled(UnstyledFile)<{ disabled: boolean }>`
 		line-height: 1;
 		margin-bottom: 6px;
 		font-size: 48px;
-		color: ${props =>
+		color: ${(props) =>
 			props.disabled ? colors.primary.faded : colors.soft.color};
 	}
 
@@ -247,11 +247,11 @@ export class FileList extends React.Component<FileListProps, FileListState> {
 	public render() {
 		let files = this.state.files;
 		if (!this.props.showHiddenFiles) {
-			files = files.filter(f => !f.isHidden);
+			files = files.filter((f) => !f.isHidden);
 		}
 		return (
 			<FileListWrap>
-				{files.map(file => {
+				{files.map((file) => {
 					return (
 						<File
 							key={file.path}

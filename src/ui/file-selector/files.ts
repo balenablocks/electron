@@ -74,10 +74,10 @@ function userCanListDirectory(stats: Stats): boolean {
 export async function readdir(dirPath$: string): Promise<FileEntry[]> {
 	const dirPath = resolve(dirPath$);
 	const fileNames = await readdirAsync(dirPath);
-	const filePaths = fileNames.map(name => join(dirPath, name));
+	const filePaths = fileNames.map((name) => join(dirPath, name));
 	const files: Array<FileEntry | undefined> = await map(
 		filePaths,
-		async filePath => {
+		async (filePath) => {
 			try {
 				const stats = await statAsync(filePath);
 				if (stats.isDirectory() && !userCanListDirectory(stats)) {
@@ -90,5 +90,7 @@ export async function readdir(dirPath$: string): Promise<FileEntry[]> {
 		},
 		{ concurrency: CONCURRENCY },
 	);
-	return (files.filter(f => f !== undefined) as FileEntry[]).sort(compareFiles);
+	return (files.filter((f) => f !== undefined) as FileEntry[]).sort(
+		compareFiles,
+	);
 }

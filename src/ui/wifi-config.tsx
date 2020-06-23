@@ -438,7 +438,7 @@ class WifiConfig extends React.Component<{}, WifiConfigState> {
 	}
 	private getAccessPointBySsid(ssid: string): AccessPointProps {
 		const device = this.state.Devices[0];
-		return device.AccessPoints.filter(ap => ap.Ssid.toString() === ssid)[0];
+		return device.AccessPoints.filter((ap) => ap.Ssid.toString() === ssid)[0];
 	}
 
 	private async addAndActivateConnection(
@@ -463,7 +463,7 @@ class WifiConfig extends React.Component<{}, WifiConfigState> {
 			<PasswordBox
 				label={`Please enter a passphrase for ${this.state.creatingConnection}`}
 				value=""
-				ok={async value => {
+				ok={async (value) => {
 					const ssid = this.state.creatingConnection as string;
 					await this.addAndActivateConnection(ssid, value);
 				}}

@@ -39,8 +39,8 @@ function unescapeHex(s: string): string {
 function parseProcMounts(data: string): MntEnt[] {
 	return data
 		.split('\n')
-		.filter(line => line.length > 0)
-		.map(line => line.split(' ').map(unescapeOctal))
+		.filter((line) => line.length > 0)
+		.map((line) => line.split(' ').map(unescapeOctal))
 		.map(([fsname, dir, type, opts, freq, passno]) => ({
 			fsname,
 			dir,
@@ -66,7 +66,7 @@ async function updateMounts(): Promise<boolean> {
 	const mounts = parseProcMounts(procMountsContents);
 	MOUNTS.clear();
 	await Promise.all(
-		mounts.map(async mount => {
+		mounts.map(async (mount) => {
 			const device = mount.fsname.startsWith('/dev/disk/')
 				? await resolveLink(mount.fsname)
 				: mount.fsname;
@@ -98,7 +98,7 @@ async function getLinkNames(
 		throw error;
 	}
 	await Promise.all(
-		links.map(async linkName => {
+		links.map(async (linkName) => {
 			const link = join(folder, linkName);
 			result.set(await resolveLink(link), linkName);
 		}),
@@ -129,7 +129,7 @@ async function listPartitions(
 		// Filter out drives that have a partition table:
 		if (
 			!isPartition(path) &&
-			pathsArray.find(p => p !== path && p.startsWith(path)) !== undefined
+			pathsArray.find((p) => p !== path && p.startsWith(path)) !== undefined
 		) {
 			continue;
 		}
@@ -245,9 +245,9 @@ async function cleanMountsRoot(): Promise<void> {
 		}
 		return;
 	}
-	const mounts = Array.from(MOUNTS.values()).map(mntent => mntent.dir);
+	const mounts = Array.from(MOUNTS.values()).map((mntent) => mntent.dir);
 	await Promise.all(
-		dirents.map(async dirent => {
+		dirents.map(async (dirent) => {
 			const path = join(MOUNTS_ROOT, dirent.name);
 			if (dirent.isDirectory() && !mounts.includes(path)) {
 				try {

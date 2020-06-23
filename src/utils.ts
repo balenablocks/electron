@@ -39,7 +39,7 @@ export class OrderedMap<TKey, TValue> {
 	}
 
 	public setOrder(order: TKey[]) {
-		this.order = order.filter(key => this.data.has(key));
+		this.order = order.filter((key) => this.data.has(key));
 		// TODO: add missing keys or throw an error
 	}
 

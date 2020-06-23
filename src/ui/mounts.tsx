@@ -24,7 +24,7 @@ class MountsWindow extends React.Component<{}, MountsState> {
 	}
 
 	private async init() {
-		const methods = await startWatching(partitions => {
+		const methods = await startWatching((partitions) => {
 			this.setState({ partitions });
 		});
 		this.setState({ methods });
@@ -58,19 +58,19 @@ class MountsWindow extends React.Component<{}, MountsState> {
 				field: 'info',
 				label: 'Label',
 				key: 'idFsLabel',
-				render: info => info.idFsLabel,
+				render: (info) => info.idFsLabel,
 			},
 			{
 				field: 'info',
 				label: 'UUID',
 				key: 'idFsUuid',
-				render: info => info.idFsUuid,
+				render: (info) => info.idFsUuid,
 			},
 			{
 				field: 'info',
 				label: 'Type',
 				key: 'idFstype',
-				render: info => info.idFsType,
+				render: (info) => info.idFsType,
 			},
 			{
 				field: 'mountpoint',

@@ -76,7 +76,7 @@ function init() {
 		// @ts-ignore
 		const originalInit = electron.BrowserWindow.prototype._init;
 		// @ts-ignore
-		electron.BrowserWindow.prototype._init = function() {
+		electron.BrowserWindow.prototype._init = function () {
 			originalInit.call(this);
 			this.setBounds({
 				x: 0,

@@ -42,7 +42,7 @@ class SettingsWindow extends React.Component<{}, SettingsState> {
 				hideSubmitButton
 				schema={this.state.schema}
 				value={this.state.data}
-				onFormChange={newState => {
+				onFormChange={(newState) => {
 					for (const key of Object.keys(newState.formData)) {
 						const oldValue = this.state.data[key];
 						const newValue = newState.formData[key];
