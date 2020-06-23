@@ -281,7 +281,10 @@ class WifiConfig extends React.Component<{}, WifiConfigState> {
 						Filename: null,
 					},
 					extraListeners: {
-						Updated: reloadSettings,
+						// Commented out as it leads to
+						// "The maximum number of pending replies per connection has been reached"
+						// errors on some systems
+						// Updated: reloadSettings,
 					},
 					extraInit: reloadSettings,
 				},
@@ -309,7 +312,10 @@ class WifiConfig extends React.Component<{}, WifiConfigState> {
 								Filename: null,
 							},
 							extraListeners: {
-								Updated: reloadSettings,
+								// Commented out as it leads to
+								// "The maximum number of pending replies per connection has been reached"
+								// errors on some systems
+								// Updated: reloadSettings,
 							},
 							extraInit: reloadSettings,
 						},
