@@ -7,6 +7,7 @@ import { Flex } from 'rendition/dist_esm5/components/Flex';
 import Heading from 'rendition/dist_esm5/components/Heading';
 import BaseProvider from 'rendition/dist_esm5/components/Provider';
 import { DefaultProps } from 'rendition/dist_esm5/common-types';
+import { default as styled } from 'styled-components';
 
 const theme = {
 	font: 'SourceSansPro',
@@ -16,15 +17,21 @@ export const Provider: React.FunctionComponent<DefaultProps> = (props) => (
 	<BaseProvider theme={theme} {...props} />
 );
 
+const StickyFlex = styled(Flex)`
+	position: sticky;
+	top: 0px;
+	background-color: white;
+`;
+
 export const CloseableWindow: React.FunctionComponent<{
 	title: string;
 }> = (props) => (
 	<Provider>
-		<Flex justifyContent="space-between">
+		<StickyFlex justifyContent="space-between" alignItems="center">
 			<Flex />
 			<Heading.h2>{props.title}</Heading.h2>
 			<Button onClick={window.close}>✖</Button>
-		</Flex>
+		</StickyFlex>
 		{props.children}
 	</Provider>
 );
