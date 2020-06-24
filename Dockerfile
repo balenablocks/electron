@@ -34,6 +34,8 @@ RUN \
 		xvfb \
 		# emojis (used on the wifi config page)
 		fonts-symbola \
+		# mount ntfs partitions
+		ntfs-3g \
 	&& rm -rf /var/lib/apt/lists/*
 COPY --from=builder /usr/src/app/build /usr/lib/balena-electronjs
 COPY .xserverrc /root/.xserverrc
