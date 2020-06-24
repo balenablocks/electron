@@ -1,4 +1,5 @@
 import * as electron from 'electron';
+import { env } from 'process';
 
 import { listPartitionsOnce, mount } from './mounts';
 import {
@@ -65,6 +66,7 @@ function init() {
 		const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
 		// delay required in order to have transparent windows
 		// https://github.com/electron/electron/issues/16809
+		const delay = env.BALENA_ELECTRONJS_OVERLAY_DELAY;
 		setTimeout(
 			() => {
 				createOverlayOpenButton('📡', 'wifi-config', 0, 0);
@@ -72,7 +74,7 @@ function init() {
 				createOverlayOpenButton('🖴', 'mounts', 120, 0);
 				createOverlaySleepButton(180, 0);
 			},
-			200, // TODO: constant
+			delay === undefined ? 200 : delay,
 		);
 		// _init exists on BrowserWindow's prototype
 		// @ts-ignore

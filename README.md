@@ -52,6 +52,7 @@ Watches and allows to mount / umount removable drives in
 | ---- | ----------- | ------------- |
 | `BALENA_ELECTRONJS_MOUNTS_ROOT` | Where the removable drives should be mounted| `/tmp/media` |
 | `BALENA_ELECTRONJS_CONSTRAINT_PATH` | Only files in this path will be accessible through the file picker |  |
+| `BALENA_ELECTRONJS_OVERLAY_DELAY` | Delay before showing the overlay icons | `200` |
 | `DBUS_SYSTEM_BUS_ADDRESS` | DBus address for communicating with NetworkManager | `unix:path=/host/run/dbus/system_bus_socket` |
 | `USE_XVFB` | Use `Xvfb` instead of `startx` if non empty |  |
 | `XVFB_RESOLUTION` | `Xvfb` resolution and color depth (only useful if `USE_XVFB` is set) | `1366x768x24` |
