@@ -22,41 +22,42 @@ function init() {
 		}
 	}
 
-	function createOverlayButton(
+	function createOverlayButton(url: string, x: number, y: number) {
+		const win = new BrowserWindow({
+			show: false,
+			focusable: false,
+			frame: false,
+			transparent: true,
+			width: 48,
+			height: 56,
+			webPreferences: {
+				nodeIntegration: true,
+			},
+			x,
+			y,
+		});
+		// Prevent white flash
+		win.on('ready-to-show', () => {
+			win.show();
+		});
+		win.loadURL(url);
+	}
+
+	function createOverlayOpenButton(
 		icon: string,
 		opens: WindowName,
 		x: number,
 		y: number,
 	) {
-		const win = new BrowserWindow({
-			focusable: false,
-			frame: false,
-			transparent: true,
-			width: 48,
-			height: 56,
-			webPreferences: {
-				nodeIntegration: true,
-			},
+		createOverlayButton(
+			uiUrl('open-window-overlay-icon', { icon, opens }),
 			x,
 			y,
-		});
-		win.loadURL(uiUrl('open-window-overlay-icon', { icon, opens }));
+		);
 	}
 
 	function createOverlaySleepButton(x: number, y: number) {
-		const win = new BrowserWindow({
-			focusable: false,
-			frame: false,
-			transparent: true,
-			width: 48,
-			height: 56,
-			webPreferences: {
-				nodeIntegration: true,
-			},
-			x,
-			y,
-		});
-		win.loadURL(uiUrl('sleep-overlay-icon', { icon: '💤' }));
+		createOverlayButton(uiUrl('sleep-overlay-icon', { icon: '💤' }), x, y);
 	}
 
 	function ready() {
@@ -66,9 +67,9 @@ function init() {
 		// https://github.com/electron/electron/issues/16809
 		setTimeout(
 			() => {
-				createOverlayButton('📡', 'wifi-config', 0, 0);
-				createOverlayButton('🔧', 'settings', 60, 0);
-				createOverlayButton('🖴', 'mounts', 120, 0);
+				createOverlayOpenButton('📡', 'wifi-config', 0, 0);
+				createOverlayOpenButton('🔧', 'settings', 60, 0);
+				createOverlayOpenButton('🖴', 'mounts', 120, 0);
 				createOverlaySleepButton(180, 0);
 			},
 			200, // TODO: constant
