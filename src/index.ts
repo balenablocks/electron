@@ -1,5 +1,6 @@
 import * as electron from 'electron';
 
+import { listPartitionsOnce, mount } from './mounts';
 import {
 	focusScript,
 	init as onScreenKeyboardInit,
@@ -125,4 +126,25 @@ electron.ipcMain.on('show-window', (_event: Event, name: WindowName) => {
 	} else {
 		win.focus();
 	}
+});
+
+electron.ipcMain.handle('mount-drive', async (_event, drivePath: string) => {
+	// Will mount all partitions of the drive
+	// drivePath is the name of the drive in /dev/disk/by-path
+	// something like pci-0000:00:14.0-usb-0:3.4.3:1.0-scsi-0:0:0:0
+	const partitions = await listPartitionsOnce();
+	await Promise.all(
+		Array.from(partitions.values()).map(async (partition) => {
+			if (
+				partition.mountpoint === undefined &&
+				partition.path.startsWith(drivePath)
+			) {
+				try {
+					await mount(partition);
+				} catch (error) {
+					console.error(error);
+				}
+			}
+		}),
+	);
 });

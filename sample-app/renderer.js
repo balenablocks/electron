@@ -19,6 +19,18 @@ document.getElementById('choose-file').onclick = async () => {
 	console.log('filePaths', filePaths, canceled);
 };
 
+document.getElementById('mount-drive-button').onclick = async () => {
+	try {
+		const result = await electron.ipcRenderer.invoke(
+			'mount-drive',
+			document.getElementById('mount-drive-input').value
+		);
+		console.log('mount-drive result', result);
+	} catch (error) {
+		console.log('mount-drive error', error);
+	}
+};
+
 async function renderForm(schema, data) {
 	const form = React.createElement(
 		Form,

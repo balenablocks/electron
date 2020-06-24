@@ -57,3 +57,11 @@ Watches and allows to mount / umount removable drives in
 | `XVFB_RESOLUTION` | `Xvfb` resolution and color depth (only useful if `USE_XVFB` is set) | `1366x768x24` |
 | `VNC_PASSWORD` | Vnc password, will start x11vnc if non empty |  |
 | `XRANDR_ROTATION` | Rotate the screen with `xrandr -o $XRANDR_ROTATION` |  |
+
+## Remote methods:
+
+Call them with `electron.ipcRenderer.invoke(methodName, ...parameters)` from any renderer process.
+
+| Name | Parameters | Description |
+| ---- | ---------- | ----------- |
+| `mount-drive` | `drivePath: string` | Mounts all partitions of the drive, `drivePath` is the name of the drive in `/dev/disk/by-path/` |
