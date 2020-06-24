@@ -2,9 +2,9 @@ import { ipcRenderer, OpenDialogOptions } from 'electron';
 import { env } from 'process';
 import { parse } from 'querystring';
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 
 import { FileSelector } from './file-selector/file-selector';
+import { render } from './theme';
 
 // Required for FileSelector icons (fa-folder, fa-file-alt, fa-hdd and fa-angle-left)
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -40,7 +40,7 @@ window.addEventListener('beforeunload', () => {
 	ipcRenderer.send('select-files', { canceled, filePaths });
 });
 
-ReactDOM.render(
+render(
 	<FileSelector
 		defaultPath={options.defaultPath || '/'}
 		buttonLabel={options.buttonLabel}
@@ -53,5 +53,4 @@ ReactDOM.render(
 		}}
 		constraintPath={env.BALENA_ELECTRONJS_CONSTRAINT_PATH}
 	/>,
-	document.body,
 );

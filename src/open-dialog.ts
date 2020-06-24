@@ -6,7 +6,7 @@ export function init(electron: typeof Electron) {
 	function createOpenDialogWindow(
 		options: Electron.OpenDialogOptions,
 	): Promise<Electron.OpenDialogReturnValue> {
-		return new Promise(resolve => {
+		return new Promise((resolve) => {
 			electron.ipcMain.once('select-files', (_event: Event, arg: any) => {
 				resolve(arg);
 			});

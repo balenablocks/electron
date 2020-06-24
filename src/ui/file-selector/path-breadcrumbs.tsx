@@ -16,7 +16,8 @@
 
 import { basename, join, parse } from 'path';
 import * as React from 'react';
-import * as rendition from 'rendition';
+import Button from 'rendition/dist_esm5/components/Button';
+import Txt from 'rendition/dist_esm5/components/Txt';
 import { default as styled } from 'styled-components';
 
 import { middleEllipsis } from './middle-ellipsis';
@@ -62,11 +63,11 @@ interface CrumbProps {
 class Crumb extends React.PureComponent<CrumbProps> {
 	public render() {
 		return (
-			<rendition.Button onClick={this.navigate.bind(this)} plain={true}>
-				<rendition.Txt bold={this.props.bold}>
+			<Button onClick={this.navigate.bind(this)} plain={true}>
+				<Txt bold={this.props.bold}>
 					{middleEllipsis(this.props.dir.name, FILENAME_CHAR_LIMIT_SHORT)}
-				</rendition.Txt>
-			</rendition.Button>
+				</Txt>
+			</Button>
 		);
 	}
 

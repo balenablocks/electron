@@ -6,13 +6,22 @@
 	</head>
 	<body>
 		<h1>Hello world!</h1>
-		We are using node <script>document.write(process.versions.node)</script>,
-		Chrome <script>document.write(process.versions.chrome)</script>,
-		and Electron <script>document.write(process.versions.electron)</script>.
-		<button id="choose-file">
-			Choose file
-		</button>
-		<input type="text" />
+		<p>
+			We are using node <script>document.write(process.versions.node)</script>,
+			Chrome <script>document.write(process.versions.chrome)</script>,
+			and Electron <script>document.write(process.versions.electron)</script>.
+		</p>
+		<p>
+			<button id="choose-file">
+				Choose file
+			</button>
+		</p>
+		<p>
+			<input type="text" id="mount-drive-input" />
+			<button id="mount-drive-button">
+				Mount this drive path
+			</button>
+		</p>
 		<h2>Balena electronjs settings</h2>
 		<div id="form-container"></div>
 		<p>1</p>

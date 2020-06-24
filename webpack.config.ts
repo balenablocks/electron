@@ -14,33 +14,27 @@
  * limitations under the License.
  */
 
-'use strict'
-
-const { exec } = require('child_process');
-const { writeFileSync } = require('fs');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
-const { env } = require('process');
+import { promises as fs } from 'fs';
+import * as HtmlWebpackPlugin from 'html-webpack-plugin';
+import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import * as path from 'path';
+import { env } from 'process';
+import * as tsj from 'ts-json-schema-generator';
+import { Compiler, Configuration } from 'webpack';
 
 const MODE = env.NODE_ENV === 'development' ? 'development' : 'production';
 
-const commonConfig = {
+const commonConfig: Configuration = {
 	mode: MODE,
+	optimization: {
+		usedExports: true,
+	},
 	node: {
 		__dirname: false,
 		__filename: false,
 	},
 	module: {
 		rules: [
-			{
-				test: /\.tsx?$/,
-				use: 'ts-loader',
-				exclude: /node_modules/
-			},
-			{
-				test: /\.css$/,
-				use: ['style-loader', 'css-loader'],
-			},
 			{
 				test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
 				use: [
@@ -50,20 +44,29 @@ const commonConfig = {
 							name: '[name].[ext]',
 							outputPath: path.join('ui', 'fonts'),
 							publicPath: 'fonts',
-						}
-					}
-				]
+						},
+					},
+				],
 			},
-		]
+			{
+				test: /\.css$/,
+				use: [MiniCssExtractPlugin.loader, 'css-loader'],
+			},
+			{
+				test: /\.tsx?$/,
+				use: 'ts-loader',
+				exclude: /node_modules/,
+			},
+		],
 	},
 	output: {
 		path: path.join(__dirname, 'build'),
-		filename: '[name].js'
+		filename: '[name].js',
 	},
 	resolve: {
-		extensions: [ '.js', '.ts', '.tsx' ]
+		extensions: ['.js', '.ts', '.tsx'],
 	},
-}
+};
 
 if (MODE === 'development') {
 	commonConfig.devtool = 'inline-source-map';
@@ -74,59 +77,67 @@ const mainConfig = {
 	...{
 		target: 'electron-main',
 		entry: {
-			index: path.join(__dirname, 'src', 'index.ts')
+			index: path.join(__dirname, 'src', 'index.ts'),
 		},
 		plugins: [
 			{
-				apply: (compiler) => {
-					compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
-						exec('ts-json-schema-generator -p src/settings/schema.ts -t Settings -c', (err, stdout, stderr) => {
-							writeFileSync('build/settings-schema.json', stdout);
-						});
+				apply: (compiler: Compiler) => {
+					compiler.hooks.afterEmit.tap('AfterEmitPlugin', async () => {
+						const schema = tsj
+							.createGenerator({
+								path: path.join('src', 'settings', 'schema.ts'),
+								skipTypeCheck: true,
+							})
+							.createSchema();
+						await fs.writeFile(
+							path.join('build', 'settings-schema.json'),
+							JSON.stringify(schema, null, 4),
+						);
 					});
-				}
+				},
 			},
-		]
-	}
-}
+		],
+	},
+};
 
 const rendererConfig = {
 	...commonConfig,
 	...{
 		target: 'electron-renderer',
 	},
-}
+};
 
-function createRendererConfig(...name) {
+function createRendererConfig(...name: string[]) {
 	return {
 		...rendererConfig,
 		...{
 			entry: {
 				[path.join(...name)]: path.join(__dirname, 'src', ...name) + '.ts',
 			},
-		}
-	}
+		},
+	};
 }
 
-function createRendererConfigUI(...name) {
+function createRendererConfigUI(...name: string[]) {
 	return {
 		...rendererConfig,
 		...{
 			entry: {
-				[path.join(...name)]: path.join(__dirname, 'src', 'ui', ...name) + '.tsx',
+				[path.join(...name)]:
+					path.join(__dirname, 'src', 'ui', ...name) + '.tsx',
 			},
 			plugins: [
 				new HtmlWebpackPlugin({
-					title: path.join(...name),  // TODO
+					title: path.join(...name), // TODO
 					filename: `${path.join('ui', ...name)}.html`,
 				}),
+				new MiniCssExtractPlugin({ filename: path.join('ui', '[name].css') }),
 			],
-		}
-	}
+		},
+	};
 }
 
 module.exports = [
-	createRendererConfigUI('sidebar'),
 	createRendererConfigUI('wifi-config'),
 	createRendererConfigUI('open-window-overlay-icon'),
 	createRendererConfigUI('sleep-overlay-icon'),
@@ -135,4 +146,4 @@ module.exports = [
 	createRendererConfigUI('file-selector-window'),
 	createRendererConfig('on-screen-keyboard', 'focus'),
 	mainConfig,
-]
+];

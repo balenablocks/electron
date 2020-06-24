@@ -39,8 +39,8 @@ function unescapeHex(s: string): string {
 function parseProcMounts(data: string): MntEnt[] {
 	return data
 		.split('\n')
-		.filter(line => line.length > 0)
-		.map(line => line.split(' ').map(unescapeOctal))
+		.filter((line) => line.length > 0)
+		.map((line) => line.split(' ').map(unescapeOctal))
 		.map(([fsname, dir, type, opts, freq, passno]) => ({
 			fsname,
 			dir,
@@ -66,11 +66,11 @@ async function updateMounts(): Promise<boolean> {
 	const mounts = parseProcMounts(procMountsContents);
 	MOUNTS.clear();
 	await Promise.all(
-		mounts.map(async mount => {
-			const device = mount.fsname.startsWith('/dev/disk/')
-				? await resolveLink(mount.fsname)
-				: mount.fsname;
-			MOUNTS.set(device, mount);
+		mounts.map(async (mnt) => {
+			const device = mnt.fsname.startsWith('/dev/disk/')
+				? await resolveLink(mnt.fsname)
+				: mnt.fsname;
+			MOUNTS.set(device, mnt);
 		}),
 	);
 	return true;
@@ -98,7 +98,7 @@ async function getLinkNames(
 		throw error;
 	}
 	await Promise.all(
-		links.map(async linkName => {
+		links.map(async (linkName) => {
 			const link = join(folder, linkName);
 			result.set(await resolveLink(link), linkName);
 		}),
@@ -120,27 +120,25 @@ async function updateLinks(): Promise<void> {
 	await getLinkNames(BY_PATH_DIR, LINKS);
 }
 
-async function listPartitions(
-	callback: (partitions: Map<string, Partition>) => void,
-): Promise<void> {
+async function listPartitions(): Promise<Map<string, Partition>> {
 	const pathsArray = Array.from(LINKS.values());
 	const partitions: Map<string, Partition> = new Map();
 	for (const [device, path] of LINKS.entries()) {
 		// Filter out drives that have a partition table:
 		if (
 			!isPartition(path) &&
-			pathsArray.find(p => p !== path && p.startsWith(path)) !== undefined
+			pathsArray.find((p) => p !== path && p.startsWith(path)) !== undefined
 		) {
 			continue;
 		}
-		const mount = MOUNTS.get(device);
+		const mnt = MOUNTS.get(device);
 		let mountpoint: string | undefined;
-		if (mount) {
+		if (mnt) {
 			// Filter out anything not in MOUNTS_ROOT
-			if (!isSubdir(MOUNTS_ROOT, mount.dir)) {
+			if (!isSubdir(MOUNTS_ROOT, mnt.dir)) {
 				continue;
 			}
-			mountpoint = mount.dir;
+			mountpoint = mnt.dir;
 		}
 		let info: Partial<UdevadmInfo>;
 		try {
@@ -158,7 +156,7 @@ async function listPartitions(
 		}
 		partitions.set(device, { path, device, mountpoint, info });
 	}
-	callback(partitions);
+	return partitions;
 }
 
 const UDEVADM_KEYS = [
@@ -213,26 +211,18 @@ function partitionMountpoint(partition: Partition): string {
 	return partitionLabel(partition).replace(/\//g, '∕');
 }
 
-async function _mount(
-	partition: Partition,
-	callback: PartitionsChangedCallback,
-): Promise<void> {
+async function _mount(partition: Partition): Promise<void> {
 	const mountpoint = join(MOUNTS_ROOT, partitionMountpoint(partition));
 	await fs.mkdir(mountpoint, { recursive: true });
 	await exec('mount', '-o', 'ro', partition.device, mountpoint);
-	await checkMounts(callback);
 }
 
-async function _umount(
-	partition: Partition,
-	callback: PartitionsChangedCallback,
-): Promise<void> {
-	const mount = MOUNTS.get(partition.device);
+async function _umount(partition: Partition): Promise<void> {
+	const mnt = MOUNTS.get(partition.device);
 	await exec('umount', partition.device);
-	if (mount !== undefined) {
-		await fs.rmdir(mount.dir);
+	if (mnt !== undefined) {
+		await fs.rmdir(mnt.dir);
 	}
-	await checkMounts(callback);
 }
 
 async function cleanMountsRoot(): Promise<void> {
@@ -245,9 +235,9 @@ async function cleanMountsRoot(): Promise<void> {
 		}
 		return;
 	}
-	const mounts = Array.from(MOUNTS.values()).map(mntent => mntent.dir);
+	const mounts = Array.from(MOUNTS.values()).map((mntent) => mntent.dir);
 	await Promise.all(
-		dirents.map(async dirent => {
+		dirents.map(async (dirent) => {
 			const path = join(MOUNTS_ROOT, dirent.name);
 			if (dirent.isDirectory() && !mounts.includes(path)) {
 				try {
@@ -263,13 +253,32 @@ async function cleanMountsRoot(): Promise<void> {
 async function checkMounts(callback: PartitionsChangedCallback): Promise<void> {
 	const mountsChanged = await updateMounts();
 	if (mountsChanged) {
-		await listPartitions(callback);
+		callback(await listPartitions());
 	}
 }
 
 type PartitionsChangedCallback = (partitions: Map<string, Partition>) => void;
 
 let isWatching = false;
+
+const mountsMutex = new Mutex();
+
+export async function listPartitionsOnce() {
+	return await mountsMutex.runExclusive(async () => {
+		await updateMounts();
+		await updateLinks();
+		await cleanMountsRoot();
+		return await listPartitions();
+	});
+}
+
+export async function mount(partition: Partition): Promise<void> {
+	await mountsMutex.runExclusive(_mount.bind(null, partition));
+}
+
+export async function umount(partition: Partition): Promise<void> {
+	await mountsMutex.runExclusive(_umount.bind(null, partition));
+}
 
 export async function startWatching(
 	callback: PartitionsChangedCallback,
@@ -282,19 +291,13 @@ export async function startWatching(
 		throw new Error('Already watching');
 	}
 	isWatching = true;
-	const mountsMutex = new Mutex();
 	const debouncedUpdateLinks = _.debounce(async () => {
 		await mountsMutex.runExclusive(async () => {
 			await updateLinks();
-			await listPartitions(callback);
+			callback(await listPartitions());
 		});
 	}, 200);
-	await mountsMutex.runExclusive(async () => {
-		await updateMounts();
-		await updateLinks();
-		await cleanMountsRoot();
-		await listPartitions(callback);
-	});
+	callback(await listPartitionsOnce());
 	const watcher = watch(
 		BY_PATH_DIR,
 		{ persistent: false },
@@ -306,19 +309,21 @@ export async function startWatching(
 		});
 	}, 500);
 
-	async function mount(partition: Partition): Promise<void> {
-		await mountsMutex.runExclusive(_mount.bind(null, partition, callback));
-	}
-
-	async function umount(partition: Partition): Promise<void> {
-		await mountsMutex.runExclusive(_umount.bind(null, partition, callback));
-	}
-
 	function stopWatching() {
 		watcher.close();
 		clearInterval(interval);
 		isWatching = false;
 	}
 
-	return { mount, umount, stopWatching };
+	return {
+		mount: async (partition) => {
+			await mount(partition);
+			await checkMounts(callback);
+		},
+		umount: async (partition) => {
+			await umount(partition);
+			await checkMounts(callback);
+		},
+		stopWatching,
+	};
 }

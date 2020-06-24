@@ -20,7 +20,7 @@ let focused: HTMLInputElement | HTMLTextAreaElement;
 
 document.addEventListener(
 	'focus',
-	e => {
+	(e) => {
 		if (
 			e.target !== null &&
 			((e.target instanceof HTMLInputElement &&
@@ -37,7 +37,7 @@ document.addEventListener(
 
 document.addEventListener(
 	'blur',
-	e => {
+	(e) => {
 		if (e.target === focused) {
 			ipcRenderer.send('input-blur');
 		}

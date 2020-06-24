@@ -1,5 +1,7 @@
 import * as electron from 'electron';
+import { env } from 'process';
 
+import { listPartitionsOnce, mount } from './mounts';
 import {
 	focusScript,
 	init as onScreenKeyboardInit,
@@ -21,41 +23,42 @@ function init() {
 		}
 	}
 
-	function createOverlayButton(
+	function createOverlayButton(url: string, x: number, y: number) {
+		const win = new BrowserWindow({
+			show: false,
+			focusable: false,
+			frame: false,
+			transparent: true,
+			width: 48,
+			height: 56,
+			webPreferences: {
+				nodeIntegration: true,
+			},
+			x,
+			y,
+		});
+		// Prevent white flash
+		win.on('ready-to-show', () => {
+			win.show();
+		});
+		win.loadURL(url);
+	}
+
+	function createOverlayOpenButton(
 		icon: string,
 		opens: WindowName,
 		x: number,
 		y: number,
 	) {
-		const win = new BrowserWindow({
-			focusable: false,
-			frame: false,
-			transparent: true,
-			width: 48,
-			height: 56,
-			webPreferences: {
-				nodeIntegration: true,
-			},
+		createOverlayButton(
+			uiUrl('open-window-overlay-icon', { icon, opens }),
 			x,
 			y,
-		});
-		win.loadURL(uiUrl('open-window-overlay-icon', { icon, opens }));
+		);
 	}
 
 	function createOverlaySleepButton(x: number, y: number) {
-		const win = new BrowserWindow({
-			focusable: false,
-			frame: false,
-			transparent: true,
-			width: 48,
-			height: 56,
-			webPreferences: {
-				nodeIntegration: true,
-			},
-			x,
-			y,
-		});
-		win.loadURL(uiUrl('sleep-overlay-icon', { icon: '💤' }));
+		createOverlayButton(uiUrl('sleep-overlay-icon', { icon: '💤' }), x, y);
 	}
 
 	function ready() {
@@ -63,20 +66,21 @@ function init() {
 		const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
 		// delay required in order to have transparent windows
 		// https://github.com/electron/electron/issues/16809
+		const delay = env.BALENA_ELECTRONJS_OVERLAY_DELAY;
 		setTimeout(
 			() => {
-				createOverlayButton('📡', 'wifi-config', 0, 0);
-				createOverlayButton('🔧', 'settings', 60, 0);
-				createOverlayButton('🖴', 'mounts', 120, 0);
+				createOverlayOpenButton('📡', 'wifi-config', 0, 0);
+				createOverlayOpenButton('🔧', 'settings', 60, 0);
+				createOverlayOpenButton('🖴', 'mounts', 120, 0);
 				createOverlaySleepButton(180, 0);
 			},
-			200, // TODO: constant
+			delay === undefined ? 200 : delay,
 		);
 		// _init exists on BrowserWindow's prototype
 		// @ts-ignore
 		const originalInit = electron.BrowserWindow.prototype._init;
 		// @ts-ignore
-		electron.BrowserWindow.prototype._init = function() {
+		electron.BrowserWindow.prototype._init = function () {
 			originalInit.call(this);
 			this.setBounds({
 				x: 0,
@@ -125,4 +129,25 @@ electron.ipcMain.on('show-window', (_event: Event, name: WindowName) => {
 	} else {
 		win.focus();
 	}
+});
+
+electron.ipcMain.handle('mount-drive', async (_event, drivePath: string) => {
+	// Will mount all partitions of the drive
+	// drivePath is the name of the drive in /dev/disk/by-path
+	// something like pci-0000:00:14.0-usb-0:3.4.3:1.0-scsi-0:0:0:0
+	const partitions = await listPartitionsOnce();
+	await Promise.all(
+		Array.from(partitions.values()).map(async (partition) => {
+			if (
+				partition.mountpoint === undefined &&
+				partition.path.startsWith(drivePath)
+			) {
+				try {
+					await mount(partition);
+				} catch (error) {
+					console.error(error);
+				}
+			}
+		}),
+	);
 });

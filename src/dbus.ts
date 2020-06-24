@@ -12,7 +12,7 @@ async function getAllProperties(
 	properties: DBusInterface,
 	iface: string,
 ): Promise<PropertyChange[]> {
-	return await fromCallback(callback => {
+	return await fromCallback((callback) => {
 		properties.GetAll(iface, callback);
 	});
 }
@@ -22,7 +22,7 @@ async function getInterface(
 	path: string,
 	iface: string,
 ): Promise<DBusInterface> {
-	return await fromCallback(callback => {
+	return await fromCallback((callback) => {
 		service.getInterface(path, iface, callback);
 	});
 }
@@ -30,7 +30,7 @@ async function getInterface(
 interface FieldDefinition {
 	interfaceName: string;
 	subtree: Dict<FieldDefinition | null>;
-	extraListeners?: Dict<(...args: any) => Promise<void>>;
+	extraListeners?: Dict<(...args: any[]) => Promise<void>>;
 	extraInit?: (o: DBusObjectNode) => Promise<void>;
 }
 
@@ -187,7 +187,9 @@ export class DBusObjectNode extends EventEmitter {
 								Array.from(oldValue.keys()),
 								keys,
 							);
-							const added: string[] = keys.filter(path => !oldValue.has(path));
+							const added: string[] = keys.filter(
+								(path) => !oldValue.has(path),
+							);
 							for (const path of removed) {
 								const item = oldValue.get(path);
 								if (item !== undefined) {
@@ -282,7 +284,7 @@ export class DBusObjectNode extends EventEmitter {
 		const result: Dict<any> = { path: this.path };
 		for (const [key, value] of Object.entries(this.state)) {
 			if (value instanceof OrderedMap) {
-				result[key] = Array.from(value.values()).map(o => o.dump());
+				result[key] = Array.from(value.values()).map((o) => o.dump());
 			} else if (value instanceof DBusObjectNode) {
 				result[key] = value.dump();
 			} else {

@@ -1,9 +1,11 @@
 import * as _ from 'lodash';
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { Button, Provider, Table, TableColumn } from 'rendition';
+import Button from 'rendition/dist_esm5/components/Button';
+import Table from 'rendition/dist_esm5/components/Table';
+import { TableColumn } from 'rendition/dist_esm5/components/Table/TableRow';
 
 import { Partition, startWatching } from '../mounts';
+import { CloseableWindow, render } from './theme';
 
 interface MountsState {
 	partitions: Map<string, Partition>;
@@ -24,7 +26,7 @@ class MountsWindow extends React.Component<{}, MountsState> {
 	}
 
 	private async init() {
-		const methods = await startWatching(partitions => {
+		const methods = await startWatching((partitions) => {
 			this.setState({ partitions });
 		});
 		this.setState({ methods });
@@ -57,20 +59,24 @@ class MountsWindow extends React.Component<{}, MountsState> {
 			{
 				field: 'info',
 				label: 'Label',
-				render: info => info.idFsLabel,
+				key: 'idFsLabel',
+				render: (info) => info.idFsLabel,
 			},
 			{
 				field: 'info',
 				label: 'UUID',
-				render: info => info.idFsUuid,
+				key: 'idFsUuid',
+				render: (info) => info.idFsUuid,
 			},
 			{
 				field: 'info',
 				label: 'Type',
-				render: info => info.idFsType,
+				key: 'idFstype',
+				render: (info) => info.idFsType,
 			},
 			{
 				field: 'mountpoint',
+				key: 'action',
 				label: 'Action',
 				render: (_mountpoint: string, partition: Partition) => {
 					if (this.state.methods === undefined) {
@@ -85,13 +91,11 @@ class MountsWindow extends React.Component<{}, MountsState> {
 			},
 		];
 		return (
-			<Provider>
-				<h1>Available partitions:</h1>
-				<button onClick={window.close}>Close</button>
+			<CloseableWindow title="Available partitions">
 				<Table columns={columns} data={this.getPartitions()}></Table>
-			</Provider>
+			</CloseableWindow>
 		);
 	}
 }
 
-ReactDOM.render(<MountsWindow />, document.body);
+render(<MountsWindow />);
