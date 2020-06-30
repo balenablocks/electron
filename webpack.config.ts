@@ -26,9 +26,6 @@ const MODE = env.NODE_ENV === 'development' ? 'development' : 'production';
 
 const commonConfig: Configuration = {
 	mode: MODE,
-	optimization: {
-		usedExports: true,
-	},
 	node: {
 		__dirname: false,
 		__filename: false,
