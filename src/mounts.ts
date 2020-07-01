@@ -225,6 +225,18 @@ async function _umount(partition: Partition): Promise<void> {
 	}
 }
 
+async function exists(path: string): Promise<boolean> {
+	try {
+		await fs.stat(path);
+		return true;
+	} catch (error) {
+		if (error.code === 'ENOENT') {
+			return false;
+		}
+		throw error;
+	}
+}
+
 async function cleanMountsRoot(): Promise<void> {
 	let dirents: Dirent[];
 	try {
@@ -235,15 +247,26 @@ async function cleanMountsRoot(): Promise<void> {
 		}
 		return;
 	}
-	const mounts = Array.from(MOUNTS.values()).map((mntent) => mntent.dir);
+	const mounts = new Map(
+		Array.from(MOUNTS.values()).map((mntent) => [mntent.dir, mntent.fsname]),
+	);
 	await Promise.all(
 		dirents.map(async (dirent) => {
 			const path = join(MOUNTS_ROOT, dirent.name);
-			if (dirent.isDirectory() && !mounts.includes(path)) {
-				try {
-					await fs.rmdir(path);
-				} catch (error) {
-					console.error(error);
+			if (dirent.isDirectory()) {
+				let remove = false;
+				const fsname = mounts.get(path);
+				if (fsname !== undefined && !(await exists(fsname))) {
+					await exec('umount', fsname);
+					remove = true;
+				}
+				remove = remove || fsname === undefined;
+				if (remove) {
+					try {
+						await fs.rmdir(path);
+					} catch (error) {
+						console.error(error);
+					}
 				}
 			}
 		}),
@@ -305,9 +328,10 @@ export async function startWatching(
 	);
 	const interval = setInterval(async () => {
 		await mountsMutex.runExclusive(async () => {
+			await cleanMountsRoot();
 			await checkMounts(callback);
 		});
-	}, 500);
+	}, 1000);
 
 	function stopWatching() {
 		watcher.close();
