@@ -33,6 +33,8 @@ RUN \
 		fonts-symbola \
 		# mount ntfs partitions
 		ntfs-3g \
+		# might be useful
+		jq \
 	&& rm -rf /var/lib/apt/lists/*
 COPY --from=builder /usr/src/app/build /usr/lib/balena-electronjs
 COPY .xserverrc /root/.xserverrc
