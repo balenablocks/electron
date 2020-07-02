@@ -10,7 +10,7 @@ import { env } from 'process';
 
 import { exec } from './utils';
 
-const MOUNTS_ROOT = env['BALENA_ELECTRONJS_MOUNTS_ROOT'] || '/tmp/media';
+const MOUNTS_ROOT = env['BALENAELECTRONJS_MOUNTS_ROOT'] || '/tmp/media';
 const BY_PATH_DIR = '/dev/disk/by-path';
 const MOUNTS: Map<string, MntEnt> = new Map();
 const LINKS: Map<string, string> = new Map();

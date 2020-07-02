@@ -51,6 +51,6 @@ render(
 			}
 			window.close();
 		}}
-		constraintPath={env.BALENA_ELECTRONJS_CONSTRAINT_PATH}
+		constraintPath={env.BALENAELECTRONJS_CONSTRAINT_PATH}
 	/>,
 );
