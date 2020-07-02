@@ -3,7 +3,7 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const Form = require('react-jsonschema-form').default;
 
-const SETTINGS = electron.remote.getGlobal('BALENA_ELECTRONJS_SETTINGS');
+const SETTINGS = electron.remote.getGlobal('BALENAELECTRONJS_SETTINGS');
 
 const currentWindow = electron.remote.getCurrentWindow()
 

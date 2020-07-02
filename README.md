@@ -35,7 +35,7 @@ Works by communicating with NetworkManager via DBus.
 ### File picker
 
 Replaces the default electron gtk file picker, can be constrained with
-`BALENA_ELECTRONJS_CONSTRAINT_PATH`.
+`BALENAELECTRONJS_CONSTRAINT_PATH`.
 
 ### On-screen keyboard
 
@@ -44,15 +44,15 @@ Replaces the default electron gtk file picker, can be constrained with
 ### Mounting / umounting of removable drives
 
 Watches and allows to mount / umount removable drives in
-`BALENA_ELECTRONJS_MOUNTS_ROOT`.
+`BALENAELECTRONJS_MOUNTS_ROOT`.
 
 ## Environment variables:
 
 | Name | Description | Default Value |
 | ---- | ----------- | ------------- |
-| `BALENA_ELECTRONJS_MOUNTS_ROOT` | Where the removable drives should be mounted| `/tmp/media` |
-| `BALENA_ELECTRONJS_CONSTRAINT_PATH` | Only files in this path will be accessible through the file picker |  |
-| `BALENA_ELECTRONJS_OVERLAY_DELAY` | Delay before showing the overlay icons | `200` |
+| `BALENAELECTRONJS_MOUNTS_ROOT` | Where the removable drives should be mounted| `/tmp/media` |
+| `BALENAELECTRONJS_CONSTRAINT_PATH` | Only files in this path will be accessible through the file picker |  |
+| `BALENAELECTRONJS_OVERLAY_DELAY` | Delay before showing the overlay icons | `200` |
 | `DBUS_SYSTEM_BUS_ADDRESS` | DBus address for communicating with NetworkManager | `unix:path=/host/run/dbus/system_bus_socket` |
 | `XRANDR_ROTATION` | Rotate the screen with `xrandr -o $XRANDR_ROTATION` |  |
 

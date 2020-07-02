@@ -10,7 +10,7 @@ interface SettingsState {
 }
 
 class SettingsWindow extends React.Component<{}, SettingsState> {
-	private settings = electron.remote.getGlobal('BALENA_ELECTRONJS_SETTINGS');
+	private settings = electron.remote.getGlobal('BALENAELECTRONJS_SETTINGS');
 
 	constructor(props: {}) {
 		super(props);

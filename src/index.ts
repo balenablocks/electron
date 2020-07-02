@@ -66,7 +66,7 @@ function init() {
 		const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
 		// delay required in order to have transparent windows
 		// https://github.com/electron/electron/issues/16809
-		const delay = env.BALENA_ELECTRONJS_OVERLAY_DELAY;
+		const delay = env.BALENAELECTRONJS_OVERLAY_DELAY;
 		setTimeout(
 			() => {
 				createOverlayOpenButton('📡', 'wifi-config', 0, 0);
@@ -101,9 +101,9 @@ function init() {
 	electron.app.on('ready', ready);
 
 	// @ts-ignore We're declaring a global that will be used in other projects that can't access balena-electronjs types
-	global.BALENA_ELECTRONJS_SETTINGS = new Settings();
+	global.BALENAELECTRONJS_SETTINGS = new Settings();
 	// @ts-ignore
-	screenSaverInit(global.BALENA_ELECTRONJS_SETTINGS);
+	screenSaverInit(global.BALENAELECTRONJS_SETTINGS);
 }
 
 if (!initialized) {
