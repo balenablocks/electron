@@ -2,7 +2,7 @@ FROM balenalib/amd64-debian-node:12.6-buster-build as builder
 WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm i
-COPY tsconfig.json webpack.config.ts ./
+COPY tsconfig.webpack.json tsconfig.json webpack.config.ts ./
 COPY src src/
 COPY typings typings/
 RUN npm run build
