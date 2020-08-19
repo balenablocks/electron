@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
-		"module": "commonjs",
+		"moduleResolution": "node",
+		"module": "es2015",
 		"outDir": "build",
 		"sourceMap": true,
 		"target": "es2019",

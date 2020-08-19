@@ -2,11 +2,13 @@ import './fonts.css';
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Button from 'rendition/dist_esm5/components/Button';
-import { Flex } from 'rendition/dist_esm5/components/Flex';
-import Heading from 'rendition/dist_esm5/components/Heading';
-import BaseProvider from 'rendition/dist_esm5/components/Provider';
-import { DefaultProps } from 'rendition/dist_esm5/common-types';
+import {
+	Button,
+	Flex,
+	Heading,
+	Provider as BaseProvider,
+	DefaultProps,
+} from 'rendition';
 import { default as styled } from 'styled-components';
 
 const theme = {
