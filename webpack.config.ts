@@ -51,8 +51,14 @@ const commonConfig: Configuration = {
 			},
 			{
 				test: /\.tsx?$/,
-				use: 'ts-loader',
-				exclude: /node_modules/,
+				use: [
+					{
+						loader: 'ts-loader',
+						options: {
+							configFile: 'tsconfig.webpack.json',
+						},
+					},
+				],
 			},
 		],
 	},

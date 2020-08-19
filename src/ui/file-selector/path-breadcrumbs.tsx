@@ -16,8 +16,7 @@
 
 import { basename, join, parse } from 'path';
 import * as React from 'react';
-import Button from 'rendition/dist_esm5/components/Button';
-import Txt from 'rendition/dist_esm5/components/Txt';
+import { Button, Txt } from 'rendition';
 import { default as styled } from 'styled-components';
 
 import { middleEllipsis } from './middle-ellipsis';

@@ -238,6 +238,7 @@ async function exists(path: string): Promise<boolean> {
 }
 
 async function cleanMountsRoot(): Promise<void> {
+	await fs.mkdir(MOUNTS_ROOT, { recursive: true });
 	let dirents: Dirent[];
 	try {
 		dirents = await fs.readdir(MOUNTS_ROOT, { withFileTypes: true });
