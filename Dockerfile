@@ -35,6 +35,8 @@ RUN \
 		ntfs-3g \
 		# might be useful
 		jq \
+		# for exposing --remote-debugging-port to other computers
+		simpleproxy \
 	&& rm -rf /var/lib/apt/lists/*
 COPY --from=builder /usr/src/app/build /usr/lib/balena-electronjs
 COPY .xserverrc /root/.xserverrc
