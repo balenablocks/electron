@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import Folder from '@fortawesome/fontawesome-free/svgs/solid/folder.svg';
+import FileAlt from '@fortawesome/fontawesome-free/svgs/solid/file-alt.svg';
 import * as debug_ from 'debug';
 import * as prettyBytes from 'pretty-bytes';
 import * as React from 'react';
@@ -84,8 +86,12 @@ interface FileProps {
 }
 
 class UnstyledFile extends React.PureComponent<FileProps> {
-	private static getFileIconClass(file: FileEntry) {
-		return file.isDirectory ? 'fas fa-folder' : 'fas fa-file-alt';
+	private static getFileIcon(file: FileEntry) {
+		return file.isDirectory ? (
+			<Folder height="48px" fill="currentColor" />
+		) : (
+			<FileAlt height="48px" fill="currentColor" />
+		);
 	}
 
 	private onHighlight(event: React.MouseEvent) {
@@ -110,7 +116,7 @@ class UnstyledFile extends React.PureComponent<FileProps> {
 				onClick={this.onHighlight.bind(this)}
 				onDoubleClick={this.onSelect.bind(this)}
 			>
-				<span className={UnstyledFile.getFileIconClass(file)} />
+				{UnstyledFile.getFileIcon(file)}
 				<span>{middleEllipsis(file.basename, FILENAME_CHAR_LIMIT)}</span>
 				<div>{file.isDirectory ? '' : prettyBytes(file.size || 0)}</div>
 			</ClickableFlex>

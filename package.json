@@ -26,7 +26,8 @@
   },
   "devDependencies": {
     "@balena/lint": "^5.1.0",
-    "@fortawesome/fontawesome-free": "^5.9.0",
+    "@fortawesome/fontawesome-free": "^5.14.0",
+    "@svgr/webpack": "^5.4.0",
     "@types/bluebird": "^3.5.29",
     "@types/debug": "^4.1.4",
     "@types/html-webpack-plugin": "^3.2.3",

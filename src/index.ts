@@ -23,14 +23,19 @@ function init() {
 		}
 	}
 
-	function createOverlayButton(url: string, x: number, y: number) {
+	function createOverlayButton(
+		url: string,
+		x: number,
+		y: number,
+		width?: number,
+	) {
 		const win = new BrowserWindow({
 			show: false,
 			focusable: false,
 			frame: false,
 			transparent: true,
-			width: 48,
-			height: 56,
+			width: width ?? 24,
+			height: 24,
 			webPreferences: {
 				nodeIntegration: true,
 			},
@@ -58,7 +63,7 @@ function init() {
 	}
 
 	function createOverlaySleepButton(x: number, y: number) {
-		createOverlayButton(uiUrl('sleep-overlay-icon', { icon: '💤' }), x, y);
+		createOverlayButton(uiUrl('sleep-overlay-icon'), x, y, 76);
 	}
 
 	function ready() {
@@ -69,10 +74,10 @@ function init() {
 		const delay = env.BALENAELECTRONJS_OVERLAY_DELAY;
 		setTimeout(
 			() => {
-				createOverlayOpenButton('📡', 'wifi-config', 0, 0);
-				createOverlayOpenButton('🔧', 'settings', 60, 0);
-				createOverlayOpenButton('🖴', 'mounts', 120, 0);
-				createOverlaySleepButton(180, 0);
+				createOverlaySleepButton(20, 13);
+				createOverlayOpenButton('📡', 'wifi-config', 114, 13);
+				createOverlayOpenButton('🔧', 'settings', 156, 13);
+				createOverlayOpenButton('🖴', 'mounts', 198, 13);
 			},
 			delay === undefined ? 200 : delay,
 		);
