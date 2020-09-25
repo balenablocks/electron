@@ -5,6 +5,7 @@ import { promisify } from 'util';
 
 import { DBusObjectNode } from '../dbus';
 import { CloseableWindow, render } from './theme';
+import { WifiIcon } from './wifi-icon';
 
 const SCAN_INTERVAL = 3000;
 const ALLOWED_SCAN_ERRORS = [
@@ -72,13 +73,14 @@ class AccessPoint extends React.PureComponent<AccessPointProps> {
 					{this.props.configured ? '⚙' : ''}
 					{passphraseRequired(this.props) ? '🔒' : ''}
 				</h1>
-				<h2>{this.props.Strength}%</h2>
+				<h2>
+					<WifiIcon percentage={this.props.Strength} disabled={false} />
+				</h2>
 				{this.props.createConnection !== undefined && (
 					<button
 						type="button"
 						onClick={() => {
-							// @ts-ignore
-							this.props.createConnection();
+							this.props.createConnection?.();
 						}}
 					>
 						Create and connect
@@ -88,8 +90,7 @@ class AccessPoint extends React.PureComponent<AccessPointProps> {
 					<button
 						type="button"
 						onClick={() => {
-							// @ts-ignore
-							this.props.connect();
+							this.props.connect?.();
 						}}
 					>
 						Connect
@@ -134,20 +135,17 @@ class WifiDevice extends React.PureComponent<WifiDeviceProps, {}> {
 			const createConnection = configured
 				? undefined
 				: () => {
-						// @ts-ignore
 						this.props.createConnection(ssid);
 				  };
 			const forgetConnection = configured
 				? () => {
-						// @ts-ignore
-						this.props.forgetConnection(configuredConnection.path);
+						this.props.forgetConnection(configuredConnection!.path);
 				  }
 				: undefined;
 			const connect =
 				configured && !active
 					? () => {
-							// @ts-ignore
-							this.props.connect(configuredConnection.path);
+							this.props.connect(configuredConnection!.path);
 					  }
 					: undefined;
 			const state = this.props.connectionStates.get(ssid);

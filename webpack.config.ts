@@ -147,6 +147,7 @@ function createRendererConfigUI(...name: string[]) {
 module.exports = [
 	createRendererConfigUI('wifi-config'),
 	createRendererConfigUI('open-window-overlay-icon'),
+	createRendererConfigUI('open-wifi-config'),
 	createRendererConfigUI('sleep-overlay-icon'),
 	createRendererConfigUI('settings'),
 	createRendererConfigUI('mounts'),

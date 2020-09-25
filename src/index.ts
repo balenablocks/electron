@@ -28,6 +28,7 @@ function init() {
 		x: number,
 		y: number,
 		width?: number,
+		height?: number,
 	) {
 		const win = new BrowserWindow({
 			show: false,
@@ -35,7 +36,7 @@ function init() {
 			frame: false,
 			transparent: true,
 			width: width ?? 24,
-			height: 24,
+			height: height ?? 24,
 			webPreferences: {
 				nodeIntegration: true,
 			},
@@ -75,7 +76,7 @@ function init() {
 		setTimeout(
 			() => {
 				createOverlaySleepButton(20, 13);
-				createOverlayOpenButton('📡', 'wifi-config', 114, 13);
+				createOverlayButton(uiUrl('open-wifi-config'), 114, 13, 24, 28);
 				createOverlayOpenButton('🔧', 'settings', 156, 13);
 				createOverlayOpenButton('🖴', 'mounts', 198, 13);
 			},
