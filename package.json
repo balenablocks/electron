@@ -51,7 +51,7 @@
     "pretty-bytes": "^5.2.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "rendition": "^17.0.1",
+    "rendition": "^18.10.0",
     "style-loader": "^0.23.1",
     "ts-json-schema-generator": "^0.70.1",
     "ts-loader": "^8.0.4",
