@@ -93,7 +93,6 @@ function init() {
 				}
 				const wifiPosition = getButtonPosition('wifi');
 				if (wifiPosition !== undefined) {
-					// @ts-ignore
 					createOverlayButton(
 						uiUrl('open-wifi-config'),
 						...wifiPosition,
