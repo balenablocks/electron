@@ -54,6 +54,10 @@ Watches and allows to mount / umount removable drives in
 | `BALENAELECTRONJS_CONSTRAINT_PATH` | Only files in this path will be accessible through the file picker |  |
 | `BALENAELECTRONJS_OVERLAY_DELAY` | Delay before showing the overlay icons | `200` |
 | `BALENAELECTRONJS_REMOTE_DEBUGGING_PORT` | Enable electron remote debugging on this port |  |
+| `BALENAELECTRONJS_SLEEP_BUTTON_POSITION` | Sleep button position: x,y |  |
+| `BALENAELECTRONJS_WIFI_BUTTON_POSITION` | Wifi button position: x,y |  |
+| `BALENAELECTRONJS_SETTINGS_BUTTON_POSITION` | Settings button position: x,y |  |
+| `BALENAELECTRONJS_MOUNTS_BUTTON_POSITION` | Mounts button position: x,y |  |
 | `DBUS_SYSTEM_BUS_ADDRESS` | DBus address for communicating with NetworkManager | `unix:path=/host/run/dbus/system_bus_socket` |
 | `XRANDR_ROTATION` | Rotate the screen with `xrandr -o $XRANDR_ROTATION` |  |
 
