@@ -1,7 +1,7 @@
 #!/bin/sh
 
-if [ -n "$XRANDR_ROTATION" ]; then
-	xrandr -o $XRANDR_ROTATION
+if [ -n "$XRANDR_ARGS" ]; then
+	xrandr $XRANDR_ARGS
 fi
 
 REMOTE_DEBUG=""
