@@ -1,31 +1,10 @@
-import { fromCallback } from 'bluebird';
-import { DBusInterface, DBusService, systemBus } from 'dbus-native';
+import { Variant, ClientInterface, ProxyObject, systemBus } from 'dbus-next';
 import { EventEmitter } from 'events';
 import * as _ from 'lodash';
-import { promisify } from 'util';
 
 import { Dict, OrderedMap } from './utils';
 
 const SYSTEM_BUS = systemBus();
-
-async function getAllProperties(
-	properties: DBusInterface,
-	iface: string,
-): Promise<PropertyChange[]> {
-	return await fromCallback((callback) => {
-		properties.GetAll(iface, callback);
-	});
-}
-
-async function getInterface(
-	service: DBusService,
-	path: string,
-	iface: string,
-): Promise<DBusInterface> {
-	return await fromCallback((callback) => {
-		service.getInterface(path, iface, callback);
-	});
-}
 
 interface FieldDefinition {
 	interfaceName: string;
@@ -34,32 +13,30 @@ interface FieldDefinition {
 	extraInit?: (o: DBusObjectNode) => Promise<void>;
 }
 
-type PropertyChange = [string, [{ type: string; child: any[] }, [any]]];
-
 export class DBusObjectNode extends EventEmitter {
 	private listener: (
 		interfaceName: string,
-		changes: PropertyChange[],
+		changes: Dict<Variant>,
 	) => Promise<void>;
-	private service: DBusService;
-	private propertiesInterface?: DBusInterface;
-	public iface?: DBusInterface;
+	private proxy: ProxyObject;
+	private propertiesInterface?: ClientInterface;
+	public iface?: ClientInterface;
 	public destroyed = false;
 	public readonly state: Dict<any> = {};
 	private extraListeners: Dict<(...args: any[]) => Promise<void>> = {};
 
 	public static async tryCreate(
-		serviceName: string,
+		name: string,
 		interfaceName: string,
 		path: string,
 		subtree: Dict<FieldDefinition | null>,
 		parent?: DBusObjectNode,
-		extraListeners?: Dict<(...args: any[]) => Promise<void>>,
+		extraListeners: Dict<(...args: any[]) => Promise<void>> = {},
 		extraInit?: (o: DBusObjectNode) => Promise<void>,
 	) {
 		try {
 			return await this.create(
-				serviceName,
+				name,
 				interfaceName,
 				path,
 				subtree,
@@ -70,11 +47,10 @@ export class DBusObjectNode extends EventEmitter {
 		} catch (error) {
 			if (
 				!(
-					(Array.isArray(error) &&
-						(error[0] === `No such interface “${interfaceName}”` ||
-							error[0] ===
-								`No such interface “${interfaceName}” on object at path ${path}`)) ||
-					error.message === 'No such interface found'
+					error.text === `No such interface “${interfaceName}”` ||
+					error.text ===
+						`No such interface “${interfaceName}” on object at path ${path}` ||
+					error.text === 'No such interface found'
 				)
 			) {
 				console.warn(
@@ -86,16 +62,16 @@ export class DBusObjectNode extends EventEmitter {
 	}
 
 	public static async create(
-		serviceName: string,
+		name: string,
 		interfaceName: string,
 		path: string,
 		subtree: Dict<FieldDefinition | null>,
 		parent?: DBusObjectNode,
-		extraListeners?: Dict<(...args: any[]) => Promise<void>>,
+		extraListeners: Dict<(...args: any[]) => Promise<void>> = {},
 		extraInit?: (o: DBusObjectNode) => Promise<void>,
 	) {
 		const obj = new DBusObjectNode(
-			serviceName,
+			name,
 			interfaceName,
 			path,
 			subtree,
@@ -108,19 +84,18 @@ export class DBusObjectNode extends EventEmitter {
 	}
 
 	private constructor(
-		public readonly serviceName: string,
+		public readonly name: string,
 		public readonly interfaceName: string,
 		public readonly path: string,
 		private subtree: Dict<FieldDefinition | null>,
 		private parent?: DBusObjectNode,
-		extraListeners?: Dict<(...args: any[]) => Promise<void>>,
+		extraListeners: Dict<(...args: any[]) => Promise<void>> = {},
 		private extraInit?: (o: DBusObjectNode) => Promise<void>,
 	) {
 		super();
-		this.service = SYSTEM_BUS.getService(serviceName);
 		this.listener = async (
 			_interfaceName: string,
-			changes: PropertyChange[],
+			changes: Dict<Variant>,
 		): Promise<void> => {
 			// TODO: 3rd arg: invalidated_properties
 			await this.parseProperties(changes);
@@ -133,21 +108,15 @@ export class DBusObjectNode extends EventEmitter {
 	}
 
 	private async init() {
-		this.propertiesInterface = await getInterface(
-			this.service,
-			this.path,
+		this.proxy = await SYSTEM_BUS.getProxyObject(this.name, this.path);
+		this.propertiesInterface = this.proxy.getInterface(
 			'org.freedesktop.DBus.Properties',
 		);
-		const properties = await getAllProperties(
-			this.propertiesInterface,
+		const properties = await this.propertiesInterface.GetAll(
 			this.interfaceName,
 		);
 		await this.parseProperties(properties);
-		this.iface = await getInterface(
-			this.service,
-			this.path,
-			this.interfaceName,
-		);
+		this.iface = await this.proxy.getInterface(this.interfaceName);
 		if (this.extraInit !== undefined) {
 			await this.extraInit(this);
 		}
@@ -163,16 +132,14 @@ export class DBusObjectNode extends EventEmitter {
 		if (this.propertiesInterface === undefined) {
 			return;
 		}
-		const setProperty = promisify(this.propertiesInterface.Set).bind(
-			this.propertiesInterface,
-		);
-		await setProperty(this.interfaceName, name, value);
+		await this.propertiesInterface.Set(this.interfaceName, name, value);
 	}
 
-	private async parseProperties(properties: PropertyChange[]) {
+	private async parseProperties(properties: Dict<Variant>) {
 		const newState: Dict<any> = {};
 		let hasNewData = false;
-		for (let [key, [, [value]]] of properties) {
+		for (const [key, variant] of Object.entries(properties)) {
+			let value = variant.value;
 			if (this.subtree.hasOwnProperty(key)) {
 				const def = this.subtree[key];
 				if (def !== null) {
@@ -200,7 +167,7 @@ export class DBusObjectNode extends EventEmitter {
 							await Promise.all(
 								added.map(async (path: string) => {
 									const item = await DBusObjectNode.tryCreate(
-										this.serviceName,
+										this.name,
 										def.interfaceName,
 										path,
 										def.subtree,
@@ -223,7 +190,7 @@ export class DBusObjectNode extends EventEmitter {
 							}
 							if (create) {
 								value = await DBusObjectNode.tryCreate(
-									this.serviceName,
+									this.name,
 									def.interfaceName,
 									value,
 									def.subtree,

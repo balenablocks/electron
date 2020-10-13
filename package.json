@@ -39,7 +39,7 @@
     "@types/webpack": "^4.41.17",
     "async-mutex": "^0.1.4",
     "css-loader": "^3.1.0",
-    "dbus-native": "^0.4.0",
+    "dbus-next": "^0.9.1",
     "debug": "^4.1.1",
     "electron": "^9.2.1",
     "file-loader": "^4.1.0",

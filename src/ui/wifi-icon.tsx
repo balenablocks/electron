@@ -6,6 +6,7 @@ const INACTIVE_COLOR = '#2f3033';
 export interface WifiIconProps {
 	percentage: number;
 	disabled: boolean;
+	style?: any; // TODO
 }
 
 type BarNumber = 1 | 2 | 3 | 4;
@@ -30,7 +31,7 @@ export class WifiIcon extends React.PureComponent<WifiIconProps> {
 
 	public render() {
 		return (
-			<svg width="28" height="24" viewBox="0 0 28 24">
+			<svg width="28" height="24" viewBox="0 0 28 24" style={this.props.style}>
 				<defs>
 					<path id="diagonal" d="M 0 22 L 26 0 L 28 2 L 2 24 Z" />
 					<mask id="diagonal-mask">
