@@ -8,7 +8,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^9.2.1"
+    "electron": "^9.3.2"
   },
   "dependencies": {
     "react": "^16.9.0",
