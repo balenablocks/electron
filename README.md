@@ -58,6 +58,7 @@ Watches and allows to mount / umount removable drives in
 | `BALENAELECTRONJS_WIFI_BUTTON_POSITION` | Wifi button position: x,y |  |
 | `BALENAELECTRONJS_SETTINGS_BUTTON_POSITION` | Settings button position: x,y |  |
 | `BALENAELECTRONJS_MOUNTS_BUTTON_POSITION` | Mounts button position: x,y |  |
+| `BALENAELECTRONJS_SCREENSAVER_COMMAND` | Shell command to run when the screensaver is triggered |  |
 | `DBUS_SYSTEM_BUS_ADDRESS` | DBus address for communicating with NetworkManager | `unix:path=/host/run/dbus/system_bus_socket` |
 | `XRANDR_ARGS` | Rotate the screen with `xrandr $XRANDR_ARGS`, example: "-o inverted -x" |  |
 
