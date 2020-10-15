@@ -33,7 +33,7 @@ const commonConfig: Configuration = {
 	module: {
 		rules: [
 			{
-				test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+				test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
 				use: [
 					{
 						loader: 'file-loader',
@@ -44,6 +44,10 @@ const commonConfig: Configuration = {
 						},
 					},
 				],
+			},
+			{
+				test: /\.svg$/,
+				use: '@svgr/webpack',
 			},
 			{
 				test: /\.css$/,
@@ -143,6 +147,7 @@ function createRendererConfigUI(...name: string[]) {
 module.exports = [
 	createRendererConfigUI('wifi-config'),
 	createRendererConfigUI('open-window-overlay-icon'),
+	createRendererConfigUI('open-wifi-config'),
 	createRendererConfigUI('sleep-overlay-icon'),
 	createRendererConfigUI('settings'),
 	createRendererConfigUI('mounts'),

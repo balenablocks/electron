@@ -6,9 +6,6 @@ import * as React from 'react';
 import { FileSelector } from './file-selector/file-selector';
 import { render } from './theme';
 
-// Required for FileSelector icons (fa-folder, fa-file-alt, fa-hdd and fa-angle-left)
-import '@fortawesome/fontawesome-free/css/all.css';
-
 // TODO: respect OpenDialogOptions:
 // * title
 // * filters

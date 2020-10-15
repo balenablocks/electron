@@ -1,15 +1,15 @@
-import { parse } from 'querystring';
+import Moon from '@fortawesome/fontawesome-free/svgs/regular/moon.svg';
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import { screenOff } from '../screensaver';
 import { OverlayIcon } from './overlay-icon';
 
-const { icon } = parse(window.location.search.substring(1));
-
 ReactDOM.render(
 	<OverlayIcon
-		icon={icon as string}
+		icon={<Moon height="1em" fill="#d3d6db" />}
+		text="Sleep"
 		onClick={() => {
 			screenOff();
 		}}

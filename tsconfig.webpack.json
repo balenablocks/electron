@@ -9,6 +9,7 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"strictNullChecks": true,
+		"allowSyntheticDefaultImports": true,
 		"jsx": "react"
 	}
 }

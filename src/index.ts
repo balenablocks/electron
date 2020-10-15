@@ -23,14 +23,20 @@ function init() {
 		}
 	}
 
-	function createOverlayButton(url: string, x: number, y: number) {
+	function createOverlayButton(
+		url: string,
+		x: number,
+		y: number,
+		width?: number,
+		height?: number,
+	) {
 		const win = new BrowserWindow({
 			show: false,
 			focusable: false,
 			frame: false,
 			transparent: true,
-			width: 48,
-			height: 56,
+			width: width ?? 24,
+			height: height ?? 24,
 			webPreferences: {
 				nodeIntegration: true,
 			},
@@ -58,8 +64,43 @@ function init() {
 	}
 
 	function createOverlaySleepButton(x: number, y: number) {
-		createOverlayButton(uiUrl('sleep-overlay-icon', { icon: '💤' }), x, y);
+		createOverlayButton(uiUrl('sleep-overlay-icon'), x, y, 76);
 	}
+
+	function getButtonPosition(
+		name: 'sleep' | 'wifi' | 'settings' | 'mounts',
+	): [number, number] | undefined {
+		const result = /^(\d+),(\d+)$/.exec(
+			env[`BALENAELECTRONJS_${name.toUpperCase()}_BUTTON_POSITION`] || '',
+		);
+		if (result !== null) {
+			const [, x, y] = result;
+			return [parseInt(x, 10), parseInt(y, 10)];
+		}
+	}
+
+	const windows: Map<WindowName, electron.BrowserWindow> = new Map();
+
+	electron.ipcMain.on('show-window', (_event: Event, name: WindowName) => {
+		let win = windows.get(name);
+		if (win === undefined || win.isDestroyed()) {
+			win = new BrowserWindow({
+				frame: false,
+				webPreferences: {
+					nodeIntegration: true,
+				},
+				transparent: true,
+				...getWindowRect(),
+			});
+			win.loadURL(uiUrl(name));
+			win.webContents.on('dom-ready', () => {
+				win?.webContents.executeJavaScript(focusScript);
+			});
+			windows.set(name, win);
+		} else {
+			win.focus();
+		}
+	});
 
 	function ready() {
 		onScreenKeyboardInit(electron);
@@ -69,10 +110,27 @@ function init() {
 		const delay = env.BALENAELECTRONJS_OVERLAY_DELAY;
 		setTimeout(
 			() => {
-				createOverlayOpenButton('📡', 'wifi-config', 0, 0);
-				createOverlayOpenButton('🔧', 'settings', 60, 0);
-				createOverlayOpenButton('🖴', 'mounts', 120, 0);
-				createOverlaySleepButton(180, 0);
+				const sleepPosition = getButtonPosition('sleep');
+				if (sleepPosition !== undefined) {
+					createOverlaySleepButton(...sleepPosition); // 20, 13
+				}
+				const wifiPosition = getButtonPosition('wifi');
+				if (wifiPosition !== undefined) {
+					createOverlayButton(
+						uiUrl('open-wifi-config'),
+						...wifiPosition,
+						24,
+						28,
+					); // 114, 13
+				}
+				const settingsPosition = getButtonPosition('settings');
+				if (settingsPosition !== undefined) {
+					createOverlayOpenButton('🔧', 'settings', ...settingsPosition); // 156, 13
+				}
+				const mountsPosition = getButtonPosition('mounts');
+				if (mountsPosition !== undefined) {
+					createOverlayOpenButton('🖴', 'mounts', ...mountsPosition); // 198, 13
+				}
 			},
 			delay === undefined ? 200 : delay,
 		);
@@ -113,23 +171,17 @@ if (!initialized) {
 
 export type WindowName = 'settings' | 'wifi-config' | 'mounts';
 
-const windows: Map<WindowName, electron.BrowserWindow> = new Map();
-
-electron.ipcMain.on('show-window', (_event: Event, name: WindowName) => {
-	let win = windows.get(name);
-	if (win === undefined || win.isDestroyed()) {
-		win = new electron.BrowserWindow({
-			frame: false, // TODO: needed?
-			webPreferences: {
-				nodeIntegration: true,
-			},
-		});
-		win.loadURL(uiUrl(name));
-		windows.set(name, win);
-	} else {
-		win.focus();
-	}
-});
+function getWindowRect() {
+	let { x, y, width, height } = electron.screen.getPrimaryDisplay().workArea;
+	const MARGIN_TOP = 50;
+	const MARGIN_BOTTOM = 10;
+	const MARGIN_LEFT = 10;
+	x += MARGIN_LEFT;
+	y += MARGIN_TOP;
+	width -= 2 * MARGIN_LEFT;
+	height -= MARGIN_TOP + MARGIN_BOTTOM;
+	return { x, y, width, height };
+}
 
 electron.ipcMain.handle('mount-drive', async (_event, drivePath: string) => {
 	// Will mount all partitions of the drive

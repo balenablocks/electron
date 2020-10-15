@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import AngleLeft from '@fortawesome/fontawesome-free/svgs/solid/angle-left.svg';
+import Hdd from '@fortawesome/fontawesome-free/svgs/solid/hdd.svg';
 import * as debug_ from 'debug';
 import { dirname, relative } from 'path';
 import * as React from 'react';
@@ -175,10 +177,10 @@ export class FileSelector extends React.PureComponent<
 						color={colors.primary.color}
 						onClick={this.navigateUp.bind(this)}
 					>
-						<span className="fas fa-angle-left" />
+						<AngleLeft height="1em" fill="currentColor" />
 						&nbsp;Back
 					</Button>
-					<span className="fas fa-hdd" />
+					<Hdd height="1em" fill="currentColor" />
 					<Breadcrumbs
 						path={this.state.path}
 						navigate={this.navigate.bind(this)}
