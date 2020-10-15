@@ -1,4 +1,4 @@
-import { execFile } from 'child_process';
+import * as childProcess from 'child_process';
 import { readFile, writeFile } from 'fs';
 import { stringify } from 'querystring';
 import { promisify } from 'util';
@@ -66,17 +66,21 @@ export class OrderedMap<TKey, TValue> {
 	}
 }
 
-export function exec(
+export function execFile(
 	...command: string[]
 ): Promise<{ stdout: string; stderr: string }> {
 	return new Promise((resolve, reject) => {
-		execFile(command[0], command.slice(1), (error, stdout, stderr) => {
-			if (error) {
-				reject(error);
-			} else {
-				resolve({ stdout, stderr });
-			}
-		});
+		childProcess.execFile(
+			command[0],
+			command.slice(1),
+			(error, stdout, stderr) => {
+				if (error) {
+					reject(error);
+				} else {
+					resolve({ stdout, stderr });
+				}
+			},
+		);
 	});
 }
 

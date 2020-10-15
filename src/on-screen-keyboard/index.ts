@@ -3,12 +3,12 @@ import * as Electron from 'electron';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
-import { exec } from '../utils';
+import { execFile } from '../utils';
 
 let keyboardVisible = false;
 
 async function setKeyboardVisibility(visible: boolean): Promise<void> {
-	await exec(
+	await execFile(
 		'dbus-send',
 		'--type=method_call',
 		'--dest=org.onboard.Onboard',

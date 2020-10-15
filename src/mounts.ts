@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 import { dirname, join, resolve, sep } from 'path';
 import { env } from 'process';
 
-import { exec } from './utils';
+import { execFile } from './utils';
 
 const MOUNTS_ROOT = env['BALENAELECTRONJS_MOUNTS_ROOT'] || '/tmp/media';
 const BY_PATH_DIR = '/dev/disk/by-path';
@@ -184,7 +184,7 @@ interface UdevadmInfo {
 }
 
 async function getUdevadmInfo(device: string): Promise<Partial<UdevadmInfo>> {
-	const { stdout } = await exec('udevadm', 'info', device);
+	const { stdout } = await execFile('udevadm', 'info', device);
 	const info: Partial<UdevadmInfo> = {};
 	for (const line of stdout.split('\n')) {
 		if (line.startsWith('E: ')) {
@@ -214,12 +214,12 @@ function partitionMountpoint(partition: Partition): string {
 async function _mount(partition: Partition): Promise<void> {
 	const mountpoint = join(MOUNTS_ROOT, partitionMountpoint(partition));
 	await fs.mkdir(mountpoint, { recursive: true });
-	await exec('mount', '-o', 'ro', partition.device, mountpoint);
+	await execFile('mount', '-o', 'ro', partition.device, mountpoint);
 }
 
 async function _umount(partition: Partition): Promise<void> {
 	const mnt = MOUNTS.get(partition.device);
-	await exec('umount', partition.device);
+	await execFile('umount', partition.device);
 	if (mnt !== undefined) {
 		await fs.rmdir(mnt.dir);
 	}
@@ -258,7 +258,7 @@ async function cleanMountsRoot(): Promise<void> {
 				let remove = false;
 				const fsname = mounts.get(path);
 				if (fsname !== undefined && !(await exists(fsname))) {
-					await exec('umount', fsname);
+					await execFile('umount', fsname);
 					remove = true;
 				}
 				remove = remove || fsname === undefined;
