@@ -5,6 +5,7 @@ RUN npm i
 COPY tsconfig.webpack.json tsconfig.json webpack.config.ts ./
 COPY src src/
 COPY typings typings/
+ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN npm run build
 
 FROM balenalib/amd64-debian-node:12.6-buster-run
