@@ -23,15 +23,22 @@ async function setSleepDelay(
 	}
 }
 
-async function setCustomScreensaverCommand(command: string): Promise<void> {
+async function setCustomScreensaverCommand(
+	onCommand?: string,
+	offCommand?: string,
+): Promise<void> {
 	const display = await createClient();
 	const root = display.screen[0].root;
 	const req = promisify(display.client.require).bind(display.client);
 	const ext = await req('screen-saver');
 	ext.SelectInput(root, ext.eventMask.Notify);
 	display.client.on('event', async (ev) => {
-		if (ev.name === 'ScreenSaverNotify' && ev.state === ext.NotifyState.Off) {
-			await exec(command);
+		if (ev.name === 'ScreenSaverNotify') {
+			if (ev.state === ext.NotifyState.On && onCommand !== undefined) {
+				await exec(onCommand);
+			} else if (ev.state === ext.NotifyState.Off && offCommand !== undefined) {
+				await exec(offCommand);
+			}
 		}
 	});
 }
@@ -44,8 +51,17 @@ export async function init(settings: Settings): Promise<void> {
 			setSleepDelay(value);
 		}
 	});
-	const { BALENAELECTRONJS_SCREENSAVER_COMMAND: command } = env;
-	if (command !== undefined) {
-		await setCustomScreensaverCommand(command);
+	const {
+		BALENAELECTRONJS_SCREENSAVER_ON_COMMAND: screensaverOnCommand,
+		BALENAELECTRONJS_SCREENSAVER_OFF_COMMAND: screensaverOffCommand,
+	} = env;
+	if (
+		screensaverOnCommand !== undefined ||
+		screensaverOffCommand !== undefined
+	) {
+		await setCustomScreensaverCommand(
+			screensaverOnCommand,
+			screensaverOffCommand,
+		);
 	}
 }
