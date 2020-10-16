@@ -370,10 +370,10 @@ class WifiConfig extends React.Component<{}, WifiConfigState> {
 		event: React.ChangeEvent<HTMLInputElement>,
 	) {
 		if (event.target) {
-			await this.networkManager.setProperty('WirelessEnabled', [
-				'b',
-				event.target.checked ? 1 : 0,
-			]);
+			await this.networkManager.setProperty(
+				'WirelessEnabled',
+				new Variant('b', event.target.checked ? 1 : 0),
+			);
 		}
 	}
 

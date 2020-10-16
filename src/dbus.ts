@@ -128,7 +128,7 @@ export class DBusObjectNode extends EventEmitter {
 		}
 	}
 
-	public async setProperty(name: string, value: [string, any]): Promise<void> {
+	public async setProperty(name: string, value: Variant): Promise<void> {
 		if (this.propertiesInterface === undefined) {
 			return;
 		}
