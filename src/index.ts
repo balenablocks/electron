@@ -119,8 +119,8 @@ function init() {
 					createOverlayButton(
 						uiUrl('open-wifi-config'),
 						...wifiPosition,
-						24,
 						28,
+						24,
 					); // 114, 13
 				}
 				const settingsPosition = getButtonPosition('settings');
