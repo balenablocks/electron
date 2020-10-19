@@ -4,6 +4,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {
 	Button,
+	FlexProps,
 	Flex,
 	Heading,
 	Provider as BaseProvider,
@@ -19,28 +20,47 @@ export const Provider: React.FunctionComponent<DefaultProps> = (props) => (
 	<BaseProvider theme={theme} {...props} />
 );
 
-const StickyFlex = styled(Flex)`
-	position: sticky;
-	top: 0px;
-	background-color: white;
-`;
-
 export const CloseableWindow: React.FunctionComponent<{
 	title: string;
 }> = (props) => (
-	<Provider>
-		<StickyFlex justifyContent="space-between" alignItems="center">
+	<OverlayWindow>
+		<Flex justifyContent="space-between" alignItems="center" height="50px">
 			<Flex />
 			<Heading.h2>{props.title}</Heading.h2>
 			<Button onClick={window.close}>✖</Button>
-		</StickyFlex>
-		{props.children}
-	</Provider>
+		</Flex>
+		<Flex
+			height="calc(100vh - 50px)"
+			width="100%"
+			flexDirection="column"
+			style={{ overflowY: 'auto' }}
+		>
+			{props.children}
+		</Flex>
+	</OverlayWindow>
+);
+
+const WithMargins = styled(Flex)(() => ({
+	marginTop: '50px',
+	marginLeft: '10px',
+	marginRight: '10px',
+	height: 'calc(100vh - 60px)',
+	backgroundColor: 'white',
+	borderRadius: '7px',
+	paddingLeft: '28px',
+	paddingRight: '28px',
+	paddingTop: '14px',
+	paddingBottom: '10px',
+	flexDirection: 'column' as const,
+	boxShadow: '0px 0px 7px 0px #666',
+}));
+
+export const OverlayWindow: React.FunctionComponent<FlexProps> = (props) => (
+	<BaseProvider theme={theme}>
+		<WithMargins {...props}>{props.children}</WithMargins>
+	</BaseProvider>
 );
 
 export function render(element: JSX.Element) {
-	ReactDOM.render(
-		element,
-		document.body.appendChild(document.createElement('div')),
-	);
+	ReactDOM.render(element, document.body);
 }

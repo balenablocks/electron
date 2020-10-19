@@ -22,7 +22,6 @@ import * as React from 'react';
 import { Button } from 'rendition';
 import { default as styled } from 'styled-components';
 
-import { Provider } from '../theme';
 import { colors } from './colors';
 import { FileList } from './file-list';
 import { FileEntry } from './files';
@@ -164,13 +163,7 @@ export class FileSelector extends React.PureComponent<
 
 	public render() {
 		return (
-			<Provider
-				style={{
-					display: 'flex',
-					height: 'calc(100vh - 20px)',
-					flexDirection: 'column',
-				}}
-			>
+			<>
 				<Header>
 					<Button
 						bg={colors.secondary.background}
@@ -215,7 +208,7 @@ export class FileSelector extends React.PureComponent<
 						{this.props.buttonLabel || 'Select file'}
 					</Button>
 				</Footer>
-			</Provider>
+			</>
 		);
 	}
 }
