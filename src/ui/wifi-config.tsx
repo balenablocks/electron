@@ -22,7 +22,7 @@ import TimesSvg from '@fortawesome/fontawesome-free/svgs/solid/times.svg';
 
 import { DBusObjectNode } from '../dbus';
 
-import { Provider, render } from './theme';
+import { OverlayWindow, render } from './theme';
 import { WifiIcon } from './wifi-icon';
 
 const SCAN_INTERVAL = 3000;
@@ -404,30 +404,18 @@ class WifiConfig extends React.Component<{}, WifiConfigState> {
 	}
 
 	public render() {
-		// TODO: avoid style
 		return (
-			<Provider>
-				<Flex
-					paddingLeft="28px"
-					paddingRight="28px"
-					paddingTop="14px"
-					paddingBottom="10px"
-					flexDirection="column"
-					height="100vh"
-					backgroundColor="white"
-					style={{ borderRadius: '7px' }}
-				>
-					{(() => {
-						if (this.state.creatingConnection !== undefined) {
-							return this.renderCreateConnection();
-						} else if (this.state.editingConnection !== undefined) {
-							return this.renderEditConnection(this.state.editingConnection);
-						} else {
-							return this.renderDevice();
-						}
-					})()}
-				</Flex>
-			</Provider>
+			<OverlayWindow>
+				{(() => {
+					if (this.state.creatingConnection !== undefined) {
+						return this.renderCreateConnection();
+					} else if (this.state.editingConnection !== undefined) {
+						return this.renderEditConnection(this.state.editingConnection);
+					} else {
+						return this.renderDevice();
+					}
+				})()}
+			</OverlayWindow>
 		);
 	}
 

@@ -15,6 +15,7 @@ export function init(electron: typeof Electron) {
 				webPreferences: {
 					nodeIntegration: true,
 				},
+				transparent: true,
 			});
 			win.loadURL(uiUrl('file-selector-window', options));
 		});

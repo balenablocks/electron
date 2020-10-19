@@ -90,7 +90,7 @@ function init() {
 					nodeIntegration: true,
 				},
 				transparent: true,
-				...getWindowRect(),
+				...electron.screen.getPrimaryDisplay().workArea,
 			});
 			win.loadURL(uiUrl(name));
 			win.webContents.on('dom-ready', () => {
@@ -170,18 +170,6 @@ if (!initialized) {
 }
 
 export type WindowName = 'settings' | 'wifi-config' | 'mounts';
-
-function getWindowRect() {
-	let { x, y, width, height } = electron.screen.getPrimaryDisplay().workArea;
-	const MARGIN_TOP = 50;
-	const MARGIN_BOTTOM = 10;
-	const MARGIN_LEFT = 10;
-	x += MARGIN_LEFT;
-	y += MARGIN_TOP;
-	width -= 2 * MARGIN_LEFT;
-	height -= MARGIN_TOP + MARGIN_BOTTOM;
-	return { x, y, width, height };
-}
 
 electron.ipcMain.handle('mount-drive', async (_event, drivePath: string) => {
 	// Will mount all partitions of the drive

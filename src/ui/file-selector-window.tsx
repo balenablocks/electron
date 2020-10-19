@@ -4,7 +4,7 @@ import { parse } from 'querystring';
 import * as React from 'react';
 
 import { FileSelector } from './file-selector/file-selector';
-import { render } from './theme';
+import { OverlayWindow, render } from './theme';
 
 // TODO: respect OpenDialogOptions:
 // * title
@@ -38,16 +38,18 @@ window.addEventListener('beforeunload', () => {
 });
 
 render(
-	<FileSelector
-		defaultPath={options.defaultPath || '/'}
-		buttonLabel={options.buttonLabel}
-		selectFiles={(files?: string[]) => {
-			if (files !== undefined) {
-				canceled = false;
-				filePaths = files;
-			}
-			window.close();
-		}}
-		constraintPath={env.BALENAELECTRONJS_CONSTRAINT_PATH}
-	/>,
+	<OverlayWindow>
+		<FileSelector
+			defaultPath={options.defaultPath || '/'}
+			buttonLabel={options.buttonLabel}
+			selectFiles={(files?: string[]) => {
+				if (files !== undefined) {
+					canceled = false;
+					filePaths = files;
+				}
+				window.close();
+			}}
+			constraintPath={env.BALENAELECTRONJS_CONSTRAINT_PATH}
+		/>
+	</OverlayWindow>,
 );
