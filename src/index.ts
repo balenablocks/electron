@@ -9,7 +9,7 @@ import {
 import { init as openDialogInit } from './open-dialog';
 import { init as screenSaverInit } from './screensaver';
 import { Settings } from './settings/settings';
-import { uiUrl } from './utils';
+import { Bounds, uiUrl } from './utils';
 
 let initialized = false;
 
@@ -23,31 +23,37 @@ function init() {
 		}
 	}
 
-	function createOverlayButton(
+	function createWindow(
 		url: string,
-		x: number,
-		y: number,
-		width?: number,
-		height?: number,
+		bounds?: Bounds,
+		extraOptions: electron.BrowserWindowConstructorOptions = {},
 	) {
 		const win = new BrowserWindow({
-			show: false,
-			focusable: false,
 			frame: false,
-			transparent: true,
-			width: width ?? 24,
-			height: height ?? 24,
+			show: false,
 			webPreferences: {
 				nodeIntegration: true,
 			},
-			x,
-			y,
+			transparent: true,
+			...(bounds ?? electron.screen.getPrimaryDisplay().workArea),
+			...extraOptions,
 		});
-		// Prevent white flash
+		// Prevent flash of white when the window is created
 		win.on('ready-to-show', () => {
 			win.show();
 		});
 		win.loadURL(url);
+		return win;
+	}
+
+	function createOverlayButton(
+		url: string,
+		x: number,
+		y: number,
+		width: number,
+		height: number,
+	) {
+		createWindow(url, { x, y, width, height }, { focusable: false });
 	}
 
 	function createOverlayOpenButton(
@@ -60,11 +66,13 @@ function init() {
 			uiUrl('open-window-overlay-icon', { icon, opens }),
 			x,
 			y,
+			24,
+			24,
 		);
 	}
 
 	function createOverlaySleepButton(x: number, y: number) {
-		createOverlayButton(uiUrl('sleep-overlay-icon'), x, y, 76);
+		createOverlayButton(uiUrl('sleep-overlay-icon'), x, y, 76, 24);
 	}
 
 	function getButtonPosition(
@@ -84,20 +92,7 @@ function init() {
 	electron.ipcMain.on('show-window', (_event: Event, name: WindowName) => {
 		let win = windows.get(name);
 		if (win === undefined || win.isDestroyed()) {
-			win = new BrowserWindow({
-				frame: false,
-				show: false,
-				webPreferences: {
-					nodeIntegration: true,
-				},
-				transparent: true,
-				...electron.screen.getPrimaryDisplay().workArea,
-			});
-			// Prevent flash of white when the window is created
-			win.on('ready-to-show', () => {
-				win!.show();
-			});
-			win.loadURL(uiUrl(name));
+			win = createWindow(uiUrl(name));
 			win.webContents.on('dom-ready', () => {
 				win?.webContents.executeJavaScript(focusScript);
 			});
@@ -160,7 +155,7 @@ function init() {
 	// @ts-ignore
 	BrowserWindow.prototype._init = electron.BrowserWindow.prototype._init;
 
-	openDialogInit(electron);
+	openDialogInit(electron, createWindow);
 	electron.app.on('ready', ready);
 
 	// @ts-ignore We're declaring a global that will be used in other projects that can't access balena-electronjs types
