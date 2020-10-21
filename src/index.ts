@@ -13,6 +13,11 @@ import { Bounds, uiUrl } from './utils';
 
 let initialized = false;
 
+function getZoomFactor(): number {
+	const result = parseFloat(env.BALENAELECTRONJS_ZOOM_FACTOR ?? '');
+	return isNaN(result) ? 1 : result;
+}
+
 function init() {
 	const originalBrowserWindow = electron.BrowserWindow;
 
@@ -28,6 +33,15 @@ function init() {
 		bounds?: Bounds,
 		extraOptions: electron.BrowserWindowConstructorOptions = {},
 	) {
+		const zoomFactor = getZoomFactor();
+		if (bounds !== undefined) {
+			bounds = {
+				x: Math.round(bounds.x * zoomFactor),
+				y: Math.round(bounds.y * zoomFactor),
+				width: Math.ceil(bounds.width * zoomFactor),
+				height: Math.ceil(bounds.height * zoomFactor),
+			};
+		}
 		const win = new BrowserWindow({
 			frame: false,
 			show: false,
@@ -40,6 +54,7 @@ function init() {
 		});
 		// Prevent flash of white when the window is created
 		win.on('ready-to-show', () => {
+			win.webContents.setZoomFactor(zoomFactor);
 			win.show();
 		});
 		win.loadURL(url);

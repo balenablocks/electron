@@ -60,6 +60,7 @@ Watches and allows to mount / umount removable drives in
 | `BALENAELECTRONJS_MOUNTS_BUTTON_POSITION` | Mounts button position: x,y |  |
 | `BALENAELECTRONJS_SCREENSAVER_ON_COMMAND` | Shell command to run when the screensaver is turned on |  |
 | `BALENAELECTRONJS_SCREENSAVER_OFF_COMMAND` | Shell command to run when the screensaver is turned off |  |
+| `BALENAELECTRONJS_ZOOM_FACTOR` | Zoom factor for overlay windows size and position | `1` |
 | `DBUS_SYSTEM_BUS_ADDRESS` | DBus address for communicating with NetworkManager | `unix:path=/host/run/dbus/system_bus_socket` |
 | `XRANDR_ARGS` | Rotate the screen with `xrandr $XRANDR_ARGS`, example: "-o inverted -x" |  |
 
