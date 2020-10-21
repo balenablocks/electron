@@ -1,8 +1,15 @@
 import * as Electron from 'electron';
 
-import { uiUrl } from './utils';
+import { Bounds, uiUrl } from './utils';
 
-export function init(electron: typeof Electron) {
+export function init(
+	electron: typeof Electron,
+	createWindow: (
+		url: string,
+		bounds?: Bounds,
+		extraOptions?: Electron.BrowserWindowConstructorOptions,
+	) => Electron.BrowserWindow,
+) {
 	function createOpenDialogWindow(
 		options: Electron.OpenDialogOptions,
 	): Promise<Electron.OpenDialogReturnValue> {
@@ -10,14 +17,7 @@ export function init(electron: typeof Electron) {
 			electron.ipcMain.once('select-files', (_event: Event, arg: any) => {
 				resolve(arg);
 			});
-			const win = new electron.BrowserWindow({
-				frame: false,
-				webPreferences: {
-					nodeIntegration: true,
-				},
-				transparent: true,
-			});
-			win.loadURL(uiUrl('file-selector-window', options));
+			createWindow(uiUrl('file-selector-window', options));
 		});
 	}
 

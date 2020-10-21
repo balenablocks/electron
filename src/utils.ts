@@ -105,3 +105,10 @@ export function uiUrl(page: string, params: Dict<any> = {}): string {
 	const qs = Object.keys(params).length ? '?' + stringify(params) : '';
 	return `file://${__dirname}/ui/${page}.html${qs}`;
 }
+
+export interface Bounds {
+	x: number;
+	y: number;
+	width: number;
+	height: number;
+}
