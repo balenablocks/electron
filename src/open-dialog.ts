@@ -12,10 +12,15 @@ export function init(electron: typeof Electron) {
 			});
 			const win = new electron.BrowserWindow({
 				frame: false,
+				show: false,
 				webPreferences: {
 					nodeIntegration: true,
 				},
 				transparent: true,
+			});
+			// Prevent flash of white when the window is created
+			win.on('ready-to-show', () => {
+				win.show();
 			});
 			win.loadURL(uiUrl('file-selector-window', options));
 		});

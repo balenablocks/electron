@@ -86,11 +86,16 @@ function init() {
 		if (win === undefined || win.isDestroyed()) {
 			win = new BrowserWindow({
 				frame: false,
+				show: false,
 				webPreferences: {
 					nodeIntegration: true,
 				},
 				transparent: true,
 				...electron.screen.getPrimaryDisplay().workArea,
+			});
+			// Prevent flash of white when the window is created
+			win.on('ready-to-show', () => {
+				win!.show();
 			});
 			win.loadURL(uiUrl(name));
 			win.webContents.on('dom-ready', () => {
