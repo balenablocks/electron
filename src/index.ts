@@ -47,6 +47,7 @@ function init() {
 			show: false,
 			webPreferences: {
 				nodeIntegration: true,
+				enableRemoteModule: true,
 			},
 			transparent: true,
 			...(bounds ?? electron.screen.getPrimaryDisplay().workArea),
