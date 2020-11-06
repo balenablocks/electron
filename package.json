@@ -1,6 +1,6 @@
 {
   "name": "balena-electronjs",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Kiosk mode for electron apps",
   "main": "build/index.js",
   "scripts": {
