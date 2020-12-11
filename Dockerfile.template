@@ -34,8 +34,6 @@ RUN \
 		fonts-symbola \
 		# mount ntfs partitions
 		ntfs-3g \
-		# might be useful
-		jq \
 		# for exposing --remote-debugging-port to other computers
 		simpleproxy \
 	&& rm -rf /var/lib/apt/lists/*
