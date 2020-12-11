@@ -1,14 +1,14 @@
-FROM balenalib/amd64-debian-node:12.6-buster-build as builder
+FROM balenalib/%%BALENA_ARCH%%-debian-node:12.6-buster-build as builder
 WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm i
 COPY tsconfig.webpack.json tsconfig.json webpack.config.ts ./
 COPY src src/
 COPY typings typings/
-ENV NODE_OPTIONS="--max-old-space-size=4096"
+ENV NODE_OPTIONS="--max-old-space-size=3072"
 RUN npm run build
 
-FROM balenalib/amd64-debian-node:12.6-buster-run
+FROM balenalib/%%BALENA_ARCH%%-debian-node:12.6-buster-run
 RUN \
 	apt-get update \
 	&& apt-get install -y \
