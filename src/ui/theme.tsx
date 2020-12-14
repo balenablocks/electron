@@ -8,7 +8,6 @@ import {
 	Flex,
 	Heading,
 	Provider as BaseProvider,
-	DefaultProps,
 } from 'rendition';
 import { default as styled } from 'styled-components';
 
@@ -16,7 +15,7 @@ const theme = {
 	font: 'SourceSansPro',
 };
 
-export const Provider: React.FunctionComponent<DefaultProps> = (props) => (
+export const Provider: React.FunctionComponent = (props) => (
 	<BaseProvider theme={theme} {...props} />
 );
 
