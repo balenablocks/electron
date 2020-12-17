@@ -1,14 +1,30 @@
-FROM balenalib/amd64-debian-node:12.6-buster-build as builder
+FROM balenalib/%%BALENA_ARCH%%-debian-node:12.6-buster-build as builder
+
+RUN apt-get update
+RUN apt-get install libx11-dev libxss-dev libxss1
+
+# Build clicklock
+WORKDIR /usr/src/clicklock
+RUN git clone https://github.com/zpfvo/clicklock.git .
+RUN git checkout 5da48f70f90883f8a966f50f75e494e8f18adc95
+RUN autoreconf --force --install
+RUN ./configure
+RUN make
+
 WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm i
 COPY tsconfig.webpack.json tsconfig.json webpack.config.ts ./
 COPY src src/
 COPY typings typings/
-ENV NODE_OPTIONS="--max-old-space-size=4096"
+ENV NODE_OPTIONS="--max-old-space-size=3072"
 RUN npm run build
 
-FROM balenalib/amd64-debian-node:12.6-buster-run
+FROM balenalib/%%BALENA_ARCH%%-debian-node:12.6-buster-run
+
+# clicklock
+COPY --from=builder /usr/src/clicklock/clicklock /usr/bin/clicklock
+
 RUN \
 	apt-get update \
 	&& apt-get install -y \
@@ -34,8 +50,6 @@ RUN \
 		fonts-symbola \
 		# mount ntfs partitions
 		ntfs-3g \
-		# might be useful
-		jq \
 		# for exposing --remote-debugging-port to other computers
 		simpleproxy \
 	&& rm -rf /var/lib/apt/lists/*
