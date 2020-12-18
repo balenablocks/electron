@@ -65,6 +65,7 @@ Watches and allows to mount / umount removable drives in
 | `BALENAELECTRONJS_SCREENSAVER_ON_COMMAND` | Shell command to run when the screensaver is turned on |  |
 | `BALENAELECTRONJS_SCREENSAVER_OFF_COMMAND` | Shell command to run when the screensaver is turned off |  |
 | `BALENAELECTRONJS_UPDATES_ONLY_DURING_SCREENSAVER` | Only allows application updates to happen while the screensaver is on if set |  |
+| `BALENAELECTRONJS_SCREENSAVER_DELAY_OVERRIDE` | Overrides the screensaver delay from the settings: number in minutes or 'never' |  |
 | `BALENAELECTRONJS_ZOOM_FACTOR` | Zoom factor for overlay windows size and position | `1` |
 | `DBUS_SYSTEM_BUS_ADDRESS` | DBus address for communicating with NetworkManager | `unix:path=/host/run/dbus/system_bus_socket` |
 | `XRANDR_ARGS` | Rotate the screen with `xrandr $XRANDR_ARGS`, example: "-o inverted -x" |  |
