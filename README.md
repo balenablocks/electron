@@ -11,11 +11,15 @@ Provides stuff that may be missing when running electron apps in kiosk mode
  * an on-screen keyboard (onboard)
  * a dialog for mounting / umounting removable drives
 
-## How
+## Building
 
- * Build this project's docker image `docker build -t bejs .`;
- * In your electron app project create a Dockerfile that uses the image you
-   built above: `FROM bejs`;
+ Build and upload this project's docker images `./image-builder.sh`;
+
+## Using
+
+ * In your electron app project create a Dockerfile that uses this
+ project: `FROM balenablocks/aarch64-balena-electron-env`,
+ replace `aarch64` with the architecture you need (`aarch64`, `armv7hf` or `amd64`);
  * Put your electron app in `/usr/src/app` in this Dockerfile.
 
 This works by running a window manager (`metacity` for now), `dbus`, an
@@ -71,3 +75,8 @@ Call them with `electron.ipcRenderer.invoke(methodName, ...parameters)` from any
 | Name | Parameters | Description |
 | ---- | ---------- | ----------- |
 | `mount-drive` | `drivePath: string` | Mounts all partitions of the drive, `drivePath` is the name of the drive in `/dev/disk/by-path/` |
+
+
+## Utilities
+
+ * [clickclock](https://github.com/zpfvo/clicklock) is available in `/usr/bin/clicklock`
