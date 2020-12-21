@@ -175,9 +175,8 @@ function init() {
 	electron.app.on('ready', ready);
 
 	// @ts-ignore We're declaring a global that will be used in other projects that can't access balena-electronjs types
-	global.BALENAELECTRONJS_SETTINGS = new Settings();
-	// @ts-ignore
-	screenSaverInit(global.BALENAELECTRONJS_SETTINGS);
+	global.BALENAELECTRONJS_SETTINGS = Settings.getInstance();
+	screenSaverInit();
 }
 
 if (!initialized) {

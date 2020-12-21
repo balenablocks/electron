@@ -14,13 +14,14 @@ const {
 } = env;
 
 const createClient = promisify(x11.createClient);
+const settings = Settings.getInstance();
 
 export async function screenOff(): Promise<void> {
 	await execFile('xset', 'dpms', 'force', 'off');
 }
 
-async function setSleepDelay(value: string): Promise<void> {
-	value = screensaverDelayOverride ?? value;
+async function setSleepDelay(): Promise<void> {
+	const value = screensaverDelayOverride ?? (await settings.get('sleepDelay'));
 	if (value === 'never') {
 		await execFile('xset', 's', 'off', '-dpms');
 	} else {
@@ -65,12 +66,11 @@ async function setScreensaverHooks(): Promise<void> {
 	});
 }
 
-export async function init(settings: Settings): Promise<void> {
-	const sleepDelay = await settings.get('sleepDelay');
-	await setSleepDelay(sleepDelay);
-	settings.on('change', (key, value) => {
+export async function init(): Promise<void> {
+	await setSleepDelay();
+	settings.on('change', (key) => {
 		if (key === 'sleepDelay') {
-			setSleepDelay(value);
+			setSleepDelay();
 		}
 	});
 	await setScreensaverHooks();
