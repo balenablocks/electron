@@ -1,3 +1,4 @@
+import * as electron from 'electron';
 import { env } from 'process';
 import { promisify } from 'util';
 import * as x11 from 'x11';
@@ -14,18 +15,25 @@ const {
 } = env;
 
 const createClient = promisify(x11.createClient);
-const settings = Settings.getInstance();
 
 export async function screenOff(): Promise<void> {
 	await execFile('xset', 'dpms', 'force', 'off');
 }
 
-async function setSleepDelay(): Promise<void> {
-	const value = screensaverDelayOverride ?? (await settings.get('sleepDelay'));
+let screensaverDisabled = false;
+
+async function setSleepDelay(value?: string): Promise<void> {
+	if (screensaverDisabled) {
+		return;
+	}
+	value =
+		value ??
+		screensaverDelayOverride ??
+		(await Settings.getInstance().get('sleepDelay'));
 	if (value === 'never') {
 		await execFile('xset', 's', 'off', '-dpms');
 	} else {
-		const minutes = parseInt(value, 10);
+		const minutes = parseInt(value!, 10);
 		if (!isNaN(minutes)) {
 			const seconds = minutes * 60;
 			await execFile('xset', 'dpms', '0', '0', seconds.toString(10));
@@ -67,8 +75,16 @@ async function setScreensaverHooks(): Promise<void> {
 }
 
 export async function init(): Promise<void> {
+	electron.ipcMain.handle('disable-screensaver', async () => {
+		await setSleepDelay('never');
+		screensaverDisabled = true;
+	});
+	electron.ipcMain.handle('enable-screensaver', async () => {
+		screensaverDisabled = false;
+		await setSleepDelay();
+	});
 	await setSleepDelay();
-	settings.on('change', (key) => {
+	Settings.getInstance().on('change', (key) => {
 		if (key === 'sleepDelay') {
 			setSleepDelay();
 		}

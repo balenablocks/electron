@@ -77,6 +77,8 @@ Call them with `electron.ipcRenderer.invoke(methodName, ...parameters)` from any
 | Name | Parameters | Description |
 | ---- | ---------- | ----------- |
 | `mount-drive` | `drivePath: string` | Mounts all partitions of the drive, `drivePath` is the name of the drive in `/dev/disk/by-path/` |
+| `disable-screensaver` | | Disables the screensaver, does not change the `sleepDelay` setting |
+| `enable-screensaver` | | Enables the screensaver, does not change the `sleepDelay` setting |
 
 
 ## Utilities
