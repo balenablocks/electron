@@ -136,6 +136,12 @@ function createRendererConfigUI(...name: string[]) {
 			plugins: [
 				new HtmlWebpackPlugin({
 					title: path.join(...name), // TODO
+					meta: {
+						'Content-Security-Policy': {
+							'http-equiv': 'Content-Security-Policy',
+							content: "default-src 'self' 'unsafe-inline'",
+						},
+					},
 					filename: `${path.join('ui', ...name)}.html`,
 				}),
 				new MiniCssExtractPlugin({ filename: path.join('ui', '[name].css') }),
