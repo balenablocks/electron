@@ -1,3 +1,4 @@
+import * as debug_ from 'debug';
 import * as electron from 'electron';
 import { env } from 'process';
 import { promisify } from 'util';
@@ -6,6 +7,8 @@ import * as x11 from 'x11';
 import { Settings } from './settings/settings';
 import { lock, unlock } from './update-lock';
 import { exec, execFile } from './utils';
+
+const debug = debug_('balena-electronjs:screensaver');
 
 const {
 	BALENAELECTRONJS_SCREENSAVER_DELAY_OVERRIDE: screensaverDelayOverride,
@@ -42,18 +45,19 @@ async function setSleepDelay(value?: string): Promise<void> {
 }
 
 async function setScreensaverHooks(): Promise<void> {
+	debug(
+		`setting screensaver hooks, BALENAELECTRONJS_UPDATES_ONLY_DURING_SCREENSAVER is "${updatesOnlyDuringScreensaver}"`,
+	);
 	const display = await createClient();
 	const root = display.screen[0].root;
 	const req = promisify(display.client.require).bind(display.client);
 	const ext = await req('screen-saver');
 	ext.SelectInput(root, ext.eventMask.Notify);
-	if (updatesOnlyDuringScreensaver) {
-		// Prevent updating the application
-		await lock();
-	}
+	await (updatesOnlyDuringScreensaver ? lock : unlock)();
 	display.client.on('event', async (ev) => {
 		if (ev.name === 'ScreenSaverNotify') {
 			if (ev.state === ext.NotifyState.On) {
+				debug('screensaver on');
 				if (screensaverOnCommand !== undefined) {
 					await exec(screensaverOnCommand);
 				}
@@ -62,6 +66,7 @@ async function setScreensaverHooks(): Promise<void> {
 					await unlock();
 				}
 			} else if (ev.state === ext.NotifyState.Off) {
+				debug('screensaver off');
 				if (updatesOnlyDuringScreensaver) {
 					// Prevent updating the application
 					await lock();
@@ -76,10 +81,12 @@ async function setScreensaverHooks(): Promise<void> {
 
 export async function init(): Promise<void> {
 	electron.ipcMain.handle('disable-screensaver', async () => {
+		debug('disabling screensaver');
 		await setSleepDelay('never');
 		screensaverDisabled = true;
 	});
 	electron.ipcMain.handle('enable-screensaver', async () => {
+		debug('enabling screensaver');
 		screensaverDisabled = false;
 		await setSleepDelay();
 	});
