@@ -1,3 +1,4 @@
+import { spawn } from 'child_process';
 import * as debug_ from 'debug';
 import * as electron from 'electron';
 import { env } from 'process';
@@ -6,7 +7,7 @@ import * as x11 from 'x11';
 
 import { Settings } from './settings/settings';
 import { lock, unlock } from './update-lock';
-import { exec, execFile } from './utils';
+import { execFile } from './utils';
 
 const debug = debug_('balena-electronjs:screensaver');
 
@@ -59,7 +60,7 @@ async function setScreensaverHooks(): Promise<void> {
 			if (ev.state === ext.NotifyState.On) {
 				debug('screensaver on');
 				if (screensaverOnCommand !== undefined) {
-					await exec(screensaverOnCommand);
+					spawn('sh', ['-c', screensaverOnCommand]);
 				}
 				if (updatesOnlyDuringScreensaver) {
 					// Allow updating the application while the screensaver is on
@@ -72,7 +73,7 @@ async function setScreensaverHooks(): Promise<void> {
 					await lock();
 				}
 				if (screensaverOffCommand !== undefined) {
-					await exec(screensaverOffCommand);
+					spawn('sh', ['-c', screensaverOffCommand]);
 				}
 			}
 		}
