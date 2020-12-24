@@ -27,6 +27,7 @@ import { WifiIcon } from './wifi-icon';
 
 const SCAN_INTERVAL = 3000;
 const ALLOWED_SCAN_ERRORS = [
+	'Scanning not allowed while unavailable',
 	'Scanning not allowed at this time',
 	'Scanning not allowed while already scanning',
 	'Scanning not allowed while unavailable or activating',
@@ -343,11 +344,13 @@ class WifiConfig extends React.Component<{}, WifiConfigState> {
 					extraInit: async (o: DBusObjectNode) => {
 						(async () => {
 							while (!o.destroyed && o.iface !== undefined) {
-								try {
-									await o.iface.RequestScan({});
-								} catch (error) {
-									if (!ALLOWED_SCAN_ERRORS.includes(error.text)) {
-										throw error;
+								if (this.state.WirelessEnabled) {
+									try {
+										await o.iface.RequestScan({});
+									} catch (error) {
+										if (!ALLOWED_SCAN_ERRORS.includes(error.text)) {
+											throw error;
+										}
 									}
 								}
 								await delay(SCAN_INTERVAL);

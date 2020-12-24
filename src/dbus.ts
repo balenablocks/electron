@@ -48,8 +48,11 @@ export class DBusObjectNode extends EventEmitter {
 			if (
 				!(
 					error.text === `No such interface “${interfaceName}”` ||
+					error.text === `No such interface '${interfaceName}'` ||
 					error.text ===
 						`No such interface “${interfaceName}” on object at path ${path}` ||
+					error.text ===
+						`No such interface '${interfaceName}' on object at path ${path}` ||
 					error.text === 'No such interface found'
 				)
 			) {

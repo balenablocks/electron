@@ -84,20 +84,6 @@ export function execFile(
 	});
 }
 
-export function exec(
-	command: string,
-): Promise<{ stdout: string; stderr: string }> {
-	return new Promise((resolve, reject) => {
-		childProcess.exec(command, (error, stdout, stderr) => {
-			if (error) {
-				reject(error);
-			} else {
-				resolve({ stdout, stderr });
-			}
-		});
-	});
-}
-
 export const readFileAsync = promisify(readFile);
 export const writeFileAsync = promisify(writeFile);
 
