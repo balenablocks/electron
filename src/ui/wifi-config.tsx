@@ -1,4 +1,3 @@
-import { delay } from 'bluebird';
 import { Variant } from 'dbus-next';
 import * as _ from 'lodash';
 import * as React from 'react';
@@ -21,6 +20,7 @@ import ChevronLeftSvg from '@fortawesome/fontawesome-free/svgs/solid/chevron-lef
 import TimesSvg from '@fortawesome/fontawesome-free/svgs/solid/times.svg';
 
 import { DBusObjectNode } from '../dbus';
+import { delay } from '../utils';
 
 import { OverlayWindow, render } from './theme';
 import { WifiIcon } from './wifi-icon';
