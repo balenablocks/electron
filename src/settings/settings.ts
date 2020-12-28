@@ -1,11 +1,12 @@
 import * as electron from 'electron';
 import { EventEmitter } from 'events';
+import { promises as fs } from 'fs';
 import { join } from 'path';
 
-import { Dict, readFileAsync, writeFileAsync } from '../utils';
+import { Dict } from '../utils';
 
 async function loadJSONFile(path: string) {
-	const data = await readFileAsync(path, 'utf8');
+	const data = await fs.readFile(path, 'utf8');
 	return JSON.parse(data);
 }
 
@@ -65,7 +66,7 @@ export class Settings extends EventEmitter {
 			return;
 		}
 		this.data[key] = value;
-		await writeFileAsync(this.getFilePath(), JSON.stringify(this.data));
+		await fs.writeFile(this.getFilePath(), JSON.stringify(this.data));
 		this.emit('change', key, value);
 	}
 
