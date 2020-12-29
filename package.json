@@ -36,6 +36,7 @@
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.4",
     "@types/styled-components": "^4.1.18",
+    "@types/terser-webpack-plugin": "^5.0.2",
     "async-mutex": "^0.1.4",
     "css-loader": "^5.0.1",
     "dbus-next": "^0.9.1",
