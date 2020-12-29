@@ -14,19 +14,14 @@
  * limitations under the License.
  */
 
-import { map } from 'bluebird';
-import { readdir as readdir_, stat, Stats } from 'fs';
+import { promises as fs, Stats } from 'fs';
 import { join, parse, resolve } from 'path';
 import { getgid, getuid } from 'process';
-import { promisify } from 'util';
 
 const CONCURRENCY = 10;
 const COLLATOR = new Intl.Collator(undefined, { sensitivity: 'case' });
 const GID = getgid();
 const UID = getuid();
-
-const readdirAsync = promisify(readdir_);
-const statAsync = promisify(stat);
 
 function compareFiles(fileA: FileEntry, fileB: FileEntry): number {
 	// used for sorting files
@@ -73,22 +68,23 @@ function userCanListDirectory(stats: Stats): boolean {
 
 export async function readdir(dirPath$: string): Promise<FileEntry[]> {
 	const dirPath = resolve(dirPath$);
-	const fileNames = await readdirAsync(dirPath);
-	const filePaths = fileNames.map((name) => join(dirPath, name));
-	const files: Array<FileEntry | undefined> = await map(
-		filePaths,
-		async (filePath) => {
-			try {
-				const stats = await statAsync(filePath);
-				if (stats.isDirectory() && !userCanListDirectory(stats)) {
+	const fileNames = await fs.readdir(dirPath);
+	const files: Array<FileEntry | undefined> = await Promise.all(
+		fileNames.map(
+			async (fileName) => {
+				const filePath = join(dirPath, fileName);
+				try {
+					const stats = await fs.stat(filePath);
+					if (stats.isDirectory() && !userCanListDirectory(stats)) {
+						return;
+					}
+					return new FileEntry(filePath, stats);
+				} catch (error) {
 					return;
 				}
-				return new FileEntry(filePath, stats);
-			} catch (error) {
-				return;
-			}
-		},
-		{ concurrency: CONCURRENCY },
+			},
+			{ concurrency: CONCURRENCY },
+		),
 	);
 	return (files.filter((f) => f !== undefined) as FileEntry[]).sort(
 		compareFiles,

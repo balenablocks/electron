@@ -1,7 +1,5 @@
 import * as childProcess from 'child_process';
-import { readFile, writeFile } from 'fs';
 import { stringify } from 'querystring';
-import { promisify } from 'util';
 
 export interface Dict<T> {
 	[key: string]: T;
@@ -84,9 +82,6 @@ export function execFile(
 	});
 }
 
-export const readFileAsync = promisify(readFile);
-export const writeFileAsync = promisify(writeFile);
-
 export function uiUrl(page: string, params: Dict<any> = {}): string {
 	const qs = Object.keys(params).length ? '?' + stringify(params) : '';
 	return `file://${__dirname}/ui/${page}.html${qs}`;
@@ -97,4 +92,10 @@ export interface Bounds {
 	y: number;
 	width: number;
 	height: number;
+}
+
+export function delay(ms: number): Promise<void> {
+	return new Promise((resolve) => {
+		setTimeout(resolve, ms);
+	});
 }

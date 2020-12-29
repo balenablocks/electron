@@ -11,8 +11,8 @@
     "electron": "^9.4.0"
   },
   "dependencies": {
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "react-jsonschema-form": "^1.8.0"
   }
 }

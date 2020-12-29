@@ -1,9 +1,11 @@
+import * as debug_ from 'debug';
 import { Variant, ClientInterface, ProxyObject, systemBus } from 'dbus-next';
 import { EventEmitter } from 'events';
 import * as _ from 'lodash';
 
 import { Dict, OrderedMap } from './utils';
 
+const debug = debug_('balena-electronjs:dbus');
 const SYSTEM_BUS = systemBus();
 
 interface FieldDefinition {
@@ -45,22 +47,7 @@ export class DBusObjectNode extends EventEmitter {
 				extraInit,
 			);
 		} catch (error) {
-			if (
-				!(
-					error.text === `No such interface “${interfaceName}”` ||
-					error.text === `No such interface '${interfaceName}'` ||
-					error.text ===
-						`No such interface “${interfaceName}” on object at path ${path}` ||
-					error.text ===
-						`No such interface '${interfaceName}' on object at path ${path}` ||
-					error.text === 'No such interface found'
-				)
-			) {
-				console.warn(
-					`Couldn't get interface ${interfaceName} of ${path}`,
-					error,
-				);
-			}
+			debug(error);
 		}
 	}
 
