@@ -83,4 +83,4 @@ Call them with `electron.ipcRenderer.invoke(methodName, ...parameters)` from any
 
 ## Utilities
 
- * [clickclock](https://github.com/zpfvo/clicklock) is available in `/usr/bin/clicklock`
+ * [clickclock](https://github.com/zpfvo/clicklock) is available in `/usr/bin/clicklock` and will be run when the screensaver goes on

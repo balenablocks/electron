@@ -59,6 +59,7 @@ async function setScreensaverHooks(): Promise<void> {
 		if (ev.name === 'ScreenSaverNotify') {
 			if (ev.state === ext.NotifyState.On) {
 				debug('screensaver on');
+				spawn('clicklock');
 				if (screensaverOnCommand !== undefined) {
 					spawn('sh', ['-c', screensaverOnCommand]);
 				}
