@@ -81,6 +81,9 @@ async function setScreensaverHooks(): Promise<void> {
 }
 
 export async function init(): Promise<void> {
+	if (screensaverOnCommand !== undefined) {
+		spawn('sh', ['-c', screensaverOnCommand]);
+	}
 	electron.ipcMain.handle('disable-screensaver', async () => {
 		debug('disabling screensaver');
 		await setSleepDelay('never');
