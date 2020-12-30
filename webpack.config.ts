@@ -18,14 +18,29 @@ import { promises as fs } from 'fs';
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
 import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import * as path from 'path';
-import { env } from 'process';
+import * as TerserPlugin from 'terser-webpack-plugin';
 import * as tsj from 'ts-json-schema-generator';
 import { Compiler, Configuration } from 'webpack';
 
-const MODE = env.NODE_ENV === 'development' ? 'development' : 'production';
-
 const commonConfig: Configuration = {
-	mode: MODE,
+	mode: 'production',
+	optimization: {
+		minimize: true,
+		minimizer: [
+			new TerserPlugin({
+				terserOptions: {
+					compress: false,
+					mangle: false,
+					output: {
+						beautify: true,
+						comments: false,
+						ecma: 2018,
+					},
+				},
+				extractComments: false,
+			}),
+		],
+	},
 	node: {
 		__dirname: false,
 		__filename: false,
@@ -74,10 +89,6 @@ const commonConfig: Configuration = {
 		extensions: ['.js', '.ts', '.tsx'],
 	},
 };
-
-if (MODE === 'development') {
-	commonConfig.devtool = 'inline-source-map';
-}
 
 const mainConfig = {
 	...commonConfig,

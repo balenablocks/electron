@@ -24,10 +24,6 @@ export async function screenOff(): Promise<void> {
 	await execFile('xset', 'dpms', 'force', 'off');
 }
 
-async function screenOn(): Promise<void> {
-	await execFile('xset', 'dpms', 'force', 'on');
-}
-
 let screensaverDisabled = false;
 
 async function setSleepDelay(value?: string): Promise<void> {
@@ -63,6 +59,7 @@ async function setScreensaverHooks(): Promise<void> {
 		if (ev.name === 'ScreenSaverNotify') {
 			if (ev.state === ext.NotifyState.On) {
 				debug('screensaver on');
+				spawn('clicklock');
 				if (screensaverOnCommand !== undefined) {
 					spawn('sh', ['-c', screensaverOnCommand]);
 				}
@@ -85,12 +82,9 @@ async function setScreensaverHooks(): Promise<void> {
 }
 
 export async function init(): Promise<void> {
-	// When the container is restarted when the screen was off,
-	// we need to turn the screen off and on again to make it work.
-	// screenOn() without screenOff() before has no effect.
-	// We need to do this before setScreensaverHooks().
-	await screenOff();
-	await screenOn();
+	if (screensaverOnCommand !== undefined) {
+		spawn('sh', ['-c', screensaverOnCommand]);
+	}
 	electron.ipcMain.handle('disable-screensaver', async () => {
 		debug('disabling screensaver');
 		await setSleepDelay('never');
