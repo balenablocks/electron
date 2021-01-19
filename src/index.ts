@@ -111,6 +111,8 @@ function init() {
 			win = createWindow(uiUrl(name));
 			win.webContents.on('dom-ready', () => {
 				win?.webContents.executeJavaScript(focusScript);
+				const brightness = env.BALENAELECTRONJS_BRIGHTNESS_FILTER ?? '1';
+				win?.webContents.insertCSS(`html{filter:brightness(${brightness});}`);
 			});
 			windows.set(name, win);
 		} else {
@@ -163,7 +165,11 @@ function init() {
 				height,
 			});
 			this.webContents.on('dom-ready', () => {
-				this.webContents.executeJavaScript(focusScript);
+				const webContents = this
+					.webContents as electron.BrowserWindow['webContents'];
+				const brightness = env.BALENAELECTRONJS_BRIGHTNESS_FILTER ?? '1';
+				webContents.executeJavaScript(focusScript);
+				webContents.insertCSS(`html{filter:brightness(${brightness});}`);
 			});
 		};
 	}
