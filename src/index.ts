@@ -53,11 +53,13 @@ function init() {
 			...(bounds ?? electron.screen.getPrimaryDisplay().workArea),
 			...extraOptions,
 		});
-		// Prevent flash of white when the window is created
 		win.on('ready-to-show', () => {
 			win.webContents.setZoomFactor(zoomFactor);
+			// Prevent flash of white when the window is created
 			win.show();
 		});
+		insertFocusScript(win.webContents);
+		insertBrightnessFilter(win.webContents);
 		win.loadURL(url);
 		return win;
 	}
@@ -105,13 +107,25 @@ function init() {
 
 	const windows: Map<WindowName, electron.BrowserWindow> = new Map();
 
+	function insertFocusScript(webContents: electron.WebContents) {
+		webContents.on('dom-ready', () => {
+			webContents.executeJavaScript(focusScript);
+		});
+	}
+
+	function insertBrightnessFilter(webContents: electron.WebContents) {
+		const brightness = env.BALENAELECTRONJS_BRIGHTNESS_FILTER;
+		if (brightness !== undefined) {
+			webContents.on('dom-ready', () => {
+				webContents.insertCSS(`html{filter:brightness(${brightness});}`);
+			});
+		}
+	}
+
 	electron.ipcMain.on('show-window', (_event: Event, name: WindowName) => {
 		let win = windows.get(name);
 		if (win === undefined || win.isDestroyed()) {
 			win = createWindow(uiUrl(name));
-			win.webContents.on('dom-ready', () => {
-				win?.webContents.executeJavaScript(focusScript);
-			});
 			windows.set(name, win);
 		} else {
 			win.focus();
@@ -162,9 +176,8 @@ function init() {
 				width,
 				height,
 			});
-			this.webContents.on('dom-ready', () => {
-				this.webContents.executeJavaScript(focusScript);
-			});
+			insertFocusScript(this.webContents);
+			insertBrightnessFilter(this.webContents);
 		};
 	}
 
