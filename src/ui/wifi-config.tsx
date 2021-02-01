@@ -424,24 +424,24 @@ class WifiConfig extends React.Component<{}, WifiConfigState> {
 
 	private renderDevice() {
 		const device = this.state.Devices[0];
-		if (device) {
-			return (
-				<>
-					<Flex flexDirection="row" alignItems="center">
-						<Heading.h2>WiFi</Heading.h2>
-						<Checkbox
-							ml="31px"
-							toggle
-							label={this.state.WirelessEnabled ? 'On' : 'Off'}
-							checked={this.state.WirelessEnabled}
-							onChange={this.handleWirelessEnabledCheckbox.bind(this)}
-						/>
-					</Flex>
-					<Flex
-						flexDirection="column"
-						height="calc(100vh - 120px)"
-						style={{ overflowY: 'auto' }}
-					>
+		return (
+			<>
+				<Flex flexDirection="row" alignItems="center">
+					<Heading.h2>WiFi</Heading.h2>
+					<Checkbox
+						ml="31px"
+						toggle
+						label={this.state.WirelessEnabled ? 'On' : 'Off'}
+						checked={this.state.WirelessEnabled}
+						onChange={this.handleWirelessEnabledCheckbox.bind(this)}
+					/>
+				</Flex>
+				<Flex
+					flexDirection="column"
+					height="calc(100vh - 120px)"
+					style={{ overflowY: 'auto' }}
+				>
+					{device && (
 						<WifiDevice
 							{...device}
 							configuredWifiConnections={this.state.configuredWifiConnections}
@@ -450,15 +450,15 @@ class WifiConfig extends React.Component<{}, WifiConfigState> {
 							createConnection={this.boundCreateConnection}
 							connect={this.boundConnect}
 						/>
-					</Flex>
-					<Flex alignItems="center" justifyContent="center">
-						<Button primary onClick={window.close} width="200px">
-							Ok
-						</Button>
-					</Flex>
-				</>
-			);
-		}
+					)}
+				</Flex>
+				<Flex alignItems="center" justifyContent="center">
+					<Button primary onClick={window.close} width="200px">
+						Ok
+					</Button>
+				</Flex>
+			</>
+		);
 	}
 
 	private getAccessPointBySsid(ssid: string): AccessPointProps {
