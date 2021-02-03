@@ -1,14 +1,24 @@
+- commits:
+    - subject: Add .versionbot/CHANGELOG.yml
+      hash: c361de0bb211076aa11fc0eed1a898e1e87ee1f5
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Alexis Svinartchouk
+  version: 1.2.2
+  date: 2021-02-03T12:34:19.485Z
 - version: 1.2.1
-  date: 2021-02-01T14:33:11Z
+  date: 2021-02-01T14:33:11.000Z
   commits:
     - hash: ab85a54d88f35fac4e7440ca90191cbd65b57290
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Always show the ok button and the header in the wifi modal
-      body:
+      body: null
 - version: 1.2.0
-  date: 2021-02-01T13:11:26Z
+  date: 2021-02-01T13:11:26.000Z
   commits:
     - hash: 7a251178b96b709ab3bf4f7dad11c90f0c62722c
       author: Lorenzo Alberto Maria Ambrosi
@@ -16,7 +26,7 @@
         change-type: patch
         signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
       subject: Added screen brightness filter env variable
-      body:
+      body: null
     - hash: 227f061ee2bace25063f928f8cbcec4374781f8f
       author: Alexis Svinartchouk
       footers:
@@ -28,7 +38,7 @@
         * Don't apply a filter if BALENAELECTRONJS_BRIGHTNESS_FILTER is not
         defined
 - version: 1.1.4
-  date: 2020-12-30T12:11:21Z
+  date: 2020-12-30T12:11:21.000Z
   commits:
     - hash: 08716e5bd83691ef86a07687d9f23bc42d5da4ac
       author: Alexis Svinartchouk
@@ -37,14 +47,14 @@
       subject: Run BALENAELECTRONJS_SCREENSAVER_OFF_COMMAND command on start
       body: Instead of BALENAELECTRONJS_SCREENSAVER_ON_COMMAND
 - version: 1.1.3
-  date: 2020-12-30T11:10:00Z
+  date: 2020-12-30T11:10:00.000Z
   commits:
     - hash: 8613e0c77f0d8f1991c73785691cd38f9e0f1cc4
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Don't minify js
-      body:
+      body: null
     - hash: 19a94c58d982bc046a7b6e393e9d9e7ef22b59d4
       author: Alexis Svinartchouk
       subject: Revert "Turn the screen off and on on start"
@@ -54,15 +64,15 @@
       footers:
         change-type: patch
       subject: Run BALENAELECTRONJS_SCREENSAVER_ON_COMMAND on start
-      body:
+      body: null
     - hash: 1777f0dfe2317726eb664f808c6720ed6f94a6c4
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Spawn clicklock when the screensaver is on
-      body:
+      body: null
 - version: 1.1.2
-  date: 2020-12-29T15:47:19Z
+  date: 2020-12-29T15:47:19.000Z
   commits:
     - hash: 0f7862f6c2abbd5d8e4e73c16ea1de709ef3efa0
       author: Alexis Svinartchouk
@@ -73,515 +83,519 @@
         This prevents a bug where the screen stays blank after a container
         restart
 - version: 1.1.1
-  date: 2020-12-29T11:59:02Z
+  date: 2020-12-29T11:59:02.000Z
   commits:
     - hash: 75061a2357ed350cca64036f588427d3c065e4ac
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Update webpack to v5
-      body:
+      body: null
     - hash: e70d2bab770cea517dc3e455bd571ec98da716f1
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Remove bluebird
-      body:
+      body: null
     - hash: d4dd07936d4d7675dbf2025e53a7b40e0138c677
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Use fs promises interface
-      body:
+      body: null
     - hash: e80cd091661fee884cbbd4b84155a9906bac5a50
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Update @balena/lint to to v5.3.0
-      body:
+      body: null
     - hash: 7c24fc8ca21f610d0d73493d685d6a8927e8e81f
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Update file-loader to v6.2.0
-      body:
+      body: null
     - hash: a46059d54e612f92fdf73976bbb76723d38894c3
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Update react to v17
-      body:
+      body: null
     - hash: 63c403cbe315eca3c7b8a0c1bfbdf8215f7ddb74
       author: Alexis Svinartchouk
       footers:
         change-type: patch
-      subject: Only log dbus errors if debug is set to balena-electronsjs:dbus
-      body:
+      subject: 'Only log dbus errors if debug is set to balena-electronsjs:dbus'
+      body: null
     - hash: c590f72cabdf3bf633bb7a449703b23a6d5138c9
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Update rendition to v19
-      body:
+      body: null
     - hash: 0788dc16604373c2b567ed5df04e4e7afd42c1a2
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Update ts-json-schema-generator to v0.82.0
-      body:
+      body: null
 - version: 1.1.0
-  date: 2020-12-24T11:26:44Z
+  date: 2020-12-24T11:26:44.000Z
   commits:
     - hash: c7fcbfb74e6e9f2879543a111c7b7f7c2e50b175
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Only allow updates while the screensaver is on
-      body:
+      body: null
     - hash: 528828a041b0fdbc935999fe971ae43afefe0730
       author: Alexis Svinartchouk
       footers:
         change-type: minor
-      subject: Allow overriding the screensaver delay from settings with BALENAELECTRONJS_SCREENSAVER_DELAY_OVERRIDE
-      body:
+      subject: >-
+        Allow overriding the screensaver delay from settings with
+        BALENAELECTRONJS_SCREENSAVER_DELAY_OVERRIDE
+      body: null
     - hash: e71cd0cd12cf626c9978c97ca4ae0016ec0acb6d
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Use settings instance singleton
-      body:
+      body: null
     - hash: 85c6294093baa562289371978b6dd4a17ab1ea1a
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Add ipc methods to temporarily disable the screensaver
-      body:
+      body: null
     - hash: 3c82a4b11089ceda6472a0c2b787d48f4597fc97
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Fix electron warnings in sample app
-      body:
+      body: null
     - hash: a7d4fd741038a48a73ffa12c07d4f0ecaf740db8
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Improve sample app start script
-      body:
+      body: null
     - hash: 08cb4e76d41401b48df58b6e52ee6b12f8cf268d
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Don't scan wifi networks if wifi is disabled
-      body:
+      body: null
     - hash: 44451a8fd33d1172d7510d75bdf2dfb39c6394c8
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Fix electron warnings
-      body:
+      body: null
     - hash: b8084151a2920ace542cf21d78c691f825ad2c01
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Match dbus errors with single quotes
-      body:
+      body: null
     - hash: 83afd07ecc460338faa6aba2ce5d203312d8a264
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Add debug in screensaver and updates-lock
-      body:
+      body: null
     - hash: ccc608cc351924fe9b9ff361ea5a42c082578758
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Don't wait for screensaver on/off command to finish
-      body:
+      body: null
     - hash: ac092101e0894e6a1b89b3008c3369e034912786
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Remove no longer used utils exec funciton
-      body:
+      body: null
 - version: 1.0.7
-  date: 2020-12-18T11:58:58Z
+  date: 2020-12-18T11:58:58.000Z
   commits:
     - hash: 958b50831479bf50039b94c87a4d9d0077179d28
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Update README instructions for building and using
-      body:
+      body: null
 - version: 1.0.6
-  date: 2020-12-17T11:56:04Z
+  date: 2020-12-17T11:56:04.000Z
   commits:
     - hash: 37409a38ca46f5c4fc9fa92be2e3b18224b77b5e
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Add build script
-      body:
+      body: null
     - hash: 98adfb664cbf66694d01cbd13a3671987cefb83b
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Remove jq
-      body:
+      body: null
     - hash: 425b5a7a4b5d5d5f0d2c5de7c599175c6a8cdbd9
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Update electron to v9.4.0
-      body:
+      body: null
     - hash: 817762d922241743dece4cf749b930c4318b9856
       author: Alexis Svinartchouk
       footers:
         change-type: patch
-      subject: Name images balenablocks/$ARCH-balena-electron-env:$GIT_TAG
-      body:
+      subject: 'Name images balenablocks/$ARCH-balena-electron-env:$GIT_TAG'
+      body: null
     - hash: 1fdd25f1731c9061c6aeb9e53a2e88db28c9b65e
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Update dependencies
-      body:
+      body: null
     - hash: af7149a3f7d2f5af2bce2a947ee1431f10ba83e6
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Add clicklock
-      body:
+      body: null
 - version: 1.0.5
-  date: 2020-11-06T13:58:07Z
+  date: 2020-11-06T13:58:07.000Z
   commits:
     - hash: 6fddb0d4712755407bede86b60ee66ba052e6e15
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Update electron to v9.3.3
-      body:
+      body: null
     - hash: f0e16b85b69f492b1d5da3941dcfc587afeff0cd
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Add sample app start script
-      body:
+      body: null
 - version: 1.0.4
-  date: 2020-10-21T15:12:11Z
+  date: 2020-10-21T15:12:11.000Z
   commits:
     - hash: 2b4e7d7b10d793ed7e3e78541faedcc5f64681b7
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Prevent windows flashing white when opening
-      body:
+      body: null
     - hash: abb3bd564d2b68aeb54b8dde923c3ea1c82d2923
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Factorize opening transparent windows
-      body:
+      body: null
     - hash: f5a2eb98d53b771856f5f00f31a3971ca7bcf172
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Add BALENAELECTRONJS_ZOOM_FACTOR env var
-      body:
+      body: null
 - version: 1.0.3
-  date: 2020-10-19T13:37:31Z
+  date: 2020-10-19T13:37:31.000Z
   commits:
     - hash: c04534e1e953a55d38906a497f18cb06bedddd31
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Fix wifi icon size
-      body:
+      body: null
     - hash: 5eb7f3bfecff882d5a96f3ff2241ed26945d601a
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Fix DBusObjectNode.setProperty
-      body:
+      body: null
     - hash: 2d91bad4c30a7538b76d5347b5291318ff157222
       author: Alexis Svinartchouk
       footers:
         change-type: patch
-      subject: Factorize overlay windows, add a shadow
-      body:
+      subject: 'Factorize overlay windows, add a shadow'
+      body: null
 - version: 1.0.2
-  date: 2020-10-16T11:51:00Z
+  date: 2020-10-16T11:51:00.000Z
   commits:
     - hash: b32530ad497bf06b250278b1141c4bdd82dc94d0
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Run commands on screensaver on or off events
-      body:
+      body: null
 - version: 1.0.1
-  date: 2020-10-15T21:37:51Z
+  date: 2020-10-15T21:37:51.000Z
   commits:
     - hash: 1b240d17a3227ca01d74a1302e8347fcd74da841
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Add .dockerignore
-      body:
+      body: null
     - hash: d56b0355f8a0475e61e8d95149d4baec370dab1b
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Increase memory available for webpack during build
-      body:
+      body: null
 - version: 1.0.0
-  date: 2020-10-15T16:51:26Z
+  date: 2020-10-15T16:51:26.000Z
   commits:
     - hash: 99d27c4d8068525f2a312d6db00deaaeed345490
       author: Alexis Svinartchouk
       footers:
         change-type: patch
-      subject: Inline svgs, update overlay buttons
-      body:
+      subject: 'Inline svgs, update overlay buttons'
+      body: null
     - hash: 09f4e7fd8818daf0815499c797b2a94a4c28241c
       author: Alexis Svinartchouk
       footers:
         change-type: minor
       subject: Wifi status icon
-      body:
+      body: null
     - hash: f5097f8e5f56fbcdfdfe688f7ab43c1da04369d9
       author: Alexis Svinartchouk
       footers:
         change-type: minor
       subject: Get buttons position from env
-      body:
+      body: null
     - hash: 652703bc8f07854d1d66b60745eed48becaa5dfe
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Update typescript to v4
-      body:
+      body: null
     - hash: 7e2c35b22868b09d194a85c5479b0666ca3640b5
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Update rendition to ^18.10
-      body:
+      body: null
     - hash: ad13d2073f36786e842532c04fe32e0460a736c9
       author: Alexis Svinartchouk
       footers:
         change-type: major
       subject: Replace $XRANDR_ROTATION with $ $XRANDR_ARGS
-      body:
+      body: null
     - hash: 3905625b9556261031898bf9b1dcce14090dbdd3
       author: Alexis Svinartchouk
       footers:
         change-type: patch
-      subject: Update wifi dialog, replace dbus-native with dbus-next
-      body:
+      subject: 'Update wifi dialog, replace dbus-native with dbus-next'
+      body: null
     - hash: 7d0eea59acfb74dd3b2cdfdbad9f5a6dfa1f3a52
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Rename exec to execFile
-      body:
+      body: null
     - hash: 8409dad96402a003f13c561750f9cd0001c17187
       author: Alexis Svinartchouk
       footers:
         change-type: patch
-      subject: Run BALENAELECTRONJS_SCREENSAVER_COMMAND when the screensaver is triggered
-      body:
+      subject: >-
+        Run BALENAELECTRONJS_SCREENSAVER_COMMAND when the screensaver is
+        triggered
+      body: null
     - hash: 405dd5c16cd28699c83c65ac15ccccb56ec17133
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Update electron to 9.3.2
-      body:
+      body: null
 - version: 0.0.8
-  date: 2020-08-20T13:20:22Z
+  date: 2020-08-20T13:20:22.000Z
   commits:
     - hash: 12b02a382e05894c143cdcb63511c8d5f9da7c20
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Use simpleproxy to enable remote electron debugging
-      body:
+      body: null
 - version: 0.0.7
-  date: 2020-08-20T12:04:58Z
+  date: 2020-08-20T12:04:58.000Z
   commits:
     - hash: d64362c7a110a3a02eb8c7b3c9a3acb2fc3dc9be
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Update electron and lodash in sample app
-      body:
+      body: null
     - hash: 97a30690e36ac72c3065e91d5b5a1a369e11554d
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Env var for enabling electron remote debugging
-      body:
+      body: null
 - version: 0.0.6
-  date: 2020-08-19T17:18:01Z
+  date: 2020-08-19T17:18:01.000Z
   commits:
     - hash: d74efe9adbd5ab60d6fb49861cdc0798578d2a1e
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Copy tsconfig.webpack.json in the Dockerfile
-      body:
+      body: null
     - hash: 371a0e64b5e073290239f99b4e321a44905e766b
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Update rendition to ^17
-      body:
+      body: null
     - hash: 4b9f329666509a2bbb95aace3275ffecae597d17
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Ensure MOUNTS_ROOT exists before listing files in it
-      body:
+      body: null
 - version: 0.0.5
-  date: 2020-07-02T10:13:46Z
+  date: 2020-07-02T10:13:46.000Z
   commits:
     - hash: 737a3a61a9f52da732fc94eb9b4377b4125267df
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Change en var prefix BALENA_ELECTRONJS to BALENAELECTRONJS
-      body:
+      body: null
     - hash: b1ee66313186b6d79b0d6d2f1827ab63edab9f18
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Install jq
-      body:
+      body: null
 - version: 0.0.4
-  date: 2020-07-01T10:09:30Z
+  date: 2020-07-01T10:09:30.000Z
   commits:
     - hash: ab22a245e52fefe1ba611fefee61819caca0b7bf
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Remove webpack usedExports config as it is the default
-      body:
+      body: null
     - hash: 6213b2fa8ad33829b683e5332abfa9e51ea4e2df
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Umount partitions of unplugged devices automatically
-      body:
+      body: null
 - version: 0.0.3
-  date: 2020-06-24T15:49:31Z
+  date: 2020-06-24T15:49:31.000Z
   commits:
     - hash: 7074b8af5dd80bc1244842c0194e9a6645e079a9
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Fix webpack config filename in Dockerfile
-      body:
+      body: null
 - version: 0.0.2
-  date: 2020-06-24T15:06:58Z
+  date: 2020-06-24T15:06:58.000Z
   commits:
     - hash: b0a1dc399e40032730d461df486035c1b69b4de8
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Update npm dependencies
-      body:
+      body: null
     - hash: 133f38df4bea9b3cad521c8915be4dfa214dd619
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Update electron to v9.0.4
-      body:
+      body: null
     - hash: 5c6a3a8a0a373e59870fd79c4f67f587a070dd15
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Fix settings JSON schema generation
-      body:
+      body: null
     - hash: beab4f7e857b68b05409d027c6d6678a37f99c6c
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Update rendition to v15
-      body:
+      body: null
     - hash: e656feb3cbb16b45e37eb55db8ea409daf5ae7d9
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Update resin-lint to @balena/lint
-      body:
+      body: null
     - hash: 16f9bd094b46d27819ba13d5efa41a0d10719f6f
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Use typescript for webpack configuration
-      body:
+      body: null
     - hash: 8549155c8b369a3418d82370030623a632d078db
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Remove sidebar
-      body:
+      body: null
     - hash: 89e00856918f5f82ca20c9cbf867f1c3085dd87a
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Reduce generated js size
-      body:
+      body: null
     - hash: b467ae67186df5de35266595d262b2c1bc869131
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Don't reload connection settings on Updated events
-      body:
+      body: null
     - hash: 5a680294047f5ede8b3267bf2c3131b67b689b93
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Lint files in pre-commit hook
-      body:
+      body: null
     - hash: a1e1ef29fa4fb1279e59da6b47dbe4dcad4b6eb5
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Update electron to 9.0.5
-      body:
+      body: null
     - hash: 790185e26827b99d399cb985601291e8e991d4ca
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Remote mount-drive method for mounting all drive partitions
-      body:
+      body: null
     - hash: 543ecb2613edcf3c9f682631e46a93cde31e425b
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Prevent white flash when overlay buttons appear
-      body:
+      body: null
     - hash: c5fd8e29cef8aaf1e3e3127badf3fbf99b3cf035
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Sticky window title bars
-      body:
+      body: null
     - hash: 7831805583c261612aaccc63646e332c814c8179
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Install ntfs-3g for mounting ntfs partitions
-      body:
+      body: null
     - hash: f933433e678f9cfed68c93e6479b67ee1f9ba22d
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Make delay before showing overlay buttons configurable
-      body:
+      body: null
     - hash: db64191c657061ade3eea9dc0fd96b90f5e6b077
       author: Alexis Svinartchouk
       footers:
         change-type: patch
       subject: Remove Xvfb and vnc support
-      body:
+      body: null
