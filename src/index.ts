@@ -185,6 +185,8 @@ function init() {
 	BrowserWindow.prototype._init = electron.BrowserWindow.prototype._init;
 
 	openDialogInit(electron, createWindow);
+	// Remove this once https://github.com/electron/electron/issues/25153 is closed
+	electron.app.disableHardwareAcceleration();
 	electron.app.on('ready', ready);
 
 	// @ts-ignore We're declaring a global that will be used in other projects that can't access balena-electronjs types
