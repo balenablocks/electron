@@ -108,8 +108,9 @@ class AccessPoint extends React.PureComponent<AccessPointProps> {
 							outline
 							marginLeft="auto"
 							color="#00aeef"
-							onClick={() => {
+							onClick={(e: React.MouseEvent<HTMLElement, MouseEvent>) => {
 								this.props.editConnection?.();
+								e.stopPropagation();
 							}}
 						>
 							Configuration
