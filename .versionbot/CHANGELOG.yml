@@ -1,4 +1,64 @@
 - commits:
+    - subject: Empty commit to create version tag (electron 12)
+      hash: 8dc1eb7c6d97cb49695ae401e0a1bb2cebfdca70
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Alexis Svinartchouk
+    - subject: Update project name and url in package.json
+      hash: 23359068ddb330ded82c09f7e67792a343724d72
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Alexis Svinartchouk
+    - subject: Update electron to v12.0.2
+      hash: be38e8d83baad939efaea2539374a090545dc93c
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Alexis Svinartchouk
+    - subject: Fix typo in README.md
+      hash: 3051371fcaa9159244e14aa51012dc080340d2eb
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Andrew Scheller
+    - subject: Update rendition from 19.0.0 to 20.10.1
+      hash: 9560d265d7c3dc48083647ab5fbccda839293146
+      body: |
+        Update rendition from 19.0.0 to 20.10.1
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Alexis Svinartchouk
+    - subject: Update @balena/lint to to v5.4.1
+      hash: e5d30d7f854b2a7c15c8a52c8f1007d125618695
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Alexis Svinartchouk
+    - subject: Don't connect to a network when the "Configure" button is pressed
+      hash: 51c3cf46b31a8cf4149741386838c3a547695b00
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Alexis Svinartchouk
+    - subject: Update electron to v11.2.3
+      hash: 32fdf5d2b6f0051f0c2de4d8923a6b2c25884463
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Alexis Svinartchouk
+  version: 1.2.3
+  date: 2021-04-06T12:19:55.763Z
+- commits:
     - subject: Add .versionbot/CHANGELOG.yml
       hash: c361de0bb211076aa11fc0eed1a898e1e87ee1f5
       body: ''
