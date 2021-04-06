@@ -1,5 +1,5 @@
 {
-  "name": "balena-electronjs",
+  "name": "balena-electron-env",
   "version": "1.2.2",
   "description": "Kiosk mode for electron apps",
   "main": "build/index.js",
@@ -22,10 +22,10 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/balena-io-modules/balena-electronjs.git"
+    "url": "https://github.com/balenablocks/balena-electron-env.git"
   },
   "devDependencies": {
-    "@balena/lint": "^5.3.0",
+    "@balena/lint": "^5.4.1",
     "@fortawesome/fontawesome-free": "^5.14.0",
     "@svgr/webpack": "^5.5.0",
     "@types/debug": "^4.1.4",
@@ -41,7 +41,7 @@
     "css-loader": "^5.0.1",
     "dbus-next": "^0.9.1",
     "debug": "^4.3.1",
-    "electron": "^9.4.0",
+    "electron": "^12.0.2",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.0.0-beta.1",
     "husky": "^4.2.5",
@@ -52,7 +52,7 @@
     "pretty-bytes": "^5.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "rendition": "^19.0.0",
+    "rendition": "^20.10.1",
     "style-loader": "^2.0.0",
     "ts-json-schema-generator": "^0.82.0",
     "ts-loader": "^8.0.12",
