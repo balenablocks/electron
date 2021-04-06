@@ -47,6 +47,7 @@ function init() {
 			show: false,
 			webPreferences: {
 				nodeIntegration: true,
+				contextIsolation: false,
 				enableRemoteModule: true,
 			},
 			transparent: true,
