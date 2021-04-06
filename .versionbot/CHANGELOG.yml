@@ -1,4 +1,21 @@
 - commits:
+    - subject: Set contextIsolation to false
+      hash: a84858c9749ccf2e5f4e1c6e870de9a74be74ba6
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Alexis Svinartchouk
+    - subject: Update dependencies
+      hash: 642e4560d5b7c7bceeb9a4a8445486f08432cfb6
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Alexis Svinartchouk
+  version: 1.2.4
+  date: 2021-04-06T16:38:31.721Z
+- commits:
     - subject: Update project name and url in package.json
       hash: 23359068ddb330ded82c09f7e67792a343724d72
       body: ''
