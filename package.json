@@ -1,5 +1,5 @@
 {
-  "name": "balena-electronjs",
+  "name": "balena-electron-env",
   "version": "1.2.2",
   "description": "Kiosk mode for electron apps",
   "main": "build/index.js",
@@ -22,7 +22,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/balena-io-modules/balena-electronjs.git"
+    "url": "https://github.com/balenablocks/balena-electron-env.git"
   },
   "devDependencies": {
     "@balena/lint": "^5.4.1",
