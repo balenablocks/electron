@@ -1,4 +1,4 @@
-# balena-electron-env
+# balenaBlocks electron
 
 This is work in progress
 
