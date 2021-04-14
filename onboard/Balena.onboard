@@ -1,0 +1,282 @@
+<?xml version="1.0" ?>
+
+<!--
+Copyright © 2013 Francesco Fumanti <francesco.fumanti@gmx.net>
+Copyright © 2013-2014, 2016 marmuta <marmvta@gmail.com>
+
+This file is part of Onboard.
+
+Onboard is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+Onboard is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<keyboard
+    id="Balena"
+    format="3.2"
+    section="system"
+    summary="Mobile keyboard for small screens" >
+
+  <include file="key_defs.xml"/>
+
+  <!-- box containing all the keys and buttons -->
+  <!-- the rows of keys on the Onboard keyboard are counted bottom to top starting with 1 -->
+  <box border="0.0" spacing="6.0" orientation="vertical">
+
+    <!--- word suggestions -->
+    <panel filename="Balena-Alpha.svg">
+        <include file='word_suggestions.xml'/>
+    </panel>
+
+    <key_template button="true" id="layer0" show_active="false"/>
+    
+    <panel>
+      <box orientation="vertical">
+      <!-- alpha and numbers layers -->
+        <panel>
+            <!-- Cyrillic keymaps-->
+            <panel id="alpha-keys" filename="Balena-Alpha.svg" layer="alpha" layout="ru,ua,by,bg,tj,ge(os),az(cyrillic),mn,mk">
+            <!-- row 2,3 and 4 of the layers -->
+            <!-- row 4 -->
+            <key group="alphanumeric" id="AD01" svg_id="AD01-cyr"/>
+            <key group="alphanumeric" id="AD02" svg_id="AD02-cyr"/>
+            <key group="alphanumeric" id="AD03" svg_id="AD03-cyr"/>
+            <key group="alphanumeric" id="AD04" svg_id="AD04-cyr"/>
+            <key group="alphanumeric" id="AD05" svg_id="AD05-cyr"/>
+            <key group="alphanumeric" id="AD06" svg_id="AD06-cyr"/>
+            <key group="alphanumeric" id="AD07" svg_id="AD07-cyr"/>
+            <key group="alphanumeric" id="AD08" svg_id="AD08-cyr"/>
+            <key group="alphanumeric" id="AD09" svg_id="AD09-cyr"/>
+            <key group="alphanumeric" id="AD10" svg_id="AD10-cyr"/>
+            <key group="alphanumeric" id="AD11" svg_id="AD11-cyr"/>
+
+            <!-- row 3 -->
+            <key group="alphanumeric" id="AC01" svg_id="AC01-cyr"/>
+            <key group="alphanumeric" id="AC02" svg_id="AC02-cyr"/>
+            <key group="alphanumeric" id="AC03" svg_id="AC03-cyr"/>
+            <key group="alphanumeric" id="AC04" svg_id="AC04-cyr"/>
+            <key group="alphanumeric" id="AC05" svg_id="AC05-cyr"/>
+            <key group="alphanumeric" id="AC06" svg_id="AC06-cyr"/>
+            <key group="alphanumeric" id="AC07" svg_id="AC07-cyr"/>
+            <key group="alphanumeric" id="AC08" svg_id="AC08-cyr"/>
+            <key group="alphanumeric" id="AC09" svg_id="AC09-cyr"/>
+            <key group="alphanumeric" id="AC10" svg_id="AC10-cyr"/>
+            <key group="alphanumeric" id="AC11" svg_id="AC11-cyr" keycode="35" layout="ru,tj,az(cyrillic)"/>
+            <key group="alphanumeric" id="AC11" svg_id="AC11-cyr" keycode="51" layout="ua"/>
+            <key group="alphanumeric" id="AC11" svg_id="AC11-cyr"/>
+
+            <!-- row 2 -->
+            <key group="shifts" id="LFSH.like_rtrn" svg_id="LFSH-cyr"/>
+            <key group="alphanumeric" id="AB01" svg_id="AB01-cyr"/>
+            <key group="alphanumeric" id="AB02" svg_id="AB02-cyr"/>
+            <key group="alphanumeric" id="AB03" svg_id="AB03-cyr"/>
+            <key group="alphanumeric" id="AB04" svg_id="AB04-cyr"/>
+            <key group="alphanumeric" id="AB05" svg_id="AB05-cyr"/>
+            <key group="alphanumeric" id="AB06" svg_id="AB06-cyr"/>
+            <key group="alphanumeric" id="AB07" svg_id="AB07-cyr"/>
+            <key group="alphanumeric" id="AB08" svg_id="AB08-cyr"/>
+            <key group="alphanumeric" id="AB09" svg_id="AB09-cyr"/>
+            <key group="alphanumeric" id="AB09" svg_id="AB09-cyr"/>
+            <key group="alphanumeric" id="AB10" svg_id="AB10-cyr" keycode="48" layout="ru,ua,tj,az(cyrillic)"/>
+            <key group="alphanumeric" id="AB10" svg_id="AB10-cyr" keycode="49" layout="ge(os)"/> <!-- not ideal, but sacrifice ESC instead? -->
+            <key group="alphanumeric" id="AB10" svg_id="AB10-cyr" keycode="51" layout="mk"/>
+            <key group="alphanumeric" id="AB10" svg_id="AB10-cyr"/>
+            <key group="bottomrow" id="BKSP" svg_id="BKSP-cyr"/>
+          </panel>
+
+          <!-- Latin and other keymaps -->
+          <panel id="alpha-keys" filename="Balena-Alpha.svg" layer="alpha">
+            <!-- row 2,3 and 4 of the layers -->
+            <!-- row 4 -->
+            <key group="alphanumeric" id="AD01"/>
+            <key group="alphanumeric" id="AD02"/>
+            <key group="alphanumeric" id="AD03"/>
+            <key group="alphanumeric" id="AD04"/>
+            <key group="alphanumeric" id="AD05"/>
+            <key group="alphanumeric" id="AD06"/>
+            <key group="alphanumeric" id="AD07"/>
+            <key group="alphanumeric" id="AD08"/>
+            <key group="alphanumeric" id="AD09"/>
+            <key group="alphanumeric" id="AD10"/>
+
+            <!-- row 3 -->
+            <key group="alphanumeric" id="AC01"/>
+            <key group="alphanumeric" id="AC02"/>
+            <key group="alphanumeric" id="AC03"/>
+            <key group="alphanumeric" id="AC04"/>
+            <key group="alphanumeric" id="AC05"/>
+            <key group="alphanumeric" id="AC06"/>
+            <key group="alphanumeric" id="AC07"/>
+            <key group="alphanumeric" id="AC08"/>
+            <key group="alphanumeric" id="AC09"/>
+            <key group="alphanumeric" id="AC10" keycode="47" layout="be,fr,cm(azerty)"/>
+            <key group="alphanumeric" id="AC10" char="'" label="'"/>
+
+            <!-- row 2 -->
+            <key group="shifts" id="LFSH.like_rtrn"/>
+            <key group="alphanumeric" id="AB01"/>
+            <key group="alphanumeric" id="AB02"/>
+            <key group="alphanumeric" id="AB03"/>
+            <key group="alphanumeric" id="AB04"/>
+            <key group="alphanumeric" id="AB05"/>
+            <key group="alphanumeric" id="AB06"/>
+            <key group="alphanumeric" id="AB07" char="'" label="'" layout="be,fr,cm(azerty)"/>
+            <key group="alphanumeric" id="AB07"/>
+            <key group="bottomrow" id="BKSP"/>
+          </panel>
+
+          <panel filename="Balena-Numbers.svg" layer="numbers">
+            <!-- row 4 -->
+            <key group="alphanumeric" id="BD01" keysym="0x31" label="1" unlatch_layer="false"/>
+            <key group="alphanumeric" id="BD02" keysym="0x32" label="2" unlatch_layer="false"/>
+            <key group="alphanumeric" id="BD03" keysym="0x33" label="3" unlatch_layer="false"/>
+            <key group="alphanumeric" id="BD04" keysym="0x34" label="4" unlatch_layer="false"/>
+            <key group="alphanumeric" id="BD05" keysym="0x35" label="5" unlatch_layer="false"/>
+            <key group="alphanumeric" id="BD06" keysym="0x36" label="6" unlatch_layer="false"/>
+            <key group="alphanumeric" id="BD07" keysym="0x37" label="7" unlatch_layer="false"/>
+            <key group="alphanumeric" id="BD08" keysym="0x38" label="8" unlatch_layer="false"/>
+            <key group="alphanumeric" id="BD09" keysym="0x39" label="9" unlatch_layer="false"/>
+            <key group="alphanumeric" id="BD10" keysym="0x30" label="0" unlatch_layer="false"/>
+
+            <!-- row 3 -->
+            <key group="alphanumeric" id="TAB"/>
+            <key group="alphanumeric" id="BC02" char="#" label="#"/>
+            <key group="alphanumeric" id="BC03" char="%" label="%"/>
+            <key group="alphanumeric" id="BC04" char="*" label="*"/>
+            <key group="alphanumeric" id="BC05" char="/" label="/"/>
+            <key group="alphanumeric" id="BC06" char="+" label="+"/>
+            <key group="alphanumeric" id="BC07" char="-" label="-"/>
+            <key group="alphanumeric" id="BC08" char="(" label="("/>
+            <key group="alphanumeric" id="BC09" char=")" label=")"/>
+            <key group="alphanumeric" id="BC10" char="'" label="'"/>
+
+            <!-- row 2 -->
+            <key group="bottomrow" id="layer2.like_rtrn" label="1/3" image=""/>
+            <key group="alphanumeric" id="BB01" char=";" label=";"/>
+            <key group="alphanumeric" id="BB02" char="@" label="@"/>
+            <key group="alphanumeric" id="BB03" char="=" label="="/>
+            <key group="alphanumeric" id="BB04" char="?" label="?"/>
+            <key group="alphanumeric" id="BB05" char="!" label="!"/>
+            <key group="alphanumeric" id="BB06" char=":" label=":"/>
+            <key group="alphanumeric" id="BB07" char="&quot;" label="&quot;" />
+            <key group="bottomrow" id="BKSP" unlatch_layer="false"/>
+          </panel>
+        </panel>
+
+        <panel>
+          <panel filename="Balena-Alpha.svg">
+            <!-- row 1 of the layer -->
+            <key group="bottomrow" id="layer1.like_rtrn" label="12!@"/>
+            <key group="alphanumeric" id="AA01" char="," label="," unlatch_layer="false"/>
+            <key group="bottomrow" id="SPCE"/>
+            <key group="alphanumeric" id="AA02" char="." label="." unlatch_layer="false"/>
+            <key group="bottomrow" id="RTRN" popup_id="RTRN_popup"/>
+          </panel>          
+        </panel>     
+      </box>
+      <panel filename="Balena-Syms.svg" layer="syms">
+        <!-- row 4 -->
+        <key group="alphanumeric" id="CD01" char="~" label="~"/>
+        <key group="alphanumeric" id="CD02" char="_" label="_"/>
+        <key group="alphanumeric" id="CD03" char="|" label="|"/>
+        <key group="alphanumeric" id="CD04" char="\" label="\"/>
+        <key group="alphanumeric" id="CD05" char="&lt;" label="&lt;"/>
+        <key group="alphanumeric" id="CD06" char="&gt;" label="&gt;"/>
+        <key group="alphanumeric" id="CD07" char="{" label="{"/>
+        <key group="alphanumeric" id="CD08" char="}" label="}"/>
+        <key group="alphanumeric" id="CD09" char="[" label="["/>
+        <key group="alphanumeric" id="CD10" char="]" label="]"/>
+        <!-- row 3 -->
+
+        <key group="alphanumeric" id="CC01" char="$" label="$"/>
+        <key group="alphanumeric" id="CC02" label="€" keysym="8364"/>
+        <key group="alphanumeric" id="CC03" label="¥" char="¥"/>
+        <key group="alphanumeric" id="CC04" label="₽" char="₽"/>
+        <key group="alphanumeric" id="CC05" label="₮" char="₮" layout="mn"/>  <!-- Mongolian tögrög -->
+        <key group="alphanumeric" id="CC05" label="£" char="£"/>
+        <key group="alphanumeric" id="CC06" label="&amp;" char="&amp;"/>
+        <key group="alphanumeric" id="CC07" char="§" label="§"/>
+        <key group="alphanumeric" id="CC08" char="^" label="^"/>
+        <key group="alphanumeric" id="CC09" char="`" label="`"/>
+        <key group="alphanumeric" id="CC10" char="°" label="°"/>
+        <!-- row 2 -->
+        <key group="bottomrow" id="layer3.like_rtrn" label="2/3"/>
+        <key group="alphanumeric" id="CB01" char="”" label="”"/>
+        <key group="alphanumeric" id="CB02" char="«" label="«"/>
+        <key group="alphanumeric" id="CB03" char="»" label="»"/>
+        <key group="alphanumeric" id="CB04" char="¿" label="¿"/>
+        <key group="alphanumeric" id="CB05" char="¡" label="¡"/>
+        <key group="alphanumeric" id="CB06" char="®" label="®"/>
+        <key group="alphanumeric" id="CB07" char="©" label="©"/>
+        <key group="bottomrow" id="BKSP"/>
+        <!-- row 1 -->
+        <key group="bottomrow" id="layer0.like_rtrn"/>
+        <key group="alphanumeric" id="CA01" char="„" label="„"/>
+        <key group="bottomrow" id="SPCE"/>
+        <key group="alphanumeric" id="CA02" char="…" label="…"/>
+        <key group="bottomrow" id="RTRN" popup_id="RTRN_popup"/>
+      </panel>
+      <panel filename="Balena-Emoji.svg" layer="emoji">
+        <!-- row 4 -->
+        <key group="symbol" id="DD01" char="☺" label="☺"/> <!-- U+263A WHITE SMILING FACE -->
+        <key group="symbol" id="DD02" char="😊" label="😊"/> <!-- U+1F60A SMILING FACE WITH SMILING EYES -->
+        <key group="symbol" id="DD03" char="😄" label="😄"/> <!-- U+1F604 SMILING FACE WITH OPEN MOUTH AND SMILING EYES -->
+        <key group="symbol" id="DD04" char="😉" label="😉"/> <!-- U+1F609 WINKING FACE -->
+        <key group="symbol" id="DD05" char="😜" label="😜"/> <!-- U+1F61C FACE WITH STUCK-OUT TONGUE AND WINKING EYE -->
+        <key group="symbol" id="DD06" char="😚" label="😚"/> <!-- U+1F61A KISSING FACE WITH CLOSED EYES -->
+        <key group="symbol" id="DD07" char="😎" label="😎"/> <!-- U+1F60E SMILING FACE WITH SUNGLASSES -->
+        <key group="symbol" id="DD08" char="😇" label="😇"/> <!-- U+1F607 SMILING FACE WITH HALO -->
+        <key group="symbol" id="DD09" char="♀" label="♀"/> <!-- U+2640 FEMALE SIGN -->
+        <key group="symbol" id="DD10" char="☼" label="☼"/> <!-- U+263C WHITE SUN WITH RAYS -->
+        <!-- row 3 -->
+        <key group="symbol" id="DC01" char="☹" label="☹"/> <!-- U+2639 WHITE FROWNING FACE -->
+        <key group="symbol" id="DC02" char="😠" label="😠"/> <!-- U+1F620 ANGRY FACE -->
+        <key group="symbol" id="DC03" char="😢" label="😢"/> <!-- U+1F622 CRYING FACE -->
+        <key group="symbol" id="DC04" char="😲" label="😲"/> <!-- U+1F632 ASTONISHED FACE -->
+        <key group="symbol" id="DC05" char="😖" label="😖"/> <!-- U+1F616 CONFOUNDED FACE -->
+        <key group="symbol" id="DC06" char="😩" label="😩"/> <!-- U+1F629 WEARY FACE -->
+        <key group="symbol" id="DC07" char="😋" label="😋"/> <!-- U+1F60B FACE SAVOURING DELICIOUS FOOD -->
+        <key group="symbol" id="DC08" char="😈" label="😈"/> <!-- U+1F608 SMILING FACE WITH HORNS -->
+        <key group="symbol" id="DC09" char="♂" label="♂"/> <!-- U+2642 MALE SIGN -->
+        <key group="symbol" id="DC10" char="☾" label="☾"/> <!-- U+263E LAST QUARTER MOON -->
+        <!-- row 2 -->
+        <key group="bottomrow" id="layer1.like_rtrn" label="3/3" image=";"/>
+        <key group="symbol" id="DB01" char="♡" label="♡"/> <!-- U+2661 WHITE HEART SUIT -->
+        <key group="symbol" id="DB02" char="♫" label="♫"/> <!-- U+266B BEAMED EIGHTH NOTE -->
+        <key group="symbol" id="DB03" char="☏" label="☏"/> <!-- U+260F WHITE TELEBalena -->
+        <key group="symbol" id="DB04" char="✉" label="✉"/> <!-- U+2709 ENVELOPE -->
+        <key group="symbol" id="DB05" char="☂" label="☂"/> <!-- U+2602 UMBRELLA -->
+        <key group="symbol" id="DB06" char="☮" label="☮"/> <!-- U+262E PEACE SYMBOL -->
+        <key group="symbol" id="DB07" char="☆" label="☆"/> <!-- U+2606 WHITE STAR -->
+        <key group="bottomrow" id="BKSP"/>
+        <!-- row 1 of the layers -->
+        <key group="bottomrow" id="layer0.like_rtrn"/>
+        <key group="symbol" id="DA01" char="☢" label="☢"/> <!-- U+2622 RADIOACTIVE SIGN -->
+        <key group="bottomrow" id="SPCE"/>
+        <key group="symbol" id="DA02" char="☯" label="☯"/> <!-- U+262F YIN YANG -->
+        <key group="bottomrow" id="RTRN" popup_id="RTRN_popup"/>
+      </panel>
+
+    </panel>
+
+  </box>
+
+  <!-- popup definition -->
+  <layout id="RTRN_popup" filename="Balena-Alpha.svg">
+    <box compact="true">
+        <key id="settings"/>
+        <key id="move"/>
+        <key id="hide" svg_id="hide.popup" image="close.svg" group="nowordlist" />
+    </box>
+  </layout>
+
+</keyboard>

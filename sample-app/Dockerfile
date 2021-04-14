@@ -1,4 +1,4 @@
-FROM balena-electronjs
+FROM balena-electron-env
 
 COPY package.json package-lock.json ./
 RUN npm i --production

@@ -9,7 +9,7 @@ import { Settings } from './settings/settings';
 import { lock, unlock } from './update-lock';
 import { execFile } from './utils';
 
-const debug = debug_('balena-electronjs:screensaver');
+const debug = debug_('balena-electron-env:screensaver');
 
 const {
 	BALENAELECTRONJS_SCREENSAVER_DELAY_OVERRIDE: screensaverDelayOverride,

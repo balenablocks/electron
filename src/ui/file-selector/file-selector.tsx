@@ -27,7 +27,7 @@ import { FileList } from './file-list';
 import { FileEntry } from './files';
 import { Breadcrumbs } from './path-breadcrumbs';
 
-const debug = debug_('balena-electronjs:file-selector');
+const debug = debug_('balena-electron-env:file-selector');
 
 const Header = styled.div`
 	flex: 0 0 auto;

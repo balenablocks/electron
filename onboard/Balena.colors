@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+
+<!--
+Copyright © 2011-2014 marmuta <marmvta@gmail.com>
+
+This file is part of Onboard.
+
+Onboard is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+Onboard is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<color_scheme name="Balena" format="2.1">
+    <window type="key-popup">
+        <color element="border" rgb="#000000" opacity="0.0"/>
+    </window>
+
+    <layer> <color element="background" rgb="#000e29" opacity="1.0"/> </layer>
+    <layer> <color element="background" rgb="#202e39" opacity="0.9"/> </layer>
+    <layer> <color element="background" rgb="#3a424f" opacity="0.9"/> </layer>
+
+    <key_group>
+        <color element="fill"   rgb="#3a424f"/>
+        <color element="stroke" rgb="#000000"/>
+        <color element="label"  rgb="#ffffff"/>
+        icon0
+        
+        <key_group>
+            <color element="fill" rgb="#ffffff"/>
+            icon1, icon2
+        </key_group>
+        
+        <!-- dark keys -->
+        <key_group>
+            <color element="fill" rgb="#212936"/>
+            <color element="label" rgb="#d2d6d9"/>
+            icon3,
+            RCTL, LCTL, RALT, LALT, LWIN, CAPS, 
+            LFSH, RTSH, NMLK,
+            MENU, RWIN, BKSP, TAB, RTRN, 
+            KPDL, KPEN, KPSU, KPDV, KPAD, KPMU,
+            LEFT, RGHT, UP, DOWN, INS, DELE, HOME, END, PGUP, PGDN,
+            F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12,
+            Prnt, Pause, ESC, Scroll,
+            secondaryclick, middleclick, doubleclick, dragclick, hoverclick,
+            hide, showclick, move, layer,
+            quit
+
+            <!-- word suggestions -->
+            <key_group>
+                <color element="fill" rgb="#111920"/>
+                wordlist, prediction, pause-learning.wordlist, language.wordlist, hide.wordlist
+            </key_group>
+        </key_group>
+        
+        <!-- snippets -->
+        <key_group>
+            <color element="fill" rgb="#2b2b63"/>
+            m0, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15
+        </key_group>
+        
+        <!-- red preferences -->
+        <key_group>
+            <color element="fill" rgb="#7f0000"/>
+            settings
+        </key_group>
+    </key_group>
+</color_scheme>
