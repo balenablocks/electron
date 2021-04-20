@@ -1,4 +1,14 @@
 - commits:
+    - subject: 'patch: Add keyboard dark theme'
+      hash: ac7162a9aebf1c52de66a155aad80edfdb576dbf
+      body: ''
+      footer:
+        Signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
+        signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
+      author: Lorenzo Alberto Maria Ambrosi
+  version: 1.2.5
+  date: 2021-04-15T14:28:28.421Z
+- commits:
     - subject: Set contextIsolation to false
       hash: a84858c9749ccf2e5f4e1c6e870de9a74be74ba6
       body: ''
