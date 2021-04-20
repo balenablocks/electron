@@ -36,7 +36,7 @@ export class Settings extends EventEmitter {
 	private getFilePath(): string {
 		return join(
 			electron.app.getPath('userData'),
-			'balena-electronjs-config.json',
+			'balena-electron-env-config.json',
 		);
 	}
 

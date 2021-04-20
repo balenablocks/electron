@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<!--
+Copyright © 2011-2013 marmuta <marmvta@gmail.com>
+
+This file is part of Onboard.
+
+Onboard is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+Onboard is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<theme name="Balena" format="1.3">
+    <color_scheme>Balena</color_scheme>
+    <background_gradient>0.0</background_gradient>
+    <key_style>flat</key_style>
+    <roundrect_radius>3.0</roundrect_radius>
+    <key_size>100.0</key_size>
+    <key_fill_gradient>0.0</key_fill_gradient>
+    <key_stroke_gradient>0.0</key_stroke_gradient>
+    <key_stroke_width>0.0</key_stroke_width>
+    <key_gradient_direction>0.0</key_gradient_direction>
+    <key_label_font>Source Sans Pro</key_label_font>
+    <key_shadow_strength>0.0</key_shadow_strength>
+    <key_shadow_size>0.0</key_shadow_size>
+</theme>

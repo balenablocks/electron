@@ -2,7 +2,7 @@ import * as debug_ from 'debug';
 import * as lockfile from 'lockfile';
 import { promisify } from 'util';
 
-const debug = debug_('balena-electronjs:update-lock');
+const debug = debug_('balena-electron-env:update-lock');
 
 const lockAsync = promisify(lockfile.lock);
 const unlockAsync = promisify(lockfile.unlock);

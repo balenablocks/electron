@@ -25,7 +25,7 @@ import { colors } from './colors';
 import { FileEntry, readdir } from './files';
 import { middleEllipsis } from './middle-ellipsis';
 
-const debug = debug_('balena-electronjs:file-selector');
+const debug = debug_('balena-electron-env:file-selector');
 
 const FILENAME_CHAR_LIMIT = 20;
 

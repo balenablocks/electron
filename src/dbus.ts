@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 
 import { Dict, OrderedMap } from './utils';
 
-const debug = debug_('balena-electronjs:dbus');
+const debug = debug_('balena-electron-env:dbus');
 const SYSTEM_BUS = systemBus();
 
 interface FieldDefinition {
