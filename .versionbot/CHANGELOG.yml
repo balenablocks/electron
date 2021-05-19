@@ -1,4 +1,16 @@
 - commits:
+    - subject: Refine keyboard style
+      hash: f3fd42be2a958a4d1cca2cecd8c412ec9aba98a8
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
+        signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
+      author: Lorenzo Alberto Maria Ambrosi
+  version: 1.2.6
+  date: 2021-05-19T13:16:10.079Z
+- commits:
     - subject: 'patch: Add keyboard dark theme'
       hash: ac7162a9aebf1c52de66a155aad80edfdb576dbf
       body: ''
