@@ -1,4 +1,16 @@
 - commits:
+    - subject: alter the build script to push as part of the buildx build
+      hash: 400d9456605763fe57e850e4dcf8d57a214e100e
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Phil Wilson <phil@balena.io>
+        signed-off-by: Phil Wilson <phil@balena.io>
+      author: Phil Wilson
+  version: 1.2.7
+  date: 2021-05-20T11:00:30.424Z
+- commits:
     - subject: Refine keyboard style
       hash: f3fd42be2a958a4d1cca2cecd8c412ec9aba98a8
       body: ''
