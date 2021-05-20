@@ -8,10 +8,7 @@ function build_and_push_image () {
   echo "Building for arch name $BALENA_ARCH, platform $DOCKER_ARCH pushing to $DOCKER_REPO/$REPO_NAME"
 
   sed "s/%%BALENA_ARCH%%/$BALENA_ARCH/g" ./Dockerfile.template > ./Dockerfile.$BALENA_ARCH
-  docker buildx build -t $DOCKER_REPO/$BALENA_ARCH-$REPO_NAME:$VERSION --platform $DOCKER_ARCH --file Dockerfile.$BALENA_ARCH .
-
-  echo "Publishing..."
-  docker push $DOCKER_REPO/$BALENA_ARCH-$REPO_NAME:$VERSION
+  docker buildx build -t $DOCKER_REPO/$BALENA_ARCH-$REPO_NAME:$VERSION --push --platform $DOCKER_ARCH --file Dockerfile.$BALENA_ARCH .
 
   echo "Cleaning up..."
   rm Dockerfile.$BALENA_ARCH
