@@ -507,29 +507,32 @@ class WifiConfig extends React.Component<{}, WifiConfigState> {
 		// TODO: Other settings under "Advanced network configuration"
 		return (
 			<>
-				<Button
-					outline
-					quartenary
-					width="108px"
-					icon={<ChevronLeftSvg height="1em" fill="currentColor" />}
-					onClick={() => {
-						this.setState({ editingConnection: undefined });
-					}}
-				>
-					Back
-				</Button>
 				<Flex
 					alignItems="center"
-					marginTop="32px"
-					marginBottom="16px"
+					marginTop="5px"
+					marginBottom="10px"
 					fontSize="18px"
+					justifyContent="space-between"
 				>
-					<WifiIcon
-						percentage={this.getAccessPointBySsid(ssid)?.Strength ?? 0}
-						disabled={false}
-						style={{ width: '24px', height: '20px' }}
-					/>
-					<Txt marginLeft="9px">{ssid}</Txt>
+					<Flex alignItems="center">
+						<WifiIcon
+							percentage={this.getAccessPointBySsid(ssid)?.Strength ?? 0}
+							disabled={false}
+							style={{ width: '24px', height: '20px' }}
+						/>
+						<Txt marginLeft="9px">{ssid}</Txt>
+					</Flex>
+					<Button
+						outline
+						quartenary
+						width="108px"
+						icon={<ChevronLeftSvg height="1em" fill="currentColor" />}
+						onClick={() => {
+							this.setState({ editingConnection: undefined });
+						}}
+					>
+						Back
+					</Button>
 				</Flex>
 				{settings.hasOwnProperty('802-11-wireless-security') && (
 					<PasswordBox
