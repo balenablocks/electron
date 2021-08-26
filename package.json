@@ -54,6 +54,7 @@
     "react-dom": "^17.0.1",
     "rendition": "^20.10.1",
     "style-loader": "^2.0.0",
+    "sys-class-rgb-led": "^3.0.1",
     "ts-json-schema-generator": "^0.82.0",
     "ts-loader": "^8.1.0",
     "ts-node": "^9.0.0",
