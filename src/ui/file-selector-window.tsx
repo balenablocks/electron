@@ -37,6 +37,11 @@ window.addEventListener('beforeunload', () => {
 	ipcRenderer.send('select-files', { canceled, filePaths });
 });
 
+const sourceCheckTimeout = parseInt(
+	env.BALENA_ELECTRONJS_FILE_SELECTOR_SOURCE_CHECK_TIMEOUT || '3000',
+	10,
+);
+
 render(
 	<OverlayWindow>
 		<FileSelector
@@ -50,6 +55,7 @@ render(
 				window.close();
 			}}
 			constraintPath={env.BALENAELECTRONJS_CONSTRAINT_PATH}
+			sourceCheckTimeout={sourceCheckTimeout}
 		/>
 	</OverlayWindow>,
 );

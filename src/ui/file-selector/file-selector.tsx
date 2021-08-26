@@ -16,11 +16,14 @@
 
 import AngleLeft from '@fortawesome/fontawesome-free/svgs/solid/angle-left.svg';
 import Hdd from '@fortawesome/fontawesome-free/svgs/solid/hdd.svg';
+import SourceSvg from './src.svg';
 import * as debug_ from 'debug';
+// import { promises as fs, readdirSync } from 'fs';
 import { dirname, relative } from 'path';
 import * as React from 'react';
-import { Button } from 'rendition';
+import { Button, Flex } from 'rendition';
 import { default as styled } from 'styled-components';
+// import { AnimationFunction, Color, RGBLed } from 'sys-class-rgb-led';
 
 import { colors } from './colors';
 import { FileList } from './file-list';
@@ -50,7 +53,7 @@ const Main = styled.div`
 const Footer = styled.div`
 	flex: 0 0 auto;
 	display: flex;
-	justify-content: flex-end;
+	justify-content: center;
 	padding: 10px;
 	flex: 0 0 auto;
 	border-top: 1px solid ${colors.primary.faded};
@@ -103,23 +106,32 @@ interface FileSelectorProps {
 	defaultPath: string;
 	constraintPath?: string;
 	selectFiles: (files?: string[]) => void;
+	sourceCheckTimeout: number;
 }
 
 interface FileSelectorState {
 	highlighted?: FileEntry;
 	path: string;
 	showHiddenFiles: boolean;
+	pathMounted: boolean;
 }
 
 export class FileSelector extends React.PureComponent<
 	FileSelectorProps,
 	FileSelectorState
 > {
+	checkSourceTimerID: number;
+
 	constructor(props: FileSelectorProps) {
 		super(props);
+
+		const path = props.constraintPath || props.defaultPath;
+		const pathMounted = true; // readdirSync(path).length > 0 || false;
+
 		this.state = {
-			path: props.constraintPath || props.defaultPath,
+			path,
 			showHiddenFiles: false,
+			pathMounted,
 		};
 	}
 
@@ -161,8 +173,25 @@ export class FileSelector extends React.PureComponent<
 		this.setState({ highlighted: file });
 	}
 
+	// TODO: debug why nodejs returns the same folders when changing USBs
+	// componentDidMount() {
+	// 	this.checkSourceTimerID = setInterval(async (path: string) => {
+	// 		const mountedFolders = await fs.readdir(path);
+	// 		if (mountedFolders.length > 0) {
+	// 			this.setState({ pathMounted: true });
+	// 		} else {
+	// 			setLeds(blinkBlue, 1);
+	// 			this.setState({ pathMounted: false });
+	// 		}
+	// 	}, this.props.sourceCheckTimeout, this.state.path);
+	// }
+
+	componentWillUnmount() {
+		clearInterval(this.checkSourceTimerID);
+	}
+
 	public render() {
-		return (
+		return this.state.pathMounted ? (
 			<>
 				<Header>
 					<Button
@@ -209,6 +238,55 @@ export class FileSelector extends React.PureComponent<
 					</Button>
 				</Footer>
 			</>
+		) : (
+			<>
+				<Main>
+					<Flex
+						flexDirection="column"
+						justifyContent="center"
+						alignItems="center"
+						width="100%"
+						height="100%"
+					>
+						<SourceSvg height="4em" fill="currentColor" />
+						<b>Plug a source drive</b>
+					</Flex>
+				</Main>
+				<Footer>
+					<Button
+						onClick={() => {
+							this.props.selectFiles();
+						}}
+					>
+						Cancel
+					</Button>
+				</Footer>
+			</>
 		);
 	}
 }
+
+// function createAnimationFunction(
+// 	intensityFunction: (t: number) => number,
+// 	color: Color,
+// ): AnimationFunction {
+// 	return (t: number): Color => {
+// 		const intensity = intensityFunction(t);
+// 		return color.map((v: number) => v * intensity) as Color;
+// 	};
+// }
+
+// function blink(t: number) {
+// 	return Math.floor(t) % 2;
+// }
+
+// const blue: Color = [0, 0, 0.1];
+
+// const blinkBlue = createAnimationFunction(blink, blue);
+
+// function setLeds(animation: AnimationFunction, led: number) {
+// 	const rgbLeds: RGBLed[] = [
+// 		new RGBLed([`led${led}_r`, `led${led}_g`, `led${led}_b`]),
+// 	];
+// 	return { animation, rgbLeds };
+// }
