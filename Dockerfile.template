@@ -1,4 +1,4 @@
-FROM balenalib/%%BALENA_ARCH%%-debian-node:12.6-buster-build as builder
+FROM balenalib/%%BALENA_ARCH%%-debian-node:12.20-buster-build as builder
 
 RUN apt-get update
 RUN apt-get install libx11-dev libxss-dev libxss1
@@ -20,7 +20,7 @@ COPY typings typings/
 ENV NODE_OPTIONS="--max-old-space-size=3072"
 RUN npm run build
 
-FROM balenalib/%%BALENA_ARCH%%-debian-node:12.6-buster-run
+FROM balenalib/%%BALENA_ARCH%%-debian-node:12.20-buster-run
 
 # clicklock
 COPY --from=builder /usr/src/clicklock/clicklock /usr/bin/clicklock
