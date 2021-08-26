@@ -1,4 +1,23 @@
 - commits:
+    - subject: Add draft of file-browser unplugged source prompt
+      hash: 34e3f175a60ffc22e24dbe4b1378a1da87719c35
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
+        signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
+      author: Lorenzo Alberto Maria Ambrosi
+    - subject: 'patch: Fix wifi passphrase hidden under keyboard'
+      hash: 5aabca59719f1d6e0a60ac942d6a8e7ea90c8b38
+      body: ''
+      footer:
+        Signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
+        signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
+      author: Lorenzo Alberto Maria Ambrosi
+  version: 1.2.8
+  date: 2021-08-26T14:43:49.252Z
+- commits:
     - subject: alter the build script to push as part of the buildx build
       hash: 400d9456605763fe57e850e4dcf8d57a214e100e
       body: ''
