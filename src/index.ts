@@ -186,8 +186,9 @@ function init() {
 	BrowserWindow.prototype._init = electron.BrowserWindow.prototype._init;
 
 	openDialogInit(electron, createWindow);
+	electron.app.commandLine.appendSwitch('use-gl', 'desktop');
 	// Remove this once https://github.com/electron/electron/issues/25153 is closed
-	electron.app.disableHardwareAcceleration();
+	// electron.app.disableHardwareAcceleration();
 	electron.app.on('ready', ready);
 
 	// @ts-ignore We're declaring a global that will be used in other projects that can't access balena-electron-env types
