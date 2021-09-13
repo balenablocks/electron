@@ -1,6 +1,6 @@
 {
   "name": "balena-electron-env",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "description": "Kiosk mode for electron apps",
   "main": "build/index.js",
   "scripts": {
@@ -64,6 +64,6 @@
     "x11": "^2.3.0"
   },
   "versionist": {
-    "publishedAt": "2021-08-26T14:43:49.321Z"
+    "publishedAt": "2021-09-13T13:48:27.877Z"
   }
 }

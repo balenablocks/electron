@@ -1,4 +1,16 @@
 - commits:
+    - subject: Fix hardware acceleration chromium flags
+      hash: 17dad3c94dbec77db4c781cdcd4fef15bbacdae0
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
+        signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
+      author: Lorenzo Alberto Maria Ambrosi
+  version: 1.2.9
+  date: 2021-09-13T13:48:27.780Z
+- commits:
     - subject: Add draft of file-browser unplugged source prompt
       hash: 34e3f175a60ffc22e24dbe4b1378a1da87719c35
       body: ''
