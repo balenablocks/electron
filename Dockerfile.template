@@ -59,6 +59,7 @@ COPY .xserverrc /root/.xserverrc
 COPY .xinitrc /root/.xinitrc
 
 ENV DISPLAY=:0
+ENV X_ADDITIONAL_PARAMETERS='-nocursor'
 ENV DBUS_SESSION_BUS_ADDRESS="unix:path=/tmp/dbus-session-bus"
 # Required for communicating with host's NetworkManager
 ENV DBUS_SYSTEM_BUS_ADDRESS="unix:path=/host/run/dbus/system_bus_socket"
