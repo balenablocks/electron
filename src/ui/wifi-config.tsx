@@ -12,7 +12,6 @@ import {
 	Spinner,
 	Txt,
 } from 'rendition';
-import { default as styled } from 'styled-components';
 
 import LockSvg from '@fortawesome/fontawesome-free/svgs/solid/lock.svg';
 import WrenchSvg from '@fortawesome/fontawesome-free/svgs/solid/wrench.svg';
@@ -60,17 +59,29 @@ function passphraseRequired(ap: AccessPointProps) {
 	return ap.RsnFlags !== 0 || ap.WpaFlags !== 0;
 }
 
-const AccessPointBox = styled(Flex)(({ active }: { active: boolean }) => ({
-	backgroundColor: active ? '#f8f9fd' : undefined,
-	height: '40px',
-	borderRadius: '3px',
-	width: '100%',
-	alignItems: 'center',
-	padding: '12px',
-	fontSize: '16px',
-	fontWeight: 600,
-	marginLeft: '10px',
-}));
+const AccessPointBox = ({
+	active,
+	children,
+}: {
+	active: boolean;
+	children: React.ReactNode;
+}) => (
+	<Flex
+		style={{
+			backgroundColor: active ? '#f8f9fd' : undefined,
+			height: '40px',
+			borderRadius: '3px',
+			width: '100%',
+			alignItems: 'center',
+			padding: '12px',
+			fontSize: '16px',
+			fontWeight: 600,
+			marginLeft: '10px',
+		}}
+	>
+		{children}
+	</Flex>
+);
 
 class AccessPoint extends React.PureComponent<AccessPointProps> {
 	public render() {
@@ -408,17 +419,14 @@ class WifiConfig extends React.Component<{}, WifiConfigState> {
 	}
 
 	public render() {
+		const handleConnection = !!(
+			this.state.creatingConnection || this.state.editingConnection
+		);
 		return (
 			<OverlayWindow>
-				{(() => {
-					if (this.state.creatingConnection !== undefined) {
-						return this.renderCreateConnection();
-					} else if (this.state.editingConnection !== undefined) {
-						return this.renderEditConnection(this.state.editingConnection);
-					} else {
-						return this.renderDevice();
-					}
-				})()}
+				{handleConnection
+					? this.renderConnectionView(this.state.editingConnection)
+					: this.renderDevice()}
 			</OverlayWindow>
 		);
 	}
@@ -496,13 +504,15 @@ class WifiConfig extends React.Component<{}, WifiConfigState> {
 		);
 	}
 
-	private renderEditConnection(connection: DBusObjectNode) {
+	private renderConnectionView(connection?: DBusObjectNode) {
 		const settings = _.merge(
 			{},
-			connection.state.Settings,
-			connection.state.Secrets,
+			connection?.state.Settings,
+			connection?.state.Secrets,
 		);
-		const ssid = settings['802-11-wireless'].ssid?.value?.toString();
+		const ssid =
+			settings['802-11-wireless']?.ssid?.value?.toString() ||
+			this.state.creatingConnection!;
 		const passphrase = settings['802-11-wireless-security']?.psk?.value;
 		// TODO: Other settings under "Advanced network configuration"
 		return (
@@ -528,18 +538,21 @@ class WifiConfig extends React.Component<{}, WifiConfigState> {
 						width="108px"
 						icon={<ChevronLeftSvg height="1em" fill="currentColor" />}
 						onClick={() => {
-							this.setState({ editingConnection: undefined });
+							this.setState({
+								editingConnection: undefined,
+								creatingConnection: undefined,
+							});
 						}}
 					>
 						Back
 					</Button>
 				</Flex>
-				{settings.hasOwnProperty('802-11-wireless-security') && (
-					<PasswordBox
-						label={'WIFI passphrase'}
-						okLabel={'Update'}
-						value={passphrase}
-						ok={async (value) => {
+				<PasswordBox
+					label={'WiFi passphrase'}
+					okLabel={connection !== undefined ? 'Update' : 'Connect'}
+					value={passphrase || ''}
+					ok={async (value) => {
+						if (connection !== undefined) {
 							settings['802-11-wireless-security'].psk = new Variant(
 								's',
 								value,
@@ -556,14 +569,22 @@ class WifiConfig extends React.Component<{}, WifiConfigState> {
 								await deviceInterface.Disconnect();
 							}
 							await this.connect(connection.path);
-							// await deviceInterface.Reapply({}, 0, 0);
-							this.setState({ editingConnection: undefined });
-						}}
-						cancel={() => {
-							this.setState({ editingConnection: undefined });
-						}}
-					/>
-				)}
+						} else {
+							await this.addAndActivateConnection(ssid, value);
+						}
+						// await deviceInterface.Reapply({}, 0, 0);
+						this.setState({
+							editingConnection: undefined,
+							creatingConnection: undefined,
+						});
+					}}
+					cancel={() => {
+						this.setState({
+							editingConnection: undefined,
+							creatingConnection: undefined,
+						});
+					}}
+				/>
 				<Divider marginTop="15px" marginBottom="15px" />
 				<Button
 					width="100px"
@@ -571,55 +592,17 @@ class WifiConfig extends React.Component<{}, WifiConfigState> {
 					danger
 					icon={<TimesSvg height="1em" fill="currentColor" />}
 					onClick={async () => {
-						await connection.iface?.Delete();
-						this.setState({ editingConnection: undefined });
+						if (connection !== undefined) {
+							await connection.iface?.Delete();
+							this.setState({
+								editingConnection: undefined,
+								creatingConnection: undefined,
+							});
+						}
 					}}
 				>
 					Forget network
 				</Button>
-			</>
-		);
-	}
-
-	private renderCreateConnection() {
-		const ssid = this.state.creatingConnection!;
-		return (
-			<>
-				<Button
-					outline
-					quartenary
-					width="108px"
-					icon={<ChevronLeftSvg height="1em" fill="currentColor" />}
-					onClick={() => {
-						this.setState({ creatingConnection: undefined });
-					}}
-				>
-					Back
-				</Button>
-				<Flex
-					alignItems="center"
-					marginTop="32px"
-					marginBottom="16px"
-					fontSize="18px"
-				>
-					<WifiIcon
-						percentage={this.getAccessPointBySsid(ssid)?.Strength ?? 0}
-						disabled={false}
-						style={{ width: '24px', height: '20px' }}
-					/>
-					<Txt marginLeft="9px">{ssid}</Txt>
-				</Flex>
-				<PasswordBox
-					label={'WIFI passphrase'}
-					value=""
-					okLabel="Connect"
-					ok={async (value) => {
-						await this.addAndActivateConnection(ssid, value);
-					}}
-					cancel={() => {
-						this.setState({ creatingConnection: undefined });
-					}}
-				/>
 			</>
 		);
 	}
