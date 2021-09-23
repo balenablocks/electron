@@ -2,4 +2,4 @@
 
 rm -f /tmp/.X0-lock
 
-exec X $DISPLAY -nolisten tcp -s 0 -nocursor
+exec X $DISPLAY -nolisten tcp -s 0 $X_ADDITIONAL_PARAMETERS
