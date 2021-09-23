@@ -1,4 +1,14 @@
 - commits:
+    - subject: 'patch: Make cursor optional with extra parameters'
+      hash: 892bf70af205759991e420564f2f3cf3f4ded894
+      body: ''
+      footer:
+        Signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
+        signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
+      author: Lorenzo Alberto Maria Ambrosi
+  version: 1.2.10
+  date: 2021-09-23T13:25:49.590Z
+- commits:
     - subject: Fix hardware acceleration chromium flags
       hash: 17dad3c94dbec77db4c781cdcd4fef15bbacdae0
       body: ''
