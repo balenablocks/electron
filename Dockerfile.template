@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:1.2
-FROM balenalib/%%BALENA_ARCH%%-debian-node:12.20-buster-build as builder
+FROM balenalib/%%BALENA_ARCH%%-debian-node:14.17-build as build
 
-RUN apt-get update
-RUN apt-get install libx11-dev libxss-dev libxss1
+RUN apt update
+RUN apt install libx11-dev libxss-dev libxss1
 
 # Build clicklock
 WORKDIR /usr/src/clicklock
@@ -14,21 +14,21 @@ RUN make
 
 WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
-RUN npm i
+RUN npm ci
 COPY tsconfig.webpack.json tsconfig.json webpack.config.ts ./
 COPY src src/
 COPY typings typings/
 ENV NODE_OPTIONS="--max-old-space-size=3072"
 RUN npm run build
 
-FROM balenalib/%%BALENA_ARCH%%-debian-node:12.20-buster-run
+FROM balenalib/%%BALENA_ARCH%%-debian-node:14.17-build
 
 # clicklock
-COPY --from=builder /usr/src/clicklock/clicklock /usr/bin/clicklock
+COPY --from=build /usr/src/clicklock/clicklock /usr/bin/clicklock
 
 RUN \
-	apt-get update \
-	&& apt-get install -y \
+	apt update \
+	&& apt install -y \
 		# Electron runtime dependencies
 		libasound2 \
 		libgdk-pixbuf2.0-0 \
@@ -54,7 +54,7 @@ RUN \
 		# for exposing --remote-debugging-port to other computers
 		simpleproxy \
 	&& rm -rf /var/lib/apt/lists/*
-COPY --from=builder /usr/src/app/build /usr/lib/balena-electron-env
+COPY --from=build /usr/src/app/build /usr/lib/balena-electron-env
 COPY .xserverrc /root/.xserverrc
 COPY .xinitrc /root/.xinitrc
 
@@ -73,4 +73,7 @@ COPY onboard/onboard-defaults.conf /etc/onboard/
 
 WORKDIR /usr/src/app
 
-CMD xinit
+COPY --from=build /usr/src/app/package-lock.json ./
+
+CMD sleep infinity
+# CMD xinit
