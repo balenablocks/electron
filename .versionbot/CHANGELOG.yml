@@ -1,4 +1,28 @@
 - commits:
+    - subject: 'patch: Reduce size with new base image'
+      hash: e84ba894291efe7d08b88e7e5e998767635190c9
+      body: ''
+      footer:
+        Signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
+        signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
+      author: Lorenzo Alberto Maria Ambrosi
+    - subject: 'patch: Move back button when creating connection'
+      hash: 78627062ac4c546cf2e608d7b2eccb2eb6965843
+      body: ''
+      footer:
+        Signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
+        signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
+      author: Lorenzo Alberto Maria Ambrosi
+    - subject: 'patch: Refactor network update function'
+      hash: b5b3dda67f920a00025314c1d86be953a06aab6f
+      body: ''
+      footer:
+        Signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
+        signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
+      author: Lorenzo Alberto Maria Ambrosi
+  version: 1.2.11
+  date: 2021-11-01T12:45:37.522Z
+- commits:
     - subject: 'patch: Make cursor optional with extra parameters'
       hash: 892bf70af205759991e420564f2f3cf3f4ded894
       body: ''
