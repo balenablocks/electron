@@ -7,6 +7,8 @@ import { DBusObjectNode } from '../dbus';
 import { WifiIcon, WifiIconProps } from './wifi-icon';
 
 import './open-wifi-config.css';
+import { Dict } from '../utils';
+import * as _ from 'lodash';
 
 export class WifiStatusIcon extends React.PureComponent<{}, WifiIconProps> {
 	constructor(props: {}) {
@@ -37,23 +39,29 @@ export class WifiStatusIcon extends React.PureComponent<{}, WifiIconProps> {
 			},
 		);
 		networkManager.on('PropertiesChanged', () => {
-			const state: WifiIconProps = { disabled: true, percentage: 0 };
+			let state: WifiIconProps = { disabled: true, percentage: 0 };
 			const dump = networkManager.dump();
 			state.disabled = !dump.WirelessEnabled;
 			if (!state.disabled) {
-				const device = dump.Devices[0];
-				const accessPointPath = device.ActiveAccessPoint;
-				if (accessPointPath !== undefined) {
-					const accessPoint = device.AccessPoints.find(
-						(ap: { path?: string }) => ap.path === accessPointPath,
-					);
-					if (accessPoint !== undefined) {
-						state.percentage = accessPoint.Strength;
-					}
-				}
+				state = this.updateNetworkState(dump, state);
 			}
 			this.setState(state);
 		});
+	}
+
+	private updateNetworkState(dump: Dict<any>, state: WifiIconProps) {
+		const newState = _.cloneDeep(state);
+		const device = dump.Devices[0];
+		const accessPointPath = device.ActiveAccessPoint;
+		if (accessPointPath !== undefined) {
+			const accessPoint = device.AccessPoints.find(
+				(ap: { path?: string }) => ap.path === accessPointPath,
+			);
+			if (accessPoint !== undefined) {
+				newState.percentage = accessPoint.Strength;
+			}
+		}
+		return newState;
 	}
 
 	public render() {
