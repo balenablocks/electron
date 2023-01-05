@@ -4,7 +4,7 @@
   "description": "Kiosk mode for electron apps",
   "main": "build/index.js",
   "scripts": {
-    "clean": "rm -rf build/*",
+    "clean": "rimraf ./build",
     "build": "npm run clean && webpack",
     "watch": "webpack --watch",
     "lint": "balena-lint --typescript src webpack.config.ts",
@@ -53,6 +53,7 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "rendition": "20.10.1",
+    "rimraf": "^3.0.2",
     "style-loader": "2.0.0",
     "sys-class-rgb-led": "3.0.1",
     "ts-json-schema-generator": "0.82.0",
