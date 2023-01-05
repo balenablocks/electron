@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.2
-FROM balenalib/%%BALENA_ARCH%%-node:14.17-bullseye-build as build
+FROM balenalib/%%BALENA_ARCH%%-node:14.19-buster-build as build
 
 RUN apt update
 RUN apt install libx11-dev libxss-dev libxss1
@@ -23,7 +23,7 @@ RUN npm run build
 
 CMD sleep infinity
 
-FROM balenalib/%%BALENA_ARCH%%-node:14.17-bullseye-run as runtime
+FROM balenalib/%%BALENA_ARCH%%-node:14.19-buster-run as runtime
 
 # clicklock
 COPY --from=build /usr/src/clicklock/clicklock /usr/bin/clicklock
