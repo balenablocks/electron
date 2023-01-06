@@ -5,8 +5,9 @@
   "main": "build/index.js",
   "scripts": {
     "clean": "rimraf ./build",
-    "build": "npm run clean && webpack",
+    "webpack": "npm run clean && webpack",
     "watch": "webpack --watch",
+    "test": "true",
     "lint": "balena-lint --typescript src webpack.config.ts",
     "lint-fix": "balena-lint --fix --typescript src webpack.config.ts"
   },
