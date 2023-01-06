@@ -19,7 +19,7 @@ COPY tsconfig.webpack.json tsconfig.json webpack.config.ts ./
 COPY src src/
 COPY typings typings/
 ENV NODE_OPTIONS="--max-old-space-size=3072"
-RUN npm run build
+RUN npm run webpack
 
 CMD sleep infinity
 
