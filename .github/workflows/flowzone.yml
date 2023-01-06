@@ -13,6 +13,10 @@ jobs:
     uses: product-os/flowzone/.github/workflows/flowzone.yml@master
     secrets: inherit
     with:
+      docker_images: |
+        docker.io/balenablocks/amd64-balena-electron-env,
+        docker.io/balenablocks/armv7hf-balena-electron-env,
+        docker.io/balenablocks/aarch64-balena-electron-env
       bake_targets: |
         amd64,
         armv7hf,
