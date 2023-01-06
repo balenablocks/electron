@@ -13,5 +13,5 @@
 # fi
 
 metacity &
-dbus-daemon --fork --session --address $DBUS_SESSION_BUS_ADDRESS
+dbus-daemon --fork --session --address $DBUS_SESSION_BUS_ADDRESS 
 /usr/src/app/node_modules/.bin/electron $REMOTE_DEBUG --no-sandbox -r /usr/lib/balena-electron-env /usr/src/app
