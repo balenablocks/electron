@@ -1,21 +1,65 @@
 - commits:
-    - subject: 'patch: Reduce size with new base image'
+    - subject: "patch: aligned dockerfiles to npm scripts"
+      hash: a2b5593f50ed47d6821ad208cfee388d27f29416
+      body: ""
+      footer: {}
+      author: Peter Makra
+    - subject: "patch: disabled npm publish"
+      hash: 66cb00e14f7fd161914702f02c1ea1e917b2299c
+      body: ""
+      footer: {}
+      author: Peter Makra
+    - subject: "patch: added docker publish targets"
+      hash: 011d7530769eba1d344ade539b734cb8c755f804
+      body: ""
+      footer: {}
+      author: Peter Makra
+    - subject: "patch: removed build script"
+      hash: eccf4f64742f36a77452dfc8918953399ed17021
+      body: ""
+      footer: {}
+      author: Peter Makra
+    - subject: "patch: bake config for flowzone"
+      hash: a4a28bc70ada6d9621a4febcea094ec33ff7d8e7
+      body: ""
+      footer: {}
+      author: Peter Makra
+    - subject: "patch: clean step with rimraf"
+      hash: dd601a2efc6dc9af8c852fc806266d29bc2e6da2
+      body: ""
+      footer: {}
+      author: Peter Makra
+    - subject: "patch: actualized lockfile"
+      hash: d3021d59c5919b775b9fe3fb042bdee6eba0a3ab
+      body: ""
+      footer: {}
+      author: Peter Makra
+    - subject: "patch: added flowzone"
+      hash: 216283ffa9e2550a0ccaeb9a318a54756866cbf1
+      body: ""
+      footer: {}
+      author: mcraa
+  version: 1.2.12
+  title: ""
+  date: 2023-01-06T17:52:32.054Z
+- commits:
+    - subject: "patch: Reduce size with new base image"
       hash: e84ba894291efe7d08b88e7e5e998767635190c9
-      body: ''
+      body: ""
       footer:
         Signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
         signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
       author: Lorenzo Alberto Maria Ambrosi
-    - subject: 'patch: Move back button when creating connection'
+    - subject: "patch: Move back button when creating connection"
       hash: 78627062ac4c546cf2e608d7b2eccb2eb6965843
-      body: ''
+      body: ""
       footer:
         Signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
         signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
       author: Lorenzo Alberto Maria Ambrosi
-    - subject: 'patch: Refactor network update function'
+    - subject: "patch: Refactor network update function"
       hash: b5b3dda67f920a00025314c1d86be953a06aab6f
-      body: ''
+      body: ""
       footer:
         Signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
         signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
@@ -23,9 +67,9 @@
   version: 1.2.11
   date: 2021-11-01T12:45:37.522Z
 - commits:
-    - subject: 'patch: Make cursor optional with extra parameters'
+    - subject: "patch: Make cursor optional with extra parameters"
       hash: 892bf70af205759991e420564f2f3cf3f4ded894
-      body: ''
+      body: ""
       footer:
         Signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
         signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
@@ -35,7 +79,7 @@
 - commits:
     - subject: Fix hardware acceleration chromium flags
       hash: 17dad3c94dbec77db4c781cdcd4fef15bbacdae0
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
@@ -47,16 +91,16 @@
 - commits:
     - subject: Add draft of file-browser unplugged source prompt
       hash: 34e3f175a60ffc22e24dbe4b1378a1da87719c35
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
         Signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
         signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
       author: Lorenzo Alberto Maria Ambrosi
-    - subject: 'patch: Fix wifi passphrase hidden under keyboard'
+    - subject: "patch: Fix wifi passphrase hidden under keyboard"
       hash: 5aabca59719f1d6e0a60ac942d6a8e7ea90c8b38
-      body: ''
+      body: ""
       footer:
         Signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
         signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
@@ -66,7 +110,7 @@
 - commits:
     - subject: alter the build script to push as part of the buildx build
       hash: 400d9456605763fe57e850e4dcf8d57a214e100e
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
@@ -78,7 +122,7 @@
 - commits:
     - subject: Refine keyboard style
       hash: f3fd42be2a958a4d1cca2cecd8c412ec9aba98a8
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
@@ -88,9 +132,9 @@
   version: 1.2.6
   date: 2021-05-19T13:16:10.079Z
 - commits:
-    - subject: 'patch: Add keyboard dark theme'
+    - subject: "patch: Add keyboard dark theme"
       hash: ac7162a9aebf1c52de66a155aad80edfdb576dbf
-      body: ''
+      body: ""
       footer:
         Signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
         signed-off-by: Lorenzo Alberto Maria Ambrosi <lorenzothunder.ambrosi@gmail.com>
@@ -100,14 +144,14 @@
 - commits:
     - subject: Set contextIsolation to false
       hash: a84858c9749ccf2e5f4e1c6e870de9a74be74ba6
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
       author: Alexis Svinartchouk
     - subject: Update dependencies
       hash: 642e4560d5b7c7bceeb9a4a8445486f08432cfb6
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
@@ -117,21 +161,21 @@
 - commits:
     - subject: Update project name and url in package.json
       hash: 23359068ddb330ded82c09f7e67792a343724d72
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
       author: Alexis Svinartchouk
     - subject: Update electron to v12.0.2
       hash: be38e8d83baad939efaea2539374a090545dc93c
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
       author: Alexis Svinartchouk
     - subject: Fix typo in README.md
       hash: 3051371fcaa9159244e14aa51012dc080340d2eb
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
@@ -146,21 +190,21 @@
       author: Alexis Svinartchouk
     - subject: Update @balena/lint to to v5.4.1
       hash: e5d30d7f854b2a7c15c8a52c8f1007d125618695
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
       author: Alexis Svinartchouk
     - subject: Don't connect to a network when the "Configure" button is pressed
       hash: 51c3cf46b31a8cf4149741386838c3a547695b00
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
       author: Alexis Svinartchouk
     - subject: Update electron to v11.2.3
       hash: 32fdf5d2b6f0051f0c2de4d8923a6b2c25884463
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
@@ -170,7 +214,7 @@
 - commits:
     - subject: Add .versionbot/CHANGELOG.yml
       hash: c361de0bb211076aa11fc0eed1a898e1e87ee1f5
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
@@ -294,7 +338,7 @@
       author: Alexis Svinartchouk
       footers:
         change-type: patch
-      subject: 'Only log dbus errors if debug is set to balena-electronsjs:dbus'
+      subject: Only log dbus errors if debug is set to balena-electronsjs:dbus
       body: null
     - hash: c590f72cabdf3bf633bb7a449703b23a6d5138c9
       author: Alexis Svinartchouk
@@ -321,8 +365,7 @@
       author: Alexis Svinartchouk
       footers:
         change-type: minor
-      subject: >-
-        Allow overriding the screensaver delay from settings with
+      subject: Allow overriding the screensaver delay from settings with
         BALENAELECTRONJS_SCREENSAVER_DELAY_OVERRIDE
       body: null
     - hash: e71cd0cd12cf626c9978c97ca4ae0016ec0acb6d
@@ -419,7 +462,7 @@
       author: Alexis Svinartchouk
       footers:
         change-type: patch
-      subject: 'Name images balenablocks/$ARCH-balena-electron-env:$GIT_TAG'
+      subject: Name images balenablocks/$ARCH-balena-electron-env:$GIT_TAG
       body: null
     - hash: 1fdd25f1731c9061c6aeb9e53a2e88db28c9b65e
       author: Alexis Svinartchouk
@@ -488,7 +531,7 @@
       author: Alexis Svinartchouk
       footers:
         change-type: patch
-      subject: 'Factorize overlay windows, add a shadow'
+      subject: Factorize overlay windows, add a shadow
       body: null
 - version: 1.0.2
   date: 2020-10-16T11:51:00.000Z
@@ -521,7 +564,7 @@
       author: Alexis Svinartchouk
       footers:
         change-type: patch
-      subject: 'Inline svgs, update overlay buttons'
+      subject: Inline svgs, update overlay buttons
       body: null
     - hash: 09f4e7fd8818daf0815499c797b2a94a4c28241c
       author: Alexis Svinartchouk
@@ -557,7 +600,7 @@
       author: Alexis Svinartchouk
       footers:
         change-type: patch
-      subject: 'Update wifi dialog, replace dbus-native with dbus-next'
+      subject: Update wifi dialog, replace dbus-native with dbus-next
       body: null
     - hash: 7d0eea59acfb74dd3b2cdfdbad9f5a6dfa1f3a52
       author: Alexis Svinartchouk
@@ -569,8 +612,7 @@
       author: Alexis Svinartchouk
       footers:
         change-type: patch
-      subject: >-
-        Run BALENAELECTRONJS_SCREENSAVER_COMMAND when the screensaver is
+      subject: Run BALENAELECTRONJS_SCREENSAVER_COMMAND when the screensaver is
         triggered
       body: null
     - hash: 405dd5c16cd28699c83c65ac15ccccb56ec17133
