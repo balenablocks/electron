@@ -68,6 +68,10 @@ RUN \
 		ntfs-3g \
 		# for exposing --remote-debugging-port to other computers
 		libproxy \
+		glib-networking \
+		mesa\
+		mesa-dri-gallium\
+		eudev\
 		#simpleproxy \
 	&& rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/src/app/build /usr/lib/balena-electron-env

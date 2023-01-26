@@ -16,12 +16,15 @@ const {
 	BALENAELECTRONJS_SCREENSAVER_ON_COMMAND: screensaverOnCommand,
 	BALENAELECTRONJS_SCREENSAVER_OFF_COMMAND: screensaverOffCommand,
 	BALENAELECTRONJS_UPDATES_ONLY_DURING_SCREENSAVER: updatesOnlyDuringScreensaver,
+	BALENAELECTRONJS_SCREENSAVER_XSET_MODE : screensaverXsetMode,
+	BALENAELECTRONJS_SCREENSAVER_NOBLANK: noBlank
 } = env;
 
 const createClient = promisify(x11.createClient);
 
 export async function screenOff(): Promise<void> {
-	await execFile('xset', 'dpms', 'force', 'off');
+	const mode : string = screensaverXsetMode??'off';
+	await execFile('xset', 'dpms', 'force', mode);
 }
 
 let screensaverDisabled = false;
@@ -40,6 +43,10 @@ async function setSleepDelay(value?: string): Promise<void> {
 		const minutes = parseInt(value!, 10);
 		if (!isNaN(minutes)) {
 			const seconds = minutes * 60;
+			if (noBlank == '1')
+			{
+				await execFile('xset', 'noblank', '+dpms');
+			}
 			await execFile('xset', 'dpms', '0', '0', seconds.toString(10));
 		}
 	}
