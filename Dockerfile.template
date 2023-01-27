@@ -1,8 +1,7 @@
 # syntax=docker/dockerfile:1.2
-FROM balenalib/%%BALENA_ARCH%%-alpine-node:14.17 as build
+FROM balenalib/%%BALENA_ARCH%%-alpine-node:14.21 as build
 
-RUN apk update
-RUN apk add libx11-dev libxscrnsaver-dev git autoconf automake libtool gcc g++ make
+RUN install_packages libx11-dev libxscrnsaver-dev git gcompat autoconf automake libtool gcc g++ make python3
 
 # Build clicklock
 WORKDIR /usr/src/clicklock
@@ -30,18 +29,17 @@ RUN ./configure &&\
 
 CMD sleep infinity
 
-FROM balenalib/%%BALENA_ARCH%%-alpine-node:14.17-run as runtime
+FROM balenalib/%%BALENA_ARCH%%-alpine-node:14.21-run as runtime
 
 # clicklock
 COPY --from=build /usr/src/clicklock/clicklock /usr/bin/clicklock
 
 RUN \
-	echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories &&\
-	echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories &&\
-	apk add -X http://dl-cdn.alpinelinux.org/alpine/edge/main -u alpine-keys && \
-	apk add -X http://dl-cdn.alpinelinux.org/alpine/edge/community -u alpine-keys && \
-	apk update \
-	&& apk add \
+	#echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories &&\
+	#echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories &&\
+	#apk add -X http://dl-cdn.alpinelinux.org/alpine/edge/main -u alpine-keys && \
+	#apk add -X http://dl-cdn.alpinelinux.org/alpine/edge/community -u alpine-keys && \
+	install_packages \
 		# Electron runtime dependencies
 		alsa-lib \
 		gdk-pixbuf \
@@ -72,6 +70,7 @@ RUN \
 		mesa\
 		mesa-dri-gallium\
 		eudev\
+		gcompat \
 		#simpleproxy \
 	&& rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/src/app/build /usr/lib/balena-electron-env
