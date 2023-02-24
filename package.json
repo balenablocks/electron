@@ -52,7 +52,7 @@
     "pretty-bytes": "5.2.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "rendition": "20.10.1",
+    "rendition": "34.8.3",
     "style-loader": "2.0.0",
     "sys-class-rgb-led": "3.0.1",
     "ts-json-schema-generator": "0.82.0",
