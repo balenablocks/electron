@@ -25,7 +25,7 @@
     "url": "https://github.com/balenablocks/balena-electron-env.git"
   },
   "devDependencies": {
-    "@balena/lint": "5.4.1",
+    "@balena/lint": "6.2.1",
     "@fortawesome/fontawesome-free": "5.14.0",
     "@svgr/webpack": "5.5.0",
     "@types/debug": "4.1.4",
